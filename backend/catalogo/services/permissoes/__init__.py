@@ -1,0 +1,1 @@
+from .servico import PermissaoService
