@@ -16,3 +16,6 @@ class VendedorPermissao(PermissaoStrategy):
 
     def brinquedos_gerenciaveis(self, usuario, consulta):
         return consulta.filter(criado_por=usuario)
+
+    def brinquedos_visiveis(self, usuario, consulta):
+            return consulta

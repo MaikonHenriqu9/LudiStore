@@ -32,3 +32,6 @@ class PermissaoService:
 
     def brinquedos_gerenciaveis(self, consulta):
         return self.estrategia.brinquedos_gerenciaveis(self.usuario, consulta)
+
+    def brinquedos_visiveis(self, consulta):
+        return self.estrategia.brinquedos_visiveis(self.usuario, consulta)

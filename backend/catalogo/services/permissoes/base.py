@@ -23,3 +23,7 @@ class PermissaoStrategy(ABC):
     @abstractmethod
     def brinquedos_gerenciaveis(self, usuario, consulta):
         """Devolve, da consulta recebida, só os brinquedos que este perfil pode gerenciar."""
+
+    @abstractmethod
+    def brinquedos_visiveis(self, usuario, consulta):
+        """Devolve, da consulta recebida, só os brinquedos que este perfil pode ver no catálogo."""

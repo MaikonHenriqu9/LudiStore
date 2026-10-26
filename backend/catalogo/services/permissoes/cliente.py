@@ -16,3 +16,6 @@ class ClientePermissao(PermissaoStrategy):
 
     def brinquedos_gerenciaveis(self, usuario, consulta):
         return consulta.none()
+
+    def brinquedos_visiveis(self, usuario, consulta):
+        return consulta.filter(ativo=True)

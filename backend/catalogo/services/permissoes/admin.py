@@ -16,3 +16,6 @@ class AdminPermissao(PermissaoStrategy):
 
     def brinquedos_gerenciaveis(self, usuario, consulta):
         return consulta
+    
+    def brinquedos_visiveis(self, usuario, consulta):
+        return consulta
