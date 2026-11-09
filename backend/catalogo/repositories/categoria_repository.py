@@ -19,3 +19,6 @@ class CategoriaRepository:
             consulta = consulta.exclude(id=ignorar_id)
 
         return consulta.exists()
+
+    def buscar_ativas_por_ids(self, categorias_ids):
+        return list(Categoria.objects.filter(id__in=categorias_ids, ativo=True))

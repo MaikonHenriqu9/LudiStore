@@ -1,2 +1,3 @@
 from .marca_repository import MarcaRepository
 from .categoria_repository import CategoriaRepository
+from .brinquedo_repository import BrinquedoRepository

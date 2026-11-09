@@ -1,2 +1,3 @@
 from .marca_service import MarcaService
 from .categoria_service import CategoriaService
+from .brinquedo_service import BrinquedoService
