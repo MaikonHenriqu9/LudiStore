@@ -8,6 +8,7 @@ from catalogo.strategies import (
     OrdenarPorMenorPreco,
     OrdenarPorNome,
 )
+from core import LoggerSistema
 from usuarios.models import Usuario
 from usuarios.repositories import UsuarioRepository
 
@@ -26,6 +27,7 @@ class BrinquedoService:
         self.marca_repository = MarcaRepository()
         self.categoria_repository = CategoriaRepository()
         self.usuario_repository = UsuarioRepository()
+        self.logger = LoggerSistema()
 
     def listar(self, ordem):
         estrategia = self.ESTRATEGIAS_ORDENACAO.get(ordem)
@@ -68,6 +70,7 @@ class BrinquedoService:
         brinquedo = self.repository.salvar(Brinquedo(**dados, marca=marca, vendedor=vendedor))
         brinquedo.categorias.set(categorias)
 
+        self.logger.info(f'Brinquedo cadastrado: {brinquedo.nome} (SKU {brinquedo.sku}) por {vendedor.nome}')
         return brinquedo
 
     @transaction.atomic
@@ -101,9 +104,11 @@ class BrinquedoService:
         if categorias is not None:
             brinquedo.categorias.set(categorias)
 
+        self.logger.info(f'Brinquedo atualizado: id={brinquedo.id}')
         return brinquedo
 
     def desativar(self, brinquedo_id):
         brinquedo = self.buscar(brinquedo_id)
         brinquedo.ativo = False
         self.repository.salvar(brinquedo)
+        self.logger.info(f'Brinquedo desativado: id={brinquedo.id}')

@@ -2,6 +2,7 @@ from usuarios.factories import ClienteFactory, VendedorFactory
 from usuarios.repositories import UsuarioRepository
 from django.contrib.auth.hashers import make_password
 from usuarios.models import Usuario
+from core import LoggerSistema
 
 class UsuarioService:
 
@@ -12,6 +13,7 @@ class UsuarioService:
 
     def __init__(self):
         self.repository = UsuarioRepository()
+        self.logger = LoggerSistema()
 
     def cadastrar(self, dados):
         if self.repository.existe_email(dados.get('email')):
@@ -26,10 +28,12 @@ class UsuarioService:
         factory = self.FACTORIES_CADASTRO.get(perfil)
 
         if factory is None:
+            self.logger.aviso(f'Cadastro bloqueado: tentativa com perfil {perfil} ({dados.get("email")})')
             raise ValueError('Perfil inválido. Escolha CLIENTE ou VENDEDOR.')
 
-        usuario = factory.criar(dados)
-        return self.repository.salvar(usuario)
+        usuario = self.repository.salvar(factory.criar(dados))
+        self.logger.info(f'Usuário cadastrado: {usuario.nome} ({usuario.perfil}) id={usuario.id}')
+        return usuario
 
     def listar(self):
         return self.repository.listar_ativos()
@@ -64,9 +68,12 @@ class UsuarioService:
         if usuario.perfil == Usuario.Perfil.VENDEDOR and not (usuario.cpf and usuario.telefone):
             raise ValueError('CPF e telefone são obrigatórios para vendedores.')
 
-        return self.repository.salvar(usuario)
+        usuario = self.repository.salvar(usuario)
+        self.logger.info(f'Usuário atualizado: id={usuario.id}')
+        return usuario
 
     def desativar(self, usuario_id):
         usuario = self.buscar(usuario_id)
         usuario.ativo = False
         self.repository.salvar(usuario)
+        self.logger.info(f'Usuário desativado: id={usuario.id}')
