@@ -16,3 +16,7 @@ class UsuarioController(APIView):
             return Response({'erro': str(erro)}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(UsuarioResponseDTO(usuario).data, status=status.HTTP_201_CREATED)
+
+    def get(self, request):
+        usuarios = UsuarioService().listar()
+        return Response(UsuarioResponseDTO(usuarios, many=True).data)
