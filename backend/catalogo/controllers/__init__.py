@@ -1,0 +1,4 @@
+from .marca_controller import MarcaController
+from .marca_detalhe_controller import MarcaDetalheController
+from .categoria_controller import CategoriaController
+from .categoria_detalhe_controller import CategoriaDetalheController
