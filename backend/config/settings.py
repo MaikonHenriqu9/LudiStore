@@ -95,4 +95,5 @@ MAILERS = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
     'UNAUTHENTICATED_USER': None,
+    'EXCEPTION_HANDLER': 'core.tratador_excecoes.tratar_excecoes',
 }

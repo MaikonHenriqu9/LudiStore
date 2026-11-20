@@ -1,4 +1,5 @@
 from usuarios.factories.usuario_factory import UsuarioFactory
+from core import RegraDeNegocioError
 from usuarios.models import Usuario
 
 
@@ -11,4 +12,4 @@ class VendedorFactory(UsuarioFactory):
         super().validar(dados)
 
         if not dados.get('telefone'):
-            raise ValueError('Telefone é obrigatório para vendedores.')
+            raise RegraDeNegocioError('Telefone é obrigatório para vendedores.')

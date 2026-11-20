@@ -203,33 +203,45 @@ Todas as URLs terminam com `/`. Sem a barra final, requisições `POST`, `PATCH`
 
 | Método | URL | Ação |
 |---|---|---|
-| `GET` | `/api/usuarios/` | Lista os usuários ativos |
+| `GET` | `/api/usuarios/` | Lista todos os usuários (ativos e desativados) |
+| `GET` | `/api/usuarios/?busca=ana` | Pesquisa por nome, e-mail, CPF, CNPJ, telefone ou id |
 | `POST` | `/api/usuarios/` | Cadastro público (cliente ou vendedor) |
-| `GET` | `/api/usuarios/<id>/` | Busca um usuário |
+| `GET` | `/api/usuarios/<id>/` | Busca um usuário (inclusive desativado) |
 | `PATCH` | `/api/usuarios/<id>/` | Atualiza os campos enviados |
 | `DELETE` | `/api/usuarios/<id>/` | Desativa o usuário (exclusão lógica) |
+| `PATCH` | `/api/usuarios/<id>/reativar/` | Reativa um usuário desativado |
 
-Exemplo de cadastro:
+Todos esses endpoints ficam num único controller (`UsuarioController`, um `ViewSet` do DRF), e as rotas são geradas pelo `SimpleRouter` em `usuarios/urls.py`.
+
+Exemplo de cadastro (vendedor pessoa jurídica):
 
 ```json
 {
-  "nome": "Ana Souza",
-  "email": "ana@email.com",
+  "nome": "Brinquedos Ltda",
+  "email": "loja@email.com",
   "senha": "123456",
   "perfil": "VENDEDOR",
-  "cpf": "12345678900",
+  "tipo_pessoa": "PJ",
+  "cnpj": "12345678000199",
   "telefone": "11988887777"
 }
 ```
 
 | Campo | Obrigatório | Observação |
 |---|:---:|---|
-| `nome`, `email`, `senha` | sim | o e-mail é único |
+| `nome`, `email`, `senha` | sim | o e-mail é único e gravado em minúsculas |
+| `tipo_pessoa` | sim | `PF` (pessoa física) ou `PJ` (pessoa jurídica) |
 | `perfil` | não | `CLIENTE` (padrão) ou `VENDEDOR` |
-| `cpf`, `telefone` | só para vendedor | apenas dígitos; o CPF é único |
+| `cpf` | só para `PF` | 11 dígitos, único |
+| `cnpj` | só para `PJ` | 14 dígitos, único |
+| `telefone` | só para vendedor | 10 ou 11 dígitos |
 | `data_nascimento` | não | formato `AAAA-MM-DD` |
 | `sexo` | não | `M`, `F`, `O` ou `N/I` |
-| `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `uf` | não | endereço |
+| `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `uf` | não | endereço; o CEP tem 8 dígitos |
+
+Documentos, telefone e CEP são enviados **apenas com números** (sem pontos, traços ou barras). O documento que não é do tipo da pessoa é opcional: um `PF` pode informar o CNPJ, e um `PJ` pode informar o CPF.
+
+No `PATCH`, o `perfil` não pode ser alterado, e as mesmas regras do cadastro são conferidas sobre o resultado final (por exemplo, um vendedor não pode apagar o telefone).
 
 A senha é gravada criptografada e nunca é devolvida pela API.
 
@@ -293,6 +305,9 @@ Exemplo de cadastro:
 | `204 No Content` | Desativação feita |
 | `400 Bad Request` | Formato inválido (erro por campo) ou regra de negócio violada (`{"erro": "..."}`) |
 | `404 Not Found` | Registro inexistente ou desativado |
+| `405 Method Not Allowed` | Verbo não suportado (ex.: `PUT`; use `PATCH`) |
+
+No módulo de usuários, as regras de negócio lançam exceções próprias (`core/excecoes.py`): `RegraDeNegocioError` vira **400** e `NaoEncontradoError` vira **404**. A conversão é feita num lugar só, em `core/tratador_excecoes.py` (equivalente ao `@ControllerAdvice` do Spring), por isso o controller não tem `try/except`.
 
 ---
 
@@ -319,4 +334,5 @@ O `LoggerSistema` registra os eventos no terminal e no arquivo `backend/logs/lud
 
 - **Autenticação (login)**: necessária para aplicar as permissões por perfil (RN02 e RN03). Hoje qualquer requisição acessa todos os endpoints, e o `vendedor_id` vai no corpo da requisição.
 - **Pedidos**: compra com baixa de estoque em transação única (RN10 a RN15).
-- **Reativação** de usuários, marcas, categorias e brinquedos desativados.
+- **Reativação** de marcas, categorias e brinquedos desativados (a de usuários já existe).
+- **Catálogo no mesmo padrão dos usuários**: um `ViewSet` por recurso e as exceções próprias no lugar de `ValueError`/`LookupError`.

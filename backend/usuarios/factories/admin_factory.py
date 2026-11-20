@@ -7,5 +7,6 @@ class AdminFactory(UsuarioFactory):
     def perfil(self):
         return Usuario.Perfil.ADMIN
 
-    def validar(self):
+    def validar(self, dados):
+        # O admin é criado pelo shell e é dispensado da regra do documento.
         pass
