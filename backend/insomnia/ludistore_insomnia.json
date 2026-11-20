@@ -23,7 +23,9 @@
         "vendedor_id": 7,
         "marca_id": 1,
         "categoria_id": 1,
-        "brinquedo_id": 1
+        "brinquedo_id": 1,
+        "comprador_id": 9,
+        "pedido_id": 1
       }
     },
     {
@@ -528,6 +530,130 @@
       "metaSortKey": 31,
       "headers": [],
       "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "fld_pedidos",
+      "_type": "request_group",
+      "parentId": "wrk_ludistore",
+      "name": "Pedidos"
+    },
+    {
+      "_id": "req_32",
+      "_type": "request",
+      "parentId": "fld_pedidos",
+      "name": "Fazer pedido",
+      "method": "POST",
+      "url": "{{ _.base_url }}/pedidos/",
+      "metaSortKey": 32,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"comprador_id\": \"{{ _.comprador_id }}\",\n  \"itens\": [\n    {\n      \"brinquedo_id\": 2,\n      \"quantidade\": 1\n    },\n    {\n      \"brinquedo_id\": 6,\n      \"quantidade\": 2\n    }\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_33",
+      "_type": "request",
+      "parentId": "fld_pedidos",
+      "name": "Erro: vendedor comprando o próprio produto",
+      "method": "POST",
+      "url": "{{ _.base_url }}/pedidos/",
+      "metaSortKey": 33,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"comprador_id\": \"{{ _.vendedor_id }}\",\n  \"itens\": [\n    {\n      \"brinquedo_id\": 1,\n      \"quantidade\": 1\n    }\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_34",
+      "_type": "request",
+      "parentId": "fld_pedidos",
+      "name": "Erro: quantidade maior que o estoque",
+      "method": "POST",
+      "url": "{{ _.base_url }}/pedidos/",
+      "metaSortKey": 34,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"comprador_id\": \"{{ _.comprador_id }}\",\n  \"itens\": [\n    {\n      \"brinquedo_id\": 4,\n      \"quantidade\": 999\n    }\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_35",
+      "_type": "request",
+      "parentId": "fld_pedidos",
+      "name": "Listar todos (admin)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/pedidos/",
+      "metaSortKey": 35,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_36",
+      "_type": "request",
+      "parentId": "fld_pedidos",
+      "name": "Histórico de compras do usuário",
+      "method": "GET",
+      "url": "{{ _.base_url }}/pedidos/",
+      "metaSortKey": 36,
+      "headers": [],
+      "parameters": [
+        {
+          "name": "comprador_id",
+          "value": "{{ _.comprador_id }}"
+        }
+      ],
+      "body": {}
+    },
+    {
+      "_id": "req_37",
+      "_type": "request",
+      "parentId": "fld_pedidos",
+      "name": "Buscar pedido por id",
+      "method": "GET",
+      "url": "{{ _.base_url }}/pedidos/{{ _.pedido_id }}/",
+      "metaSortKey": 37,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_38",
+      "_type": "request",
+      "parentId": "fld_pedidos",
+      "name": "Vendas do vendedor",
+      "method": "GET",
+      "url": "{{ _.base_url }}/pedidos/vendas/",
+      "metaSortKey": 38,
+      "headers": [],
+      "parameters": [
+        {
+          "name": "vendedor_id",
+          "value": "{{ _.vendedor_id }}"
+        }
+      ],
       "body": {}
     }
   ]

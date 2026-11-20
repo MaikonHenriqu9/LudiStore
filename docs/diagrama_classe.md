@@ -3,11 +3,27 @@
 ```mermaid
 classDiagram
     class Usuario {
-        +int id
-        +str username
+        +int usuario_id
+        +str nome
         +str email
-        +str password
+        +str senha
         +Perfil perfil
+        +TipoPessoa tipo_pessoa
+        +str cpf
+        +str cnpj
+        +str telefone
+        +date data_nascimento
+        +Sexo sexo
+        +str cep
+        +str logradouro
+        +str numero
+        +str complemento
+        +str bairro
+        +str cidade
+        +str uf
+        +bool ativo
+        +datetime criado_em
+        +datetime atualizado_em
     }
     class Perfil {
         <<enumeration>>
@@ -15,16 +31,30 @@ classDiagram
         VENDEDOR
         CLIENTE
     }
+    class TipoPessoa {
+        <<enumeration>>
+        PF
+        PJ
+    }
+    class Sexo {
+        <<enumeration>>
+        M
+        F
+        O
+        N/I
+    }
     class Marca {
-        +int id
+        +int marca_id
         +str nome
+        +bool ativo
     }
     class Categoria {
-        +int id
+        +int categoria_id
         +str nome
+        +bool ativo
     }
     class Brinquedo {
-        +int id
+        +int brinquedo_id
         +str sku
         +str nome
         +str descricao
@@ -37,18 +67,26 @@ classDiagram
         +datetime atualizado_em
     }
     class Pedido {
-        +int id
+        +int pedido_id
+        +StatusPedido status
         +Decimal total
         +datetime criado_em
     }
+    class StatusPedido {
+        <<enumeration>>
+        CONFIRMADO
+    }
     class ItemPedido {
-        +int id
+        +int item_pedido_id
         +int quantidade
         +Decimal preco_unitario
         +subtotal() Decimal
     }
 
     Usuario --> Perfil
+    Usuario --> TipoPessoa
+    Usuario --> Sexo
+    Pedido --> StatusPedido
     Usuario "1" --> "0..*" Brinquedo : vende
     Usuario "1" --> "0..*" Pedido : compra
     Marca "1" --> "0..*" Brinquedo

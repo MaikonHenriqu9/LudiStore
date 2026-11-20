@@ -23,3 +23,5 @@
 | RN19 | E-mail, CPF e CNPJ são únicos: um mesmo documento não pode ter duas contas. O e-mail não diferencia maiúsculas de minúsculas |
 | RN20 | O perfil não pode ser alterado depois do cadastro |
 | RN21 | Usuários, marcas, categorias e brinquedos desativados podem ser reativados |
+| RN22 | Só é possível comprar brinquedos ativos, e o comprador precisa estar ativo |
+| RN23 | O pedido nasce confirmado e não é alterado nem apagado depois |

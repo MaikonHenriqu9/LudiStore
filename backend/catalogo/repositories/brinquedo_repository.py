@@ -13,6 +13,12 @@ class BrinquedoRepository:
     def listar_ativos(self):
         return Brinquedo.objects.filter(ativo=True).select_related('marca', 'vendedor').prefetch_related('categorias')
 
+    def buscar_para_compra(self, brinquedos_ids):
+        # select_for_update TRAVA essas linhas até o fim da transação. Se duas pessoas
+        # comprarem o último brinquedo ao mesmo tempo, a segunda espera a primeira terminar
+        # e já enxerga o estoque atualizado (evita vender mais do que existe).
+        return {b.pk: b for b in Brinquedo.objects.select_for_update().filter(pk__in=brinquedos_ids)}
+
     def existe_sku(self, sku):
         return Brinquedo.objects.filter(sku__iexact=sku).exists()
 

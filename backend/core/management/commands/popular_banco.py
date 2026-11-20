@@ -5,6 +5,8 @@ from django.db import transaction
 
 from catalogo.models import Brinquedo, Categoria, Marca
 from catalogo.services import BrinquedoService
+from pedidos.models import Pedido
+from pedidos.services import PedidoService
 from usuarios.factories import AdminFactory, ClienteFactory, VendedorFactory
 from usuarios.models import Usuario
 from usuarios.repositories import UsuarioRepository
@@ -61,6 +63,14 @@ BRINQUEDOS = [
     ('MAT-BON-001', 'Barbie Aventura', '139.90', 12, 3, 'Mattel', ['Bonecas'], 'contato@mundodosbrinquedos.com'),
 ]
 
+# (e-mail do comprador, [(sku, quantidade), ...])
+PEDIDOS = [
+    ('ana@email.com', [('EST-BON-001', 1), ('LEG-BLO-001', 1)]),
+    ('bruno@email.com', [('MAT-CAR-001', 2)]),
+    ('compras@pequenosaber.edu.br', [('XAL-EDU-001', 5), ('GRO-JOG-001', 2)]),
+    ('sandra@email.com', [('HAS-JOG-001', 1)]),  # vendedora comprando de outro vendedor
+]
+
 
 class Command(BaseCommand):
     help = 'Popula o banco com usuários, marcas, categorias e brinquedos de exemplo (só para desenvolvimento).'
@@ -68,7 +78,7 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
         repositorio = UsuarioRepository()
-        criados = {'usuários': 0, 'marcas': 0, 'categorias': 0, 'brinquedos': 0}
+        criados = {'usuários': 0, 'marcas': 0, 'categorias': 0, 'brinquedos': 0, 'pedidos': 0}
 
         # Usuários: passam pelas Factories (senha criptografada e regras do perfil)
         for factory, dados in USUARIOS:
@@ -101,6 +111,19 @@ class Command(BaseCommand):
                 'categorias_ids': list(Categoria.objects.filter(nome__in=categorias).values_list('pk', flat=True)),
             })
             criados['brinquedos'] += 1
+
+        # Pedidos: só na primeira vez (passam pelo PedidoService, que baixa o estoque)
+        if not Pedido.objects.exists():
+            servico_pedidos = PedidoService()
+            for email_comprador, itens in PEDIDOS:
+                servico_pedidos.criar({
+                    'comprador_id': Usuario.objects.get(email=email_comprador).pk,
+                    'itens': [
+                        {'brinquedo_id': Brinquedo.objects.get(sku=sku).pk, 'quantidade': quantidade}
+                        for sku, quantidade in itens
+                    ],
+                })
+                criados['pedidos'] += 1
 
         resumo = ', '.join(f'{quantidade} {tipo}' for tipo, quantidade in criados.items())
         self.stdout.write(self.style.SUCCESS(f'Banco populado: {resumo} criados.'))

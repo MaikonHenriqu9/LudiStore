@@ -84,7 +84,13 @@ backend/
 │   ├── services/
 │   ├── strategies/    padrão Strategy
 │   └── urls.py
-├── pedidos/           (em desenvolvimento)
+├── pedidos/
+│   ├── controllers/
+│   ├── dtos/
+│   ├── models/        Pedido e ItemPedido
+│   ├── repositories/
+│   ├── services/      compra em transação única
+│   └── urls.py
 ├── docker-compose.yml MySQL 8.0 em container
 ├── manage.py
 └── requirements.txt
@@ -193,7 +199,7 @@ python manage.py migrate
 python manage.py popular_banco
 ```
 
-Cria 2 administradores, 2 vendedores (um PF e um PJ), 3 clientes (um deles PJ), 6 marcas, 6 categorias e 8 brinquedos. Rodar de novo não duplica nada.
+Cria 2 administradores, 2 vendedores (um PF e um PJ), 3 clientes (um deles PJ), 6 marcas, 6 categorias, 8 brinquedos e 4 pedidos. Rodar de novo não duplica nada.
 
 | Perfil | E-mail | Senha (só desenvolvimento) |
 |---|---|---|
@@ -214,9 +220,9 @@ A API fica disponível em `http://127.0.0.1:8000/api/`.
 
 ### 8. Testar pelo Insomnia
 
-No Insomnia, use **Import** e escolha o arquivo `insomnia/ludistore_insomnia.json`. A coleção tem 31 requisições, separadas em Usuários, Marcas, Categorias e Brinquedos.
+No Insomnia, use **Import** e escolha o arquivo `insomnia/ludistore_insomnia.json`. A coleção tem 38 requisições, separadas em Usuários, Marcas, Categorias, Brinquedos e Pedidos.
 
-Os ids usados nas requisições ficam no **Base Environment** (`usuario_id`, `vendedor_id`, `marca_id`, `categoria_id` e `brinquedo_id`). Como o MySQL numera os ids de forma diferente em cada máquina, confira os valores com as listagens e ajuste o ambiente se precisar.
+Os ids usados nas requisições ficam no **Base Environment** (`usuario_id`, `vendedor_id`, `comprador_id`, `marca_id`, `categoria_id`, `brinquedo_id` e `pedido_id`). Como o MySQL numera os ids de forma diferente em cada máquina, confira os valores com as listagens e ajuste o ambiente se precisar.
 
 ### 9. Rodar os testes automatizados
 
@@ -224,7 +230,7 @@ Os ids usados nas requisições ficam no **Base Environment** (`usuario_id`, `ve
 python manage.py test
 ```
 
-São 21 casos de teste (CT01 a CT21), em `usuarios/tests.py` e `catalogo/tests.py`. O Django cria um banco separado (`test_ludistore`) e o apaga no final, então o banco de desenvolvimento não é tocado. Durante os testes o `LoggerSistema` fica desligado.
+São 29 casos de teste (CT01 a CT29), em `usuarios/tests.py`, `catalogo/tests.py` e `pedidos/tests.py`. O Django cria um banco separado (`test_ludistore`) e o apaga no final, então o banco de desenvolvimento não é tocado. Durante os testes o `LoggerSistema` fica desligado.
 
 ---
 
@@ -333,6 +339,43 @@ Exemplo de cadastro:
 - `categorias_ids` precisa ter ao menos uma categoria ativa
 - No `PATCH`, `vendedor_id` não pode ser alterado e `categorias_ids` substitui as categorias atuais
 
+### Pedidos
+
+| Método | URL | Ação |
+|---|---|---|
+| `POST` | `/api/pedidos/` | Faz um pedido |
+| `GET` | `/api/pedidos/` | Lista todos os pedidos (visão do admin) |
+| `GET` | `/api/pedidos/?comprador_id=9` | Histórico de compras de um usuário (RN15) |
+| `GET` | `/api/pedidos/<id>/` | Busca um pedido com os itens |
+| `GET` | `/api/pedidos/vendas/?vendedor_id=7` | Vendas dos brinquedos de um vendedor (RN14) |
+
+Não existe `PATCH` nem `DELETE`: um pedido confirmado não é alterado nem apagado.
+
+Exemplo de pedido:
+
+```json
+{
+  "comprador_id": 9,
+  "itens": [
+    { "brinquedo_id": 2, "quantidade": 1 },
+    { "brinquedo_id": 6, "quantidade": 2 }
+  ]
+}
+```
+
+O que acontece ao fazer um pedido (`PedidoService.criar`):
+
+1. O comprador precisa estar ativo. Qualquer perfil pode comprar.
+2. Itens repetidos do mesmo brinquedo são somados.
+3. Os brinquedos do pedido são **travados** no banco (`select_for_update`) até o fim da compra. Assim, duas pessoas comprando o último item ao mesmo tempo não conseguem vender mais do que existe.
+4. Para cada item: o brinquedo precisa estar ativo, não pode ser do próprio comprador (RN10) e precisa ter estoque suficiente (RN11).
+5. O item guarda o **preço do momento** da compra (RN13), e o estoque é baixado.
+6. Tudo roda numa única transação (`@transaction.atomic`, RN12): se qualquer item falhar, nada é gravado e nenhum estoque é baixado.
+
+O pedido já nasce com o status `CONFIRMADO`.
+
+> Sem login ainda, o `comprador_id` vai no corpo e o `vendedor_id` vai na URL. Com a autenticação, os dois vão vir do usuário logado.
+
 ### Respostas
 
 | Código | Quando |
@@ -350,7 +393,7 @@ As regras de negócio lançam exceções próprias (`core/excecoes.py`): `RegraD
 
 ## Regras de negócio
 
-As regras completas (RN01 a RN21) estão em [`docs/regras_negocio.md`](../docs/regras_negocio.md) e o diagrama de classes em [`docs/diagrama_classe.md`](../docs/diagrama_classe.md).
+As regras completas (RN01 a RN23) estão em [`docs/regras_negocio.md`](../docs/regras_negocio.md) e o diagrama de classes em [`docs/diagrama_classe.md`](../docs/diagrama_classe.md).
 
 Exclusões são sempre **lógicas**: o registro fica com `ativo = false` e deixa de aparecer nas consultas, mas continua no banco para preservar o histórico.
 
@@ -370,5 +413,5 @@ O `LoggerSistema` registra os eventos no terminal e no arquivo `backend/logs/lud
 ## Próximos passos
 
 - **Autenticação (login)**: necessária para aplicar as permissões por perfil (RN02 e RN03). Hoje qualquer requisição acessa todos os endpoints, e o `vendedor_id` vai no corpo da requisição.
-- **Pedidos**: compra com baixa de estoque em transação única (RN10 a RN15).
+- **Cancelamento de pedido** com devolução do estoque (hoje o pedido só existe como `CONFIRMADO`).
 - **Validação dos dígitos verificadores** de CPF e CNPJ (hoje só o formato é conferido).
