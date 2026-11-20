@@ -94,8 +94,12 @@ MAILERS = {
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    # Lê o "Authorization: Bearer <token>" e coloca o Usuario logado em request.user
+    'DEFAULT_AUTHENTICATION_CLASSES': ['usuarios.seguranca.autenticacao.TokenAutenticacao'],
+    # Sem login, request.user fica None
     'UNAUTHENTICATED_USER': None,
+    # Seguro por padrão: todo endpoint exige login, a não ser que o controller diga outra coisa
+    'DEFAULT_PERMISSION_CLASSES': ['usuarios.seguranca.permissoes.Autenticado'],
     'EXCEPTION_HANDLER': 'core.tratador_excecoes.tratar_excecoes',
 }
 

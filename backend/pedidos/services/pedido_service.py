@@ -8,6 +8,7 @@ from pedidos.models import ItemPedido, Pedido
 from pedidos.repositories import PedidoRepository
 from usuarios.models import Usuario
 from usuarios.repositories import UsuarioRepository
+from usuarios.seguranca import exigir_dono_ou_admin
 
 
 class PedidoService:
@@ -64,11 +65,15 @@ class PedidoService:
         self.logger.info(f'Pedido {pedido.pk} confirmado: {comprador.nome}, {len(itens)} item(ns), total R$ {total}')
         return self.repository.buscar_por_id(pedido.pk)
 
-    def buscar(self, pedido_id):
+    def buscar(self, pedido_id, solicitante=None):
         pedido = self.repository.buscar_por_id(pedido_id)
 
         if pedido is None:
             raise NaoEncontradoError('Pedido não encontrado.')
+
+        # Só o próprio comprador (ou o admin) vê o pedido
+        if solicitante is not None:
+            exigir_dono_ou_admin(solicitante, pedido.comprador_id, 'Você só pode ver os próprios pedidos.')
 
         return pedido
 

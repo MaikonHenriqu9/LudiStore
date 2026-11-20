@@ -6,9 +6,10 @@ from rest_framework.viewsets import ViewSet
 from core import RegraDeNegocioError
 from pedidos.dtos import PedidoCreateDTO, PedidoResponseDTO, VendaResponseDTO
 from pedidos.services import PedidoService
+from usuarios.seguranca import Autenticado, PermissoesPorAcaoMixin, VendedorOuAdmin, eh_admin
 
 
-class PedidoController(ViewSet):
+class PedidoController(PermissoesPorAcaoMixin, ViewSet):
     """Todos os endpoints de pedidos num lugar só (mesmo padrão dos outros controllers).
 
     Não existe PATCH nem DELETE: um pedido confirmado não é alterado nem apagado.
@@ -17,33 +18,50 @@ class PedidoController(ViewSet):
     lookup_field = 'pedido_id'
     lookup_value_regex = '[0-9]+'
 
-    # GET /api/pedidos/                    todos os pedidos (visão do admin)
-    # GET /api/pedidos/?comprador_id=9     histórico de compras de um usuário (RN15)
+    permissoes_por_acao = {
+        'create': [Autenticado],
+        'list': [Autenticado],
+        'retrieve': [Autenticado],
+        'vendas': [VendedorOuAdmin],
+    }
+
+    # GET /api/pedidos/
+    #   usuário comum: o próprio histórico de compras (RN15)
+    #   admin: todos os pedidos, ou os de um comprador com ?comprador_id=9
     def list(self, request):
-        comprador_id = self._parametro_inteiro(request, 'comprador_id')
+        if eh_admin(request.user):
+            comprador_id = self._parametro_inteiro(request, 'comprador_id')
+        else:
+            comprador_id = request.user.pk
+
         pedidos = PedidoService().listar(comprador_id)
         return Response(PedidoResponseDTO(pedidos, many=True).data)
 
-    # POST /api/pedidos/
+    # POST /api/pedidos/   o comprador é o usuário logado
     def create(self, request):
         dto = PedidoCreateDTO(data=request.data)
         dto.is_valid(raise_exception=True)
 
-        pedido = PedidoService().criar(dto.validated_data)
+        dados = {**dto.validated_data, 'comprador_id': request.user.pk}
+        pedido = PedidoService().criar(dados)
         return Response(PedidoResponseDTO(pedido).data, status=status.HTTP_201_CREATED)
 
-    # GET /api/pedidos/1/
+    # GET /api/pedidos/1/   só o comprador do pedido ou o admin
     def retrieve(self, request, pedido_id=None):
-        pedido = PedidoService().buscar(pedido_id)
+        pedido = PedidoService().buscar(pedido_id, solicitante=request.user)
         return Response(PedidoResponseDTO(pedido).data)
 
-    # GET /api/pedidos/vendas/?vendedor_id=7   vendas dos brinquedos de um vendedor (RN14)
+    # GET /api/pedidos/vendas/   vendas dos brinquedos do vendedor logado (RN14)
+    #   o admin informa de qual vendedor: /api/pedidos/vendas/?vendedor_id=7
     @action(detail=False, methods=['get'])
     def vendas(self, request):
-        vendedor_id = self._parametro_inteiro(request, 'vendedor_id')
+        if eh_admin(request.user):
+            vendedor_id = self._parametro_inteiro(request, 'vendedor_id')
 
-        if vendedor_id is None:
-            raise RegraDeNegocioError('Informe o vendedor_id. Exemplo: /api/pedidos/vendas/?vendedor_id=7')
+            if vendedor_id is None:
+                raise RegraDeNegocioError('Informe o vendedor_id. Exemplo: /api/pedidos/vendas/?vendedor_id=7')
+        else:
+            vendedor_id = request.user.pk
 
         vendas = PedidoService().listar_vendas(vendedor_id)
         return Response(VendaResponseDTO(vendas, many=True).data)

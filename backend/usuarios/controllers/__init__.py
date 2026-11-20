@@ -1,1 +1,2 @@
 from .usuario_controller import UsuarioController
+from .autenticacao_controller import AutenticacaoController

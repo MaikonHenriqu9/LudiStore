@@ -7,6 +7,5 @@ class ItemPedidoCreateDTO(serializers.Serializer):
 
 
 class PedidoCreateDTO(serializers.Serializer):
-    # Sem login ainda: o comprador vem no corpo. Com a autenticação, virá do usuário logado.
-    comprador_id = serializers.IntegerField()
+    # O comprador NÃO vem no corpo: é sempre o usuário logado (vem do token).
     itens = ItemPedidoCreateDTO(many=True, allow_empty=False)

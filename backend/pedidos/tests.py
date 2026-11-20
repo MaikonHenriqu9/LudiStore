@@ -33,11 +33,9 @@ class PedidoBaseTests(APITestCase):
         self.carrinho.categorias.add(categoria)
 
     def comprar(self, comprador, *itens):
-        """comprar(cliente, (boneca, 2), (carrinho, 1))"""
-        corpo = {
-            'comprador_id': comprador.pk,
-            'itens': [{'brinquedo_id': b.pk, 'quantidade': q} for b, q in itens],
-        }
+        """comprar(cliente, (boneca, 2), (carrinho, 1)): faz o pedido logado como o comprador."""
+        self.client.force_authenticate(user=comprador)
+        corpo = {'itens': [{'brinquedo_id': b.pk, 'quantidade': q} for b, q in itens]}
         return self.client.post(URL, corpo, format='json')
 
 
@@ -108,7 +106,8 @@ class ConsultaPedidoTests(PedidoBaseTests):
         self.comprar(self.cliente, (self.carrinho, 1))
 
     def test_ct28_vendedor_ve_as_vendas_dos_seus_produtos(self):
-        resposta = self.client.get(f'{URL}vendas/', {'vendedor_id': self.vendedora.pk})
+        self.client.force_authenticate(user=self.vendedora)
+        resposta = self.client.get(f'{URL}vendas/')
 
         self.assertEqual(resposta.status_code, status.HTTP_200_OK)
         self.assertEqual(len(resposta.data), 2)
@@ -119,9 +118,21 @@ class ConsultaPedidoTests(PedidoBaseTests):
         )
 
     def test_ct29_usuario_ve_o_proprio_historico_de_compras(self):
-        resposta = self.client.get(URL, {'comprador_id': self.cliente.pk})
-        da_vendedora = self.client.get(URL, {'comprador_id': self.vendedora.pk})
+        self.client.force_authenticate(user=self.cliente)
+        resposta = self.client.get(URL)
+
+        self.client.force_authenticate(user=self.vendedora)
+        da_vendedora = self.client.get(URL)
 
         self.assertEqual(len(resposta.data), 2)
         self.assertEqual({p['comprador'] for p in resposta.data}, {'Ana'})
         self.assertEqual(da_vendedora.data, [])
+
+    def test_ct38_usuario_nao_ve_o_pedido_de_outro(self):
+        pedido_da_ana = Pedido.objects.filter(comprador=self.cliente).first()
+        self.client.force_authenticate(user=self.vendedora)
+
+        resposta = self.client.get(f'{URL}{pedido_da_ana.pk}/')
+
+        self.assertEqual(resposta.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(resposta.data['erro'], 'Você só pode ver os próprios pedidos.')

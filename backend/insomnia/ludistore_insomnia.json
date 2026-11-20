@@ -19,14 +19,119 @@
       "name": "Base Environment",
       "data": {
         "base_url": "http://127.0.0.1:8000/api",
+        "token_admin": "{% response 'body', 'req_login_admin', 'b64::JC50b2tlbg==::46b', 'no-history', 60 %}",
+        "token_vendedor": "{% response 'body', 'req_login_vendedor', 'b64::JC50b2tlbg==::46b', 'no-history', 60 %}",
+        "token_cliente": "{% response 'body', 'req_login_cliente', 'b64::JC50b2tlbg==::46b', 'no-history', 60 %}",
         "usuario_id": 9,
         "vendedor_id": 7,
         "marca_id": 1,
         "categoria_id": 1,
         "brinquedo_id": 1,
-        "comprador_id": 9,
         "pedido_id": 1
       }
+    },
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "parentId": "wrk_ludistore",
+      "name": "0. Autenticação"
+    },
+    {
+      "_id": "req_login_admin",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Login admin",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/login/",
+      "metaSortKey": 1,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@ludistore.com\",\n  \"senha\": \"admin123\"\n}"
+      }
+    },
+    {
+      "_id": "req_login_vendedor",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Login vendedor (Sandra)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/login/",
+      "metaSortKey": 2,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"sandra@email.com\",\n  \"senha\": \"senha123\"\n}"
+      }
+    },
+    {
+      "_id": "req_login_cliente",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Login cliente (Ana)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/login/",
+      "metaSortKey": 3,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"ana@email.com\",\n  \"senha\": \"senha123\"\n}"
+      }
+    },
+    {
+      "_id": "req_04",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Erro: senha errada",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/login/",
+      "metaSortKey": 4,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"ana@email.com\",\n  \"senha\": \"errada\"\n}"
+      }
+    },
+    {
+      "_id": "req_05",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Quem sou eu  [cliente]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/auth/eu/",
+      "metaSortKey": 5,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_cliente }}"
+        }
+      ],
+      "parameters": [],
+      "body": {}
     },
     {
       "_id": "fld_usuarios",
@@ -35,26 +140,36 @@
       "name": "Usuários"
     },
     {
-      "_id": "req_01",
+      "_id": "req_06",
       "_type": "request",
       "parentId": "fld_usuarios",
-      "name": "Listar todos",
+      "name": "Listar todos  [admin]",
       "method": "GET",
       "url": "{{ _.base_url }}/usuarios/",
-      "metaSortKey": 1,
-      "headers": [],
+      "metaSortKey": 6,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_02",
+      "_id": "req_07",
       "_type": "request",
       "parentId": "fld_usuarios",
-      "name": "Pesquisar (nome, e-mail, documento, telefone ou id)",
+      "name": "Pesquisar (nome, e-mail, documento, telefone ou id)  [admin]",
       "method": "GET",
       "url": "{{ _.base_url }}/usuarios/",
-      "metaSortKey": 2,
-      "headers": [],
+      "metaSortKey": 7,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
       "parameters": [
         {
           "name": "busca",
@@ -64,13 +179,13 @@
       "body": {}
     },
     {
-      "_id": "req_03",
+      "_id": "req_08",
       "_type": "request",
       "parentId": "fld_usuarios",
       "name": "Cadastrar cliente PF",
       "method": "POST",
       "url": "{{ _.base_url }}/usuarios/",
-      "metaSortKey": 3,
+      "metaSortKey": 8,
       "headers": [
         {
           "name": "Content-Type",
@@ -84,13 +199,13 @@
       }
     },
     {
-      "_id": "req_04",
+      "_id": "req_09",
       "_type": "request",
       "parentId": "fld_usuarios",
       "name": "Cadastrar vendedor PJ",
       "method": "POST",
       "url": "{{ _.base_url }}/usuarios/",
-      "metaSortKey": 4,
+      "metaSortKey": 9,
       "headers": [
         {
           "name": "Content-Type",
@@ -104,13 +219,13 @@
       }
     },
     {
-      "_id": "req_05",
+      "_id": "req_10",
       "_type": "request",
       "parentId": "fld_usuarios",
       "name": "Erro: tentar cadastrar ADMIN",
       "method": "POST",
       "url": "{{ _.base_url }}/usuarios/",
-      "metaSortKey": 5,
+      "metaSortKey": 10,
       "headers": [
         {
           "name": "Content-Type",
@@ -124,29 +239,55 @@
       }
     },
     {
-      "_id": "req_06",
+      "_id": "req_11",
       "_type": "request",
       "parentId": "fld_usuarios",
-      "name": "Buscar por id",
+      "name": "Erro: cliente listando usuários  [cliente]",
       "method": "GET",
-      "url": "{{ _.base_url }}/usuarios/{{ _.usuario_id }}/",
-      "metaSortKey": 6,
-      "headers": [],
+      "url": "{{ _.base_url }}/usuarios/",
+      "metaSortKey": 11,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_cliente }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_07",
+      "_id": "req_12",
       "_type": "request",
       "parentId": "fld_usuarios",
-      "name": "Atualizar (PATCH)",
+      "name": "Ver o próprio cadastro  [cliente]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/usuarios/{{ _.usuario_id }}/",
+      "metaSortKey": 12,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_cliente }}"
+        }
+      ],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_13",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Atualizar o próprio cadastro (PATCH)  [cliente]",
       "method": "PATCH",
       "url": "{{ _.base_url }}/usuarios/{{ _.usuario_id }}/",
-      "metaSortKey": 7,
+      "metaSortKey": 13,
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_cliente }}"
         }
       ],
       "parameters": [],
@@ -156,26 +297,36 @@
       }
     },
     {
-      "_id": "req_08",
+      "_id": "req_14",
       "_type": "request",
       "parentId": "fld_usuarios",
-      "name": "Desativar",
+      "name": "Desativar  [admin]",
       "method": "DELETE",
       "url": "{{ _.base_url }}/usuarios/{{ _.usuario_id }}/",
-      "metaSortKey": 8,
-      "headers": [],
+      "metaSortKey": 14,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_09",
+      "_id": "req_15",
       "_type": "request",
       "parentId": "fld_usuarios",
-      "name": "Reativar",
+      "name": "Reativar  [admin]",
       "method": "PATCH",
       "url": "{{ _.base_url }}/usuarios/{{ _.usuario_id }}/reativar/",
-      "metaSortKey": 9,
-      "headers": [],
+      "metaSortKey": 15,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
@@ -186,29 +337,33 @@
       "name": "Marcas"
     },
     {
-      "_id": "req_10",
+      "_id": "req_16",
       "_type": "request",
       "parentId": "fld_marcas",
       "name": "Listar ativas",
       "method": "GET",
       "url": "{{ _.base_url }}/marcas/",
-      "metaSortKey": 10,
+      "metaSortKey": 16,
       "headers": [],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_11",
+      "_id": "req_17",
       "_type": "request",
       "parentId": "fld_marcas",
-      "name": "Cadastrar",
+      "name": "Cadastrar  [admin]",
       "method": "POST",
       "url": "{{ _.base_url }}/marcas/",
-      "metaSortKey": 11,
+      "metaSortKey": 17,
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
         }
       ],
       "parameters": [],
@@ -218,29 +373,57 @@
       }
     },
     {
-      "_id": "req_12",
+      "_id": "req_18",
+      "_type": "request",
+      "parentId": "fld_marcas",
+      "name": "Erro: cliente cadastrando  [cliente]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/marcas/",
+      "metaSortKey": 18,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_cliente }}"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Brinquedos Bandeirante\"\n}"
+      }
+    },
+    {
+      "_id": "req_19",
       "_type": "request",
       "parentId": "fld_marcas",
       "name": "Buscar por id",
       "method": "GET",
       "url": "{{ _.base_url }}/marcas/{{ _.marca_id }}/",
-      "metaSortKey": 12,
+      "metaSortKey": 19,
       "headers": [],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_13",
+      "_id": "req_20",
       "_type": "request",
       "parentId": "fld_marcas",
-      "name": "Renomear (PATCH)",
+      "name": "Renomear (PATCH)  [admin]",
       "method": "PATCH",
       "url": "{{ _.base_url }}/marcas/{{ _.marca_id }}/",
-      "metaSortKey": 13,
+      "metaSortKey": 20,
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
         }
       ],
       "parameters": [],
@@ -250,26 +433,36 @@
       }
     },
     {
-      "_id": "req_14",
+      "_id": "req_21",
       "_type": "request",
       "parentId": "fld_marcas",
-      "name": "Desativar",
+      "name": "Desativar  [admin]",
       "method": "DELETE",
       "url": "{{ _.base_url }}/marcas/{{ _.marca_id }}/",
-      "metaSortKey": 14,
-      "headers": [],
+      "metaSortKey": 21,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_15",
+      "_id": "req_22",
       "_type": "request",
       "parentId": "fld_marcas",
-      "name": "Reativar",
+      "name": "Reativar  [admin]",
       "method": "PATCH",
       "url": "{{ _.base_url }}/marcas/{{ _.marca_id }}/reativar/",
-      "metaSortKey": 15,
-      "headers": [],
+      "metaSortKey": 22,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
@@ -280,29 +473,33 @@
       "name": "Categorias"
     },
     {
-      "_id": "req_16",
+      "_id": "req_23",
       "_type": "request",
       "parentId": "fld_categorias",
       "name": "Listar ativas",
       "method": "GET",
       "url": "{{ _.base_url }}/categorias/",
-      "metaSortKey": 16,
+      "metaSortKey": 23,
       "headers": [],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_17",
+      "_id": "req_24",
       "_type": "request",
       "parentId": "fld_categorias",
-      "name": "Cadastrar",
+      "name": "Cadastrar  [admin]",
       "method": "POST",
       "url": "{{ _.base_url }}/categorias/",
-      "metaSortKey": 17,
+      "metaSortKey": 24,
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
         }
       ],
       "parameters": [],
@@ -312,29 +509,57 @@
       }
     },
     {
-      "_id": "req_18",
+      "_id": "req_25",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "name": "Erro: cliente cadastrando  [cliente]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/categorias/",
+      "metaSortKey": 25,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_cliente }}"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Bonecos de Ação\"\n}"
+      }
+    },
+    {
+      "_id": "req_26",
       "_type": "request",
       "parentId": "fld_categorias",
       "name": "Buscar por id",
       "method": "GET",
       "url": "{{ _.base_url }}/categorias/{{ _.categoria_id }}/",
-      "metaSortKey": 18,
+      "metaSortKey": 26,
       "headers": [],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_19",
+      "_id": "req_27",
       "_type": "request",
       "parentId": "fld_categorias",
-      "name": "Renomear (PATCH)",
+      "name": "Renomear (PATCH)  [admin]",
       "method": "PATCH",
       "url": "{{ _.base_url }}/categorias/{{ _.categoria_id }}/",
-      "metaSortKey": 19,
+      "metaSortKey": 27,
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
         }
       ],
       "parameters": [],
@@ -344,26 +569,36 @@
       }
     },
     {
-      "_id": "req_20",
+      "_id": "req_28",
       "_type": "request",
       "parentId": "fld_categorias",
-      "name": "Desativar",
+      "name": "Desativar  [admin]",
       "method": "DELETE",
       "url": "{{ _.base_url }}/categorias/{{ _.categoria_id }}/",
-      "metaSortKey": 20,
-      "headers": [],
+      "metaSortKey": 28,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_21",
+      "_id": "req_29",
       "_type": "request",
       "parentId": "fld_categorias",
-      "name": "Reativar",
+      "name": "Reativar  [admin]",
       "method": "PATCH",
       "url": "{{ _.base_url }}/categorias/{{ _.categoria_id }}/reativar/",
-      "metaSortKey": 21,
-      "headers": [],
+      "metaSortKey": 29,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
@@ -374,25 +609,25 @@
       "name": "Brinquedos"
     },
     {
-      "_id": "req_22",
+      "_id": "req_30",
       "_type": "request",
       "parentId": "fld_brinquedos",
       "name": "Catálogo (ordem: nome)",
       "method": "GET",
       "url": "{{ _.base_url }}/brinquedos/",
-      "metaSortKey": 22,
+      "metaSortKey": 30,
       "headers": [],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_23",
+      "_id": "req_31",
       "_type": "request",
       "parentId": "fld_brinquedos",
       "name": "Catálogo (menor preço)",
       "method": "GET",
       "url": "{{ _.base_url }}/brinquedos/",
-      "metaSortKey": 23,
+      "metaSortKey": 31,
       "headers": [],
       "parameters": [
         {
@@ -403,13 +638,13 @@
       "body": {}
     },
     {
-      "_id": "req_24",
+      "_id": "req_32",
       "_type": "request",
       "parentId": "fld_brinquedos",
       "name": "Catálogo (maior preço)",
       "method": "GET",
       "url": "{{ _.base_url }}/brinquedos/",
-      "metaSortKey": 24,
+      "metaSortKey": 32,
       "headers": [],
       "parameters": [
         {
@@ -420,13 +655,13 @@
       "body": {}
     },
     {
-      "_id": "req_25",
+      "_id": "req_33",
       "_type": "request",
       "parentId": "fld_brinquedos",
       "name": "Catálogo (mais recentes)",
       "method": "GET",
       "url": "{{ _.base_url }}/brinquedos/",
-      "metaSortKey": 25,
+      "metaSortKey": 33,
       "headers": [],
       "parameters": [
         {
@@ -437,69 +672,122 @@
       "body": {}
     },
     {
-      "_id": "req_26",
+      "_id": "req_34",
       "_type": "request",
       "parentId": "fld_brinquedos",
-      "name": "Cadastrar",
+      "name": "Meus brinquedos  [vendedor]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/brinquedos/meus/",
+      "metaSortKey": 34,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_vendedor }}"
+        }
+      ],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_35",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Cadastrar  [vendedor]",
       "method": "POST",
       "url": "{{ _.base_url }}/brinquedos/",
-      "metaSortKey": 26,
+      "metaSortKey": 35,
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_vendedor }}"
         }
       ],
       "parameters": [],
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"sku\": \"EST-CAR-002\",\n  \"nome\": \"Caminhão Bombeiro\",\n  \"descricao\": \"Caminhão com escada e sirene\",\n  \"preco\": 99.9,\n  \"estoque\": 10,\n  \"idade_minima\": 3,\n  \"marca_id\": \"{{ _.marca_id }}\",\n  \"vendedor_id\": \"{{ _.vendedor_id }}\",\n  \"categorias_ids\": [\n    2\n  ]\n}"
+        "text": "{\n  \"sku\": \"EST-CAR-002\",\n  \"nome\": \"Caminhão Bombeiro\",\n  \"descricao\": \"Caminhão com escada e sirene\",\n  \"preco\": 99.9,\n  \"estoque\": 10,\n  \"idade_minima\": 3,\n  \"marca_id\": \"{{ _.marca_id }}\",\n  \"categorias_ids\": [\n    2\n  ]\n}"
       }
     },
     {
-      "_id": "req_27",
+      "_id": "req_36",
       "_type": "request",
       "parentId": "fld_brinquedos",
-      "name": "Erro: preço negativo",
+      "name": "Erro: preço negativo  [vendedor]",
       "method": "POST",
       "url": "{{ _.base_url }}/brinquedos/",
-      "metaSortKey": 27,
+      "metaSortKey": 36,
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_vendedor }}"
         }
       ],
       "parameters": [],
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"sku\": \"EST-ERR-001\",\n  \"nome\": \"Brinquedo Inválido\",\n  \"preco\": -10,\n  \"estoque\": 1,\n  \"marca_id\": 1,\n  \"vendedor_id\": 7,\n  \"categorias_ids\": [\n    1\n  ]\n}"
+        "text": "{\n  \"sku\": \"EST-ERR-001\",\n  \"nome\": \"Brinquedo Inválido\",\n  \"preco\": -10,\n  \"estoque\": 1,\n  \"marca_id\": 1,\n  \"categorias_ids\": [\n    1\n  ]\n}"
       }
     },
     {
-      "_id": "req_28",
+      "_id": "req_37",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Erro: cliente cadastrando brinquedo  [cliente]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/brinquedos/",
+      "metaSortKey": 37,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_cliente }}"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"sku\": \"EST-ERR-002\",\n  \"nome\": \"Brinquedo Inválido\",\n  \"preco\": 10,\n  \"estoque\": 1,\n  \"marca_id\": 1,\n  \"categorias_ids\": [\n    1\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_38",
       "_type": "request",
       "parentId": "fld_brinquedos",
       "name": "Buscar por id",
       "method": "GET",
       "url": "{{ _.base_url }}/brinquedos/{{ _.brinquedo_id }}/",
-      "metaSortKey": 28,
+      "metaSortKey": 38,
       "headers": [],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_29",
+      "_id": "req_39",
       "_type": "request",
       "parentId": "fld_brinquedos",
-      "name": "Atualizar (PATCH)",
+      "name": "Atualizar (PATCH)  [vendedor]",
       "method": "PATCH",
       "url": "{{ _.base_url }}/brinquedos/{{ _.brinquedo_id }}/",
-      "metaSortKey": 29,
+      "metaSortKey": 39,
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_vendedor }}"
         }
       ],
       "parameters": [],
@@ -509,26 +797,36 @@
       }
     },
     {
-      "_id": "req_30",
+      "_id": "req_40",
       "_type": "request",
       "parentId": "fld_brinquedos",
-      "name": "Desativar",
+      "name": "Desativar  [vendedor]",
       "method": "DELETE",
       "url": "{{ _.base_url }}/brinquedos/{{ _.brinquedo_id }}/",
-      "metaSortKey": 30,
-      "headers": [],
+      "metaSortKey": 40,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_vendedor }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_31",
+      "_id": "req_41",
       "_type": "request",
       "parentId": "fld_brinquedos",
-      "name": "Reativar",
+      "name": "Reativar  [vendedor]",
       "method": "PATCH",
       "url": "{{ _.base_url }}/brinquedos/{{ _.brinquedo_id }}/reativar/",
-      "metaSortKey": 31,
-      "headers": [],
+      "metaSortKey": 41,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_vendedor }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
@@ -539,115 +837,159 @@
       "name": "Pedidos"
     },
     {
-      "_id": "req_32",
+      "_id": "req_42",
       "_type": "request",
       "parentId": "fld_pedidos",
-      "name": "Fazer pedido",
+      "name": "Fazer pedido  [cliente]",
       "method": "POST",
       "url": "{{ _.base_url }}/pedidos/",
-      "metaSortKey": 32,
+      "metaSortKey": 42,
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_cliente }}"
         }
       ],
       "parameters": [],
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"comprador_id\": \"{{ _.comprador_id }}\",\n  \"itens\": [\n    {\n      \"brinquedo_id\": 2,\n      \"quantidade\": 1\n    },\n    {\n      \"brinquedo_id\": 6,\n      \"quantidade\": 2\n    }\n  ]\n}"
+        "text": "{\n  \"itens\": [\n    {\n      \"brinquedo_id\": 2,\n      \"quantidade\": 1\n    },\n    {\n      \"brinquedo_id\": 6,\n      \"quantidade\": 2\n    }\n  ]\n}"
       }
     },
     {
-      "_id": "req_33",
+      "_id": "req_43",
       "_type": "request",
       "parentId": "fld_pedidos",
-      "name": "Erro: vendedor comprando o próprio produto",
+      "name": "Erro: vendedor comprando o próprio produto  [vendedor]",
       "method": "POST",
       "url": "{{ _.base_url }}/pedidos/",
-      "metaSortKey": 33,
+      "metaSortKey": 43,
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_vendedor }}"
         }
       ],
       "parameters": [],
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"comprador_id\": \"{{ _.vendedor_id }}\",\n  \"itens\": [\n    {\n      \"brinquedo_id\": 1,\n      \"quantidade\": 1\n    }\n  ]\n}"
+        "text": "{\n  \"itens\": [\n    {\n      \"brinquedo_id\": 1,\n      \"quantidade\": 1\n    }\n  ]\n}"
       }
     },
     {
-      "_id": "req_34",
+      "_id": "req_44",
       "_type": "request",
       "parentId": "fld_pedidos",
-      "name": "Erro: quantidade maior que o estoque",
+      "name": "Erro: quantidade maior que o estoque  [cliente]",
       "method": "POST",
       "url": "{{ _.base_url }}/pedidos/",
-      "metaSortKey": 34,
+      "metaSortKey": 44,
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_cliente }}"
         }
       ],
       "parameters": [],
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"comprador_id\": \"{{ _.comprador_id }}\",\n  \"itens\": [\n    {\n      \"brinquedo_id\": 4,\n      \"quantidade\": 999\n    }\n  ]\n}"
+        "text": "{\n  \"itens\": [\n    {\n      \"brinquedo_id\": 4,\n      \"quantidade\": 999\n    }\n  ]\n}"
       }
     },
     {
-      "_id": "req_35",
+      "_id": "req_45",
       "_type": "request",
       "parentId": "fld_pedidos",
-      "name": "Listar todos (admin)",
+      "name": "Meus pedidos (histórico)  [cliente]",
       "method": "GET",
       "url": "{{ _.base_url }}/pedidos/",
-      "metaSortKey": 35,
-      "headers": [],
+      "metaSortKey": 45,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_cliente }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_36",
+      "_id": "req_46",
       "_type": "request",
       "parentId": "fld_pedidos",
-      "name": "Histórico de compras do usuário",
-      "method": "GET",
-      "url": "{{ _.base_url }}/pedidos/",
-      "metaSortKey": 36,
-      "headers": [],
-      "parameters": [
-        {
-          "name": "comprador_id",
-          "value": "{{ _.comprador_id }}"
-        }
-      ],
-      "body": {}
-    },
-    {
-      "_id": "req_37",
-      "_type": "request",
-      "parentId": "fld_pedidos",
-      "name": "Buscar pedido por id",
+      "name": "Buscar pedido por id  [cliente]",
       "method": "GET",
       "url": "{{ _.base_url }}/pedidos/{{ _.pedido_id }}/",
-      "metaSortKey": 37,
-      "headers": [],
+      "metaSortKey": 46,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_cliente }}"
+        }
+      ],
       "parameters": [],
       "body": {}
     },
     {
-      "_id": "req_38",
+      "_id": "req_47",
       "_type": "request",
       "parentId": "fld_pedidos",
-      "name": "Vendas do vendedor",
+      "name": "Todos os pedidos  [admin]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/pedidos/",
+      "metaSortKey": 47,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_48",
+      "_type": "request",
+      "parentId": "fld_pedidos",
+      "name": "Minhas vendas  [vendedor]",
       "method": "GET",
       "url": "{{ _.base_url }}/pedidos/vendas/",
-      "metaSortKey": 38,
-      "headers": [],
+      "metaSortKey": 48,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_vendedor }}"
+        }
+      ],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_49",
+      "_type": "request",
+      "parentId": "fld_pedidos",
+      "name": "Vendas de um vendedor  [admin]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/pedidos/vendas/",
+      "metaSortKey": 49,
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
       "parameters": [
         {
           "name": "vendedor_id",

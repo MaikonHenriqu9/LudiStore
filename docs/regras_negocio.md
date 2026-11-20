@@ -25,3 +25,5 @@
 | RN21 | Usuários, marcas, categorias e brinquedos desativados podem ser reativados |
 | RN22 | Só é possível comprar brinquedos ativos, e o comprador precisa estar ativo |
 | RN23 | O pedido nasce confirmado e não é alterado nem apagado depois |
+| RN24 | O acesso é feito por login (e-mail e senha). Usuário desativado não entra |
+| RN25 | Cada usuário vê e altera apenas o próprio cadastro e os próprios pedidos (o admin vê todos) |

@@ -11,6 +11,7 @@ from catalogo.strategies import (
 from core import LoggerSistema, NaoEncontradoError, RegraDeNegocioError
 from usuarios.models import Usuario
 from usuarios.repositories import UsuarioRepository
+from usuarios.seguranca import exigir_dono_ou_admin
 
 
 class BrinquedoService:
@@ -53,7 +54,11 @@ class BrinquedoService:
         if self.repository.existe_sku(dados['sku']):
             raise RegraDeNegocioError('SKU já cadastrado.')
 
-        vendedor = self.usuario_repository.buscar_por_id(dados.pop('vendedor_id'))
+        vendedor_id = dados.pop('vendedor_id', None)
+        if vendedor_id is None:
+            raise RegraDeNegocioError('Informe o vendedor_id.')
+
+        vendedor = self.usuario_repository.buscar_por_id(vendedor_id)
         perfis_que_vendem = (Usuario.Perfil.VENDEDOR, Usuario.Perfil.ADMIN)
         if vendedor is None or not vendedor.ativo or vendedor.perfil not in perfis_que_vendem:
             raise RegraDeNegocioError('Vendedor inválido.')
@@ -74,8 +79,9 @@ class BrinquedoService:
         return brinquedo
 
     @transaction.atomic
-    def atualizar(self, brinquedo_id, dados):
+    def atualizar(self, brinquedo_id, dados, solicitante=None):
         brinquedo = self.buscar(brinquedo_id)
+        self._exigir_dono(brinquedo, solicitante)
 
         if 'preco' in dados and dados['preco'] <= 0:
             raise RegraDeNegocioError('O preço deve ser maior que zero.')
@@ -107,14 +113,19 @@ class BrinquedoService:
         self.logger.info(f'Brinquedo atualizado: id={brinquedo.pk}')
         return brinquedo
 
-    def desativar(self, brinquedo_id):
+    def listar_do_vendedor(self, vendedor_id):
+        return self.repository.listar_por_vendedor(vendedor_id)
+
+    def desativar(self, brinquedo_id, solicitante=None):
         brinquedo = self.buscar(brinquedo_id)
+        self._exigir_dono(brinquedo, solicitante)
         brinquedo.ativo = False
         self.repository.salvar(brinquedo)
         self.logger.info(f'Brinquedo desativado: id={brinquedo.pk}')
 
-    def reativar(self, brinquedo_id):
+    def reativar(self, brinquedo_id, solicitante=None):
         brinquedo = self.buscar(brinquedo_id, incluir_inativos=True)
+        self._exigir_dono(brinquedo, solicitante)
 
         if brinquedo.ativo:
             raise RegraDeNegocioError('Brinquedo já está ativo.')
@@ -123,3 +134,9 @@ class BrinquedoService:
         brinquedo = self.repository.salvar(brinquedo)
         self.logger.info(f'Brinquedo reativado: id={brinquedo.pk}')
         return brinquedo
+
+    def _exigir_dono(self, brinquedo, solicitante):
+        # RN03: o vendedor só altera os próprios brinquedos (o admin altera qualquer um).
+        # solicitante=None é uso interno (ex.: popular_banco), sem usuário logado.
+        if solicitante is not None:
+            exigir_dono_ou_admin(solicitante, brinquedo.vendedor_id, 'Você só pode alterar os próprios brinquedos.')

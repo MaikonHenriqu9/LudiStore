@@ -13,6 +13,14 @@ class BrinquedoRepository:
     def listar_ativos(self):
         return Brinquedo.objects.filter(ativo=True).select_related('marca', 'vendedor').prefetch_related('categorias')
 
+    def listar_por_vendedor(self, vendedor_id):
+        # Painel do vendedor: inclui os desativados, para ele poder reativar
+        return (
+            Brinquedo.objects.filter(vendedor_id=vendedor_id)
+            .select_related('marca', 'vendedor').prefetch_related('categorias')
+            .order_by('nome')
+        )
+
     def buscar_para_compra(self, brinquedos_ids):
         # select_for_update TRAVA essas linhas até o fim da transação. Se duas pessoas
         # comprarem o último brinquedo ao mesmo tempo, a segunda espera a primeira terminar

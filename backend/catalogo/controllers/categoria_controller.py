@@ -5,13 +5,24 @@ from rest_framework.viewsets import ViewSet
 
 from catalogo.dtos import CategoriaDTO
 from catalogo.services import CategoriaService
+from usuarios.seguranca import PermissoesPorAcaoMixin, Publico, SomenteAdmin, eh_admin
 
 
-class CategoriaController(ViewSet):
+class CategoriaController(PermissoesPorAcaoMixin, ViewSet):
     """Todos os endpoints de categorias num lugar só (mesmo padrão do UsuarioController)."""
 
     lookup_field = 'categoria_id'
     lookup_value_regex = '[0-9]+'
+
+    # RN02: só o admin gerencia categorias; consultar é público (RN04: o vendedor escolhe da lista)
+    permissoes_por_acao = {
+        'list': [Publico],
+        'retrieve': [Publico],
+        'create': [SomenteAdmin],
+        'partial_update': [SomenteAdmin],
+        'destroy': [SomenteAdmin],
+        'reativar': [SomenteAdmin],
+    }
 
     # GET /api/categorias/   (só as ativas: é a lista que o vendedor usa para escolher)
     def list(self, request):
@@ -26,9 +37,9 @@ class CategoriaController(ViewSet):
         categoria = CategoriaService().criar(dto.validated_data)
         return Response(CategoriaDTO(categoria).data, status=status.HTTP_201_CREATED)
 
-    # GET /api/categorias/1/   (o admin também vê as desativadas)
+    # GET /api/categorias/1/   (só o admin vê as desativadas)
     def retrieve(self, request, categoria_id=None):
-        categoria = CategoriaService().buscar(categoria_id, incluir_inativos=True)
+        categoria = CategoriaService().buscar(categoria_id, incluir_inativos=eh_admin(request.user))
         return Response(CategoriaDTO(categoria).data)
 
     # PATCH /api/categorias/1/
