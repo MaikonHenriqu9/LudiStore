@@ -61,7 +61,13 @@ O código é dividido em **apps por área do negócio** (`usuarios`, `catalogo` 
 ```
 backend/
 ├── config/            configurações do projeto (settings, rotas principais)
-├── core/              recursos compartilhados (LoggerSistema)
+├── core/              recursos compartilhados
+│   ├── logger_sistema.py      padrão Singleton
+│   ├── excecoes.py            RegraDeNegocioError e NaoEncontradoError
+│   ├── tratador_excecoes.py   converte as exceções em 400 e 404
+│   ├── test_runner.py         roda os testes sem gravar log
+│   └── management/commands/popular_banco.py
+├── insomnia/          coleção de requisições para importar no Insomnia
 ├── usuarios/
 │   ├── controllers/
 │   ├── dtos/
@@ -79,6 +85,7 @@ backend/
 │   ├── strategies/    padrão Strategy
 │   └── urls.py
 ├── pedidos/           (em desenvolvimento)
+├── docker-compose.yml MySQL 8.0 em container
 ├── manage.py
 └── requirements.txt
 ```
@@ -91,7 +98,7 @@ backend/
 
 | Padrão | Tipo | Onde | Por quê |
 |---|---|---|---|
-| **Factory Method** | Criacional | `usuarios/factories/` | Cada perfil tem a sua fábrica (`ClienteFactory`, `VendedorFactory`, `AdminFactory`), todas filhas de `UsuarioFactory`. A regra exclusiva do vendedor (CPF e telefone obrigatórios) fica isolada na `VendedorFactory`. Um perfil novo exige apenas uma classe nova (Princípio Aberto/Fechado). |
+| **Factory Method** | Criacional | `usuarios/factories/` | Cada perfil tem a sua fábrica (`ClienteFactory`, `VendedorFactory`, `AdminFactory`), todas filhas de `UsuarioFactory`. A regra comum (documento do tipo de pessoa) fica na classe base; a regra exclusiva do vendedor (telefone obrigatório) fica isolada na `VendedorFactory`, e a `AdminFactory` dispensa a validação. O cadastro e a atualização usam as mesmas fábricas para validar. Um perfil novo exige apenas uma classe nova (Princípio Aberto/Fechado). |
 | **Strategy** | Comportamental | `catalogo/strategies/` | Cada forma de ordenar o catálogo (nome, menor preço, maior preço, mais recentes) é uma classe com o mesmo método `ordenar()`. O `BrinquedoService` escolhe a estratégia em tempo de execução, sem `if/elif`. |
 | **Singleton** | Criacional | `core/logger_sistema.py` | O `LoggerSistema` tem uma única instância no sistema inteiro. Todos os Services registram eventos no mesmo log, com a mesma configuração e o mesmo arquivo. |
 
@@ -103,6 +110,8 @@ backend/
 | **Repository** | `*/repositories/` |
 | **Service Layer** | `*/services/` |
 | **DTO** | `*/dtos/` |
+| **Herança para reaproveitar regras (DRY)** | `catalogo/services/cadastro_simples_service.py`: `MarcaService` e `CategoriaService` herdam a mesma lógica |
+| **Tratamento centralizado de exceções** | `core/tratador_excecoes.py` (equivalente ao `@ControllerAdvice` do Spring) |
 
 ---
 
@@ -111,17 +120,9 @@ backend/
 ### Pré-requisitos
 
 - Python 3.10 ou superior
-- MySQL 8.0 ou superior
+- Docker Desktop (o MySQL roda em container; não é preciso instalar o MySQL)
 
-### 1. Criar o banco de dados
-
-No MySQL:
-
-```sql
-CREATE DATABASE ludistore CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
-
-### 2. Criar e ativar o ambiente virtual
+### 1. Criar e ativar o ambiente virtual
 
 Dentro da pasta `backend`:
 
@@ -141,13 +142,13 @@ Linux/macOS:
 source venv/bin/activate
 ```
 
-### 3. Instalar as dependências
+### 2. Instalar as dependências
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configurar as variáveis de ambiente
+### 3. Configurar as variáveis de ambiente
 
 Copie o arquivo `.env.example` para `.env` e preencha com os seus dados:
 
@@ -159,10 +160,26 @@ DB_NAME=ludistore
 DB_USER=root
 DB_PASSWORD=sua-senha
 DB_HOST=127.0.0.1
-DB_PORT=3306
+DB_PORT=3308
 ```
 
 > O `DEBUG=True` é necessário para rodar em desenvolvimento. Sem ele, o Django entende que está em produção e exige o `ALLOWED_HOSTS`.
+
+### 4. Subir o banco (Docker)
+
+Com o Docker Desktop aberto, dentro da pasta `backend`:
+
+```bash
+docker compose up -d
+```
+
+O container `ludistore-mysql` cria o banco `ludistore` sozinho, com a senha do `root` definida no `.env`, e fica disponível na porta `3308`.
+
+| Situação | Comando |
+|---|---|
+| Ligar o banco | `docker compose up -d` |
+| Desligar (os dados ficam) | `docker compose stop` |
+| Apagar o banco e começar do zero | `docker compose down -v` |
 
 ### 5. Criar as tabelas
 
@@ -170,7 +187,24 @@ DB_PORT=3306
 python manage.py migrate
 ```
 
-### 6. Subir o servidor
+### 6. Popular com dados de exemplo
+
+```bash
+python manage.py popular_banco
+```
+
+Cria 2 administradores, 2 vendedores (um PF e um PJ), 3 clientes (um deles PJ), 6 marcas, 6 categorias e 8 brinquedos. Rodar de novo não duplica nada.
+
+| Perfil | E-mail | Senha (só desenvolvimento) |
+|---|---|---|
+| Admin | `admin@ludistore.com` e `suporte@ludistore.com` | `admin123` |
+| Vendedor PF | `sandra@email.com` | `senha123` |
+| Vendedor PJ | `contato@mundodosbrinquedos.com` | `senha123` |
+| Cliente | `ana@email.com`, `bruno@email.com` e `compras@pequenosaber.edu.br` (PJ) | `senha123` |
+
+> Por regra de negócio (RN01), o cadastro público não permite o perfil ADMIN. Por isso os administradores são criados por esse comando (ou pelo shell, com a `AdminFactory`).
+
+### 7. Subir o servidor
 
 ```bash
 python manage.py runserver
@@ -178,20 +212,19 @@ python manage.py runserver
 
 A API fica disponível em `http://127.0.0.1:8000/api/`.
 
-### 7. Criar um administrador
+### 8. Testar pelo Insomnia
 
-Por regra de negócio (RN01), o cadastro público não permite o perfil ADMIN. O administrador é criado pelo shell do Django:
+No Insomnia, use **Import** e escolha o arquivo `insomnia/ludistore_insomnia.json`. A coleção tem 31 requisições, separadas em Usuários, Marcas, Categorias e Brinquedos.
+
+Os ids usados nas requisições ficam no **Base Environment** (`usuario_id`, `vendedor_id`, `marca_id`, `categoria_id` e `brinquedo_id`). Como o MySQL numera os ids de forma diferente em cada máquina, confira os valores com as listagens e ajuste o ambiente se precisar.
+
+### 9. Rodar os testes automatizados
 
 ```bash
-python manage.py shell
+python manage.py test
 ```
 
-```python
-from usuarios.factories import AdminFactory
-from usuarios.repositories import UsuarioRepository
-
-UsuarioRepository().salvar(AdminFactory().criar({'nome': 'Admin', 'email': 'admin@ludistore.com', 'senha': 'sua-senha'}))
-```
+São 21 casos de teste (CT01 a CT21), em `usuarios/tests.py` e `catalogo/tests.py`. O Django cria um banco separado (`test_ludistore`) e o apaga no final, então o banco de desenvolvimento não é tocado. Durante os testes o `LoggerSistema` fica desligado.
 
 ---
 
@@ -251,9 +284,10 @@ A senha é gravada criptografada e nunca é devolvida pela API.
 |---|---|---|
 | `GET` | `/api/marcas/` | Lista as marcas ativas |
 | `POST` | `/api/marcas/` | Cadastra uma marca |
-| `GET` | `/api/marcas/<id>/` | Busca uma marca |
+| `GET` | `/api/marcas/<id>/` | Busca uma marca (inclusive desativada) |
 | `PATCH` | `/api/marcas/<id>/` | Atualiza o nome |
 | `DELETE` | `/api/marcas/<id>/` | Desativa a marca |
+| `PATCH` | `/api/marcas/<id>/reativar/` | Reativa a marca |
 
 As rotas de categorias são as mesmas, trocando `marcas` por `categorias`. Corpo do cadastro:
 
@@ -273,6 +307,9 @@ O nome é único e a comparação ignora maiúsculas e minúsculas (`Estrela` e 
 | `GET` | `/api/brinquedos/<id>/` | Busca um brinquedo |
 | `PATCH` | `/api/brinquedos/<id>/` | Atualiza os campos enviados |
 | `DELETE` | `/api/brinquedos/<id>/` | Desativa o brinquedo |
+| `PATCH` | `/api/brinquedos/<id>/reativar/` | Reativa o brinquedo |
+
+Cada recurso (`usuarios`, `marcas`, `categorias` e `brinquedos`) tem um único controller (`ViewSet`), e as rotas são geradas pelo `SimpleRouter`.
 
 Valores aceitos em `ordem`: `nome` (padrão), `menor_preco`, `maior_preco` e `recentes`.
 
@@ -307,13 +344,13 @@ Exemplo de cadastro:
 | `404 Not Found` | Registro inexistente ou desativado |
 | `405 Method Not Allowed` | Verbo não suportado (ex.: `PUT`; use `PATCH`) |
 
-No módulo de usuários, as regras de negócio lançam exceções próprias (`core/excecoes.py`): `RegraDeNegocioError` vira **400** e `NaoEncontradoError` vira **404**. A conversão é feita num lugar só, em `core/tratador_excecoes.py` (equivalente ao `@ControllerAdvice` do Spring), por isso o controller não tem `try/except`.
+As regras de negócio lançam exceções próprias (`core/excecoes.py`): `RegraDeNegocioError` vira **400** e `NaoEncontradoError` vira **404**. A conversão é feita num lugar só, em `core/tratador_excecoes.py` (equivalente ao `@ControllerAdvice` do Spring), por isso nenhum controller tem `try/except`. Qualquer outro erro inesperado vira **500**, sem se disfarçar de erro do usuário.
 
 ---
 
 ## Regras de negócio
 
-As regras completas (RN01 a RN15) estão em [`docs/regras_negocio.md`](../docs/regras_negocio.md) e o diagrama de classes em [`docs/diagrama_classe.md`](../docs/diagrama_classe.md).
+As regras completas (RN01 a RN21) estão em [`docs/regras_negocio.md`](../docs/regras_negocio.md) e o diagrama de classes em [`docs/diagrama_classe.md`](../docs/diagrama_classe.md).
 
 Exclusões são sempre **lógicas**: o registro fica com `ativo = false` e deixa de aparecer nas consultas, mas continua no banco para preservar o histórico.
 
@@ -334,5 +371,4 @@ O `LoggerSistema` registra os eventos no terminal e no arquivo `backend/logs/lud
 
 - **Autenticação (login)**: necessária para aplicar as permissões por perfil (RN02 e RN03). Hoje qualquer requisição acessa todos os endpoints, e o `vendedor_id` vai no corpo da requisição.
 - **Pedidos**: compra com baixa de estoque em transação única (RN10 a RN15).
-- **Reativação** de marcas, categorias e brinquedos desativados (a de usuários já existe).
-- **Catálogo no mesmo padrão dos usuários**: um `ViewSet` por recurso e as exceções próprias no lugar de `ValueError`/`LookupError`.
+- **Validação dos dígitos verificadores** de CPF e CNPJ (hoje só o formato é conferido).

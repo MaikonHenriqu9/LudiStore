@@ -8,7 +8,7 @@ from catalogo.strategies import (
     OrdenarPorMenorPreco,
     OrdenarPorNome,
 )
-from core import LoggerSistema
+from core import LoggerSistema, NaoEncontradoError, RegraDeNegocioError
 from usuarios.models import Usuario
 from usuarios.repositories import UsuarioRepository
 
@@ -33,39 +33,39 @@ class BrinquedoService:
         estrategia = self.ESTRATEGIAS_ORDENACAO.get(ordem)
 
         if estrategia is None:
-            raise ValueError('Ordenação inválida. Use: nome, menor_preco, maior_preco ou recentes.')
+            raise RegraDeNegocioError('Ordenação inválida. Use: nome, menor_preco, maior_preco ou recentes.')
 
         return estrategia.ordenar(self.repository.listar_ativos())
 
-    def buscar(self, brinquedo_id):
+    def buscar(self, brinquedo_id, incluir_inativos=False):
         brinquedo = self.repository.buscar_por_id(brinquedo_id)
 
-        if brinquedo is None or not brinquedo.ativo:
-            raise LookupError('Brinquedo não encontrado.')
+        if brinquedo is None or (not brinquedo.ativo and not incluir_inativos):
+            raise NaoEncontradoError('Brinquedo não encontrado.')
 
         return brinquedo
 
     @transaction.atomic
     def criar(self, dados):
         if dados['preco'] <= 0:
-            raise ValueError('O preço deve ser maior que zero.')
+            raise RegraDeNegocioError('O preço deve ser maior que zero.')
 
         if self.repository.existe_sku(dados['sku']):
-            raise ValueError('SKU já cadastrado.')
+            raise RegraDeNegocioError('SKU já cadastrado.')
 
         vendedor = self.usuario_repository.buscar_por_id(dados.pop('vendedor_id'))
         perfis_que_vendem = (Usuario.Perfil.VENDEDOR, Usuario.Perfil.ADMIN)
         if vendedor is None or not vendedor.ativo or vendedor.perfil not in perfis_que_vendem:
-            raise ValueError('Vendedor inválido.')
+            raise RegraDeNegocioError('Vendedor inválido.')
 
         marca = self.marca_repository.buscar_por_id(dados.pop('marca_id'))
         if marca is None or not marca.ativo:
-            raise ValueError('Marca inválida.')
+            raise RegraDeNegocioError('Marca inválida.')
 
         categorias_ids = set(dados.pop('categorias_ids'))
         categorias = self.categoria_repository.buscar_ativas_por_ids(categorias_ids)
         if len(categorias) != len(categorias_ids):
-            raise ValueError('Uma ou mais categorias são inválidas.')
+            raise RegraDeNegocioError('Uma ou mais categorias são inválidas.')
 
         brinquedo = self.repository.salvar(Brinquedo(**dados, marca=marca, vendedor=vendedor))
         brinquedo.categorias.set(categorias)
@@ -78,15 +78,15 @@ class BrinquedoService:
         brinquedo = self.buscar(brinquedo_id)
 
         if 'preco' in dados and dados['preco'] <= 0:
-            raise ValueError('O preço deve ser maior que zero.')
+            raise RegraDeNegocioError('O preço deve ser maior que zero.')
 
         if 'sku' in dados and self.repository.existe_sku_em_outro_brinquedo(dados['sku'], brinquedo_id):
-            raise ValueError('SKU já cadastrado.')
+            raise RegraDeNegocioError('SKU já cadastrado.')
 
         if 'marca_id' in dados:
             marca = self.marca_repository.buscar_por_id(dados.pop('marca_id'))
             if marca is None or not marca.ativo:
-                raise ValueError('Marca inválida.')
+                raise RegraDeNegocioError('Marca inválida.')
             brinquedo.marca = marca
 
         categorias = None
@@ -94,7 +94,7 @@ class BrinquedoService:
             categorias_ids = set(dados.pop('categorias_ids'))
             categorias = self.categoria_repository.buscar_ativas_por_ids(categorias_ids)
             if len(categorias) != len(categorias_ids):
-                raise ValueError('Uma ou mais categorias são inválidas.')
+                raise RegraDeNegocioError('Uma ou mais categorias são inválidas.')
 
         for campo, valor in dados.items():
             setattr(brinquedo, campo, valor)
@@ -112,3 +112,14 @@ class BrinquedoService:
         brinquedo.ativo = False
         self.repository.salvar(brinquedo)
         self.logger.info(f'Brinquedo desativado: id={brinquedo.pk}')
+
+    def reativar(self, brinquedo_id):
+        brinquedo = self.buscar(brinquedo_id, incluir_inativos=True)
+
+        if brinquedo.ativo:
+            raise RegraDeNegocioError('Brinquedo já está ativo.')
+
+        brinquedo.ativo = True
+        brinquedo = self.repository.salvar(brinquedo)
+        self.logger.info(f'Brinquedo reativado: id={brinquedo.pk}')
+        return brinquedo

@@ -17,3 +17,9 @@
 | RN13 | O item guarda o preço do momento da compra |
 | RN14 | O vendedor vê as vendas dos seus produtos (data, comprador, quantidade e valor) |
 | RN15 | Todo usuário vê o próprio histórico de compras |
+| RN16 | Todo usuário informa o tipo de pessoa: física (PF) ou jurídica (PJ) |
+| RN17 | O documento do tipo é obrigatório: CPF para PF e CNPJ para PJ. O outro documento é opcional. O admin é dispensado |
+| RN18 | O vendedor também precisa informar o telefone |
+| RN19 | E-mail, CPF e CNPJ são únicos: um mesmo documento não pode ter duas contas. O e-mail não diferencia maiúsculas de minúsculas |
+| RN20 | O perfil não pode ser alterado depois do cadastro |
+| RN21 | Usuários, marcas, categorias e brinquedos desativados podem ser reativados |

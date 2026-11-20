@@ -1,19 +1,11 @@
-from django.urls import path
+from rest_framework.routers import SimpleRouter
 
-from catalogo.controllers import (
-    BrinquedoController,
-    BrinquedoDetalheController,
-    CategoriaController,
-    CategoriaDetalheController,
-    MarcaController,
-    MarcaDetalheController,
-)
+from catalogo.controllers import BrinquedoController, CategoriaController, MarcaController
 
-urlpatterns = [
-    path('marcas/', MarcaController.as_view()),
-    path('marcas/<int:marca_id>/', MarcaDetalheController.as_view()),
-    path('categorias/', CategoriaController.as_view()),
-    path('categorias/<int:categoria_id>/', CategoriaDetalheController.as_view()),
-    path('brinquedos/', BrinquedoController.as_view()),
-    path('brinquedos/<int:brinquedo_id>/', BrinquedoDetalheController.as_view()),
-]
+# O Router gera, para cada recurso, as rotas recurso/, recurso/<id>/ e recurso/<id>/reativar/.
+router = SimpleRouter()
+router.register('marcas', MarcaController, basename='marca')
+router.register('categorias', CategoriaController, basename='categoria')
+router.register('brinquedos', BrinquedoController, basename='brinquedo')
+
+urlpatterns = router.urls

@@ -1,0 +1,534 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-11-20T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "wrk_ludistore",
+      "_type": "workspace",
+      "parentId": null,
+      "name": "LudiStore API",
+      "scope": "collection",
+      "description": "Endpoints do back-end da LudiStore. Rode \"python manage.py popular_banco\" antes."
+    },
+    {
+      "_id": "env_ludistore",
+      "_type": "environment",
+      "parentId": "wrk_ludistore",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://127.0.0.1:8000/api",
+        "usuario_id": 9,
+        "vendedor_id": 7,
+        "marca_id": 1,
+        "categoria_id": 1,
+        "brinquedo_id": 1
+      }
+    },
+    {
+      "_id": "fld_usuarios",
+      "_type": "request_group",
+      "parentId": "wrk_ludistore",
+      "name": "Usuários"
+    },
+    {
+      "_id": "req_01",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Listar todos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/usuarios/",
+      "metaSortKey": 1,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_02",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Pesquisar (nome, e-mail, documento, telefone ou id)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/usuarios/",
+      "metaSortKey": 2,
+      "headers": [],
+      "parameters": [
+        {
+          "name": "busca",
+          "value": "ana"
+        }
+      ],
+      "body": {}
+    },
+    {
+      "_id": "req_03",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Cadastrar cliente PF",
+      "method": "POST",
+      "url": "{{ _.base_url }}/usuarios/",
+      "metaSortKey": 3,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Carla Mendes\",\n  \"email\": \"carla@email.com\",\n  \"senha\": \"senha123\",\n  \"tipo_pessoa\": \"PF\",\n  \"cpf\": \"22233344455\"\n}"
+      }
+    },
+    {
+      "_id": "req_04",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Cadastrar vendedor PJ",
+      "method": "POST",
+      "url": "{{ _.base_url }}/usuarios/",
+      "metaSortKey": 4,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Casa da Diversão Ltda\",\n  \"email\": \"vendas@casadadiversao.com\",\n  \"senha\": \"senha123\",\n  \"perfil\": \"VENDEDOR\",\n  \"tipo_pessoa\": \"PJ\",\n  \"cnpj\": \"11222333000144\",\n  \"telefone\": \"1144445555\"\n}"
+      }
+    },
+    {
+      "_id": "req_05",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Erro: tentar cadastrar ADMIN",
+      "method": "POST",
+      "url": "{{ _.base_url }}/usuarios/",
+      "metaSortKey": 5,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Invasor\",\n  \"email\": \"invasor@email.com\",\n  \"senha\": \"senha123\",\n  \"perfil\": \"ADMIN\",\n  \"tipo_pessoa\": \"PF\",\n  \"cpf\": \"99988877766\"\n}"
+      }
+    },
+    {
+      "_id": "req_06",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Buscar por id",
+      "method": "GET",
+      "url": "{{ _.base_url }}/usuarios/{{ _.usuario_id }}/",
+      "metaSortKey": 6,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_07",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Atualizar (PATCH)",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/usuarios/{{ _.usuario_id }}/",
+      "metaSortKey": 7,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"telefone\": \"11912345678\",\n  \"cidade\": \"Campinas\",\n  \"uf\": \"SP\"\n}"
+      }
+    },
+    {
+      "_id": "req_08",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Desativar",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/usuarios/{{ _.usuario_id }}/",
+      "metaSortKey": 8,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_09",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Reativar",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/usuarios/{{ _.usuario_id }}/reativar/",
+      "metaSortKey": 9,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "fld_marcas",
+      "_type": "request_group",
+      "parentId": "wrk_ludistore",
+      "name": "Marcas"
+    },
+    {
+      "_id": "req_10",
+      "_type": "request",
+      "parentId": "fld_marcas",
+      "name": "Listar ativas",
+      "method": "GET",
+      "url": "{{ _.base_url }}/marcas/",
+      "metaSortKey": 10,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_11",
+      "_type": "request",
+      "parentId": "fld_marcas",
+      "name": "Cadastrar",
+      "method": "POST",
+      "url": "{{ _.base_url }}/marcas/",
+      "metaSortKey": 11,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Brinquedos Bandeirante\"\n}"
+      }
+    },
+    {
+      "_id": "req_12",
+      "_type": "request",
+      "parentId": "fld_marcas",
+      "name": "Buscar por id",
+      "method": "GET",
+      "url": "{{ _.base_url }}/marcas/{{ _.marca_id }}/",
+      "metaSortKey": 12,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_13",
+      "_type": "request",
+      "parentId": "fld_marcas",
+      "name": "Renomear (PATCH)",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/marcas/{{ _.marca_id }}/",
+      "metaSortKey": 13,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Brinquedos Bandeirante Editada\"\n}"
+      }
+    },
+    {
+      "_id": "req_14",
+      "_type": "request",
+      "parentId": "fld_marcas",
+      "name": "Desativar",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/marcas/{{ _.marca_id }}/",
+      "metaSortKey": 14,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_15",
+      "_type": "request",
+      "parentId": "fld_marcas",
+      "name": "Reativar",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/marcas/{{ _.marca_id }}/reativar/",
+      "metaSortKey": 15,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "fld_categorias",
+      "_type": "request_group",
+      "parentId": "wrk_ludistore",
+      "name": "Categorias"
+    },
+    {
+      "_id": "req_16",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "name": "Listar ativas",
+      "method": "GET",
+      "url": "{{ _.base_url }}/categorias/",
+      "metaSortKey": 16,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_17",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "name": "Cadastrar",
+      "method": "POST",
+      "url": "{{ _.base_url }}/categorias/",
+      "metaSortKey": 17,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Bonecos de Ação\"\n}"
+      }
+    },
+    {
+      "_id": "req_18",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "name": "Buscar por id",
+      "method": "GET",
+      "url": "{{ _.base_url }}/categorias/{{ _.categoria_id }}/",
+      "metaSortKey": 18,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_19",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "name": "Renomear (PATCH)",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/categorias/{{ _.categoria_id }}/",
+      "metaSortKey": 19,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Bonecos de Ação Editada\"\n}"
+      }
+    },
+    {
+      "_id": "req_20",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "name": "Desativar",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/categorias/{{ _.categoria_id }}/",
+      "metaSortKey": 20,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_21",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "name": "Reativar",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/categorias/{{ _.categoria_id }}/reativar/",
+      "metaSortKey": 21,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "fld_brinquedos",
+      "_type": "request_group",
+      "parentId": "wrk_ludistore",
+      "name": "Brinquedos"
+    },
+    {
+      "_id": "req_22",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Catálogo (ordem: nome)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/brinquedos/",
+      "metaSortKey": 22,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_23",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Catálogo (menor preço)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/brinquedos/",
+      "metaSortKey": 23,
+      "headers": [],
+      "parameters": [
+        {
+          "name": "ordem",
+          "value": "menor_preco"
+        }
+      ],
+      "body": {}
+    },
+    {
+      "_id": "req_24",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Catálogo (maior preço)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/brinquedos/",
+      "metaSortKey": 24,
+      "headers": [],
+      "parameters": [
+        {
+          "name": "ordem",
+          "value": "maior_preco"
+        }
+      ],
+      "body": {}
+    },
+    {
+      "_id": "req_25",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Catálogo (mais recentes)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/brinquedos/",
+      "metaSortKey": 25,
+      "headers": [],
+      "parameters": [
+        {
+          "name": "ordem",
+          "value": "recentes"
+        }
+      ],
+      "body": {}
+    },
+    {
+      "_id": "req_26",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Cadastrar",
+      "method": "POST",
+      "url": "{{ _.base_url }}/brinquedos/",
+      "metaSortKey": 26,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"sku\": \"EST-CAR-002\",\n  \"nome\": \"Caminhão Bombeiro\",\n  \"descricao\": \"Caminhão com escada e sirene\",\n  \"preco\": 99.9,\n  \"estoque\": 10,\n  \"idade_minima\": 3,\n  \"marca_id\": \"{{ _.marca_id }}\",\n  \"vendedor_id\": \"{{ _.vendedor_id }}\",\n  \"categorias_ids\": [\n    2\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_27",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Erro: preço negativo",
+      "method": "POST",
+      "url": "{{ _.base_url }}/brinquedos/",
+      "metaSortKey": 27,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"sku\": \"EST-ERR-001\",\n  \"nome\": \"Brinquedo Inválido\",\n  \"preco\": -10,\n  \"estoque\": 1,\n  \"marca_id\": 1,\n  \"vendedor_id\": 7,\n  \"categorias_ids\": [\n    1\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_28",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Buscar por id",
+      "method": "GET",
+      "url": "{{ _.base_url }}/brinquedos/{{ _.brinquedo_id }}/",
+      "metaSortKey": 28,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_29",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Atualizar (PATCH)",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/brinquedos/{{ _.brinquedo_id }}/",
+      "metaSortKey": 29,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parameters": [],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"preco\": 79.9,\n  \"estoque\": 25\n}"
+      }
+    },
+    {
+      "_id": "req_30",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Desativar",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/brinquedos/{{ _.brinquedo_id }}/",
+      "metaSortKey": 30,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    },
+    {
+      "_id": "req_31",
+      "_type": "request",
+      "parentId": "fld_brinquedos",
+      "name": "Reativar",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/brinquedos/{{ _.brinquedo_id }}/reativar/",
+      "metaSortKey": 31,
+      "headers": [],
+      "parameters": [],
+      "body": {}
+    }
+  ]
+}

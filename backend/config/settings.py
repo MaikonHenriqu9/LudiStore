@@ -15,6 +15,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
+    'core',
     'usuarios',
     'catalogo',
     'pedidos',
@@ -97,3 +98,6 @@ REST_FRAMEWORK = {
     'UNAUTHENTICATED_USER': None,
     'EXCEPTION_HANDLER': 'core.tratador_excecoes.tratar_excecoes',
 }
+
+# Roda os testes sem o LoggerSistema escrever no terminal e no arquivo de log
+TEST_RUNNER = 'core.test_runner.TestRunnerSemLog'
