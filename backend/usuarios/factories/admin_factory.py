@@ -6,3 +6,6 @@ class AdminFactory(UsuarioFactory):
 
     def perfil(self):
         return Usuario.Perfil.ADMIN
+
+    def validar(self):
+        pass

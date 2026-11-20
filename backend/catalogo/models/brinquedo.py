@@ -5,6 +5,7 @@ from usuarios.models import Usuario
 
 
 class Brinquedo(models.Model):
+    brinquedo_id = models.BigAutoField(primary_key=True)
     sku = models.CharField(max_length=30, unique=True)
     nome = models.CharField(max_length=100)
     descricao = models.TextField(blank=True)

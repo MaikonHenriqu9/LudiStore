@@ -11,8 +11,12 @@ class Usuario(models.Model):
         FEMININO = 'F', 'Feminino'
         OUTRO = 'O', 'Outro'
         NAO_INFORMAR = 'N/I', 'Não Informar'
-    
 
+    class TipoPessoa(models.TextChoices):
+        FISICA = 'PF', 'Pessoa Física'
+        JURIDICA = 'PJ', 'Pessoa Jurídica'
+    
+    usuario_id = models.BigAutoField(primary_key=True)
     nome = models.CharField(max_length=200)
     email = models.EmailField(unique=True)
     senha = models.CharField(max_length=200)
@@ -22,7 +26,9 @@ class Usuario(models.Model):
         default=Perfil.CLIENTE
     )
 
+    tipo_pessoa = models.CharField(max_length=2, choices=TipoPessoa, default=TipoPessoa.FISICA)
     cpf = models.CharField(max_length=11, unique=True, null=True, blank=True)
+    cnpj = models.CharField(max_length=14, unique=True, null=True, blank=True)
     telefone = models.CharField(max_length=11, blank=True)
     data_nascimento = models.DateField(null=True, blank=True)
     sexo = models.CharField(max_length=3, choices=Sexo.choices, blank=True)
@@ -37,6 +43,7 @@ class Usuario(models.Model):
     
     ativo = models.BooleanField(default=True)
     criado_em = models.DateTimeField(auto_now_add=True)
+    atualizado_em = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "usuario"

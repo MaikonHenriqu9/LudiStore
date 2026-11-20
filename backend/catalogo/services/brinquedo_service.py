@@ -104,11 +104,11 @@ class BrinquedoService:
         if categorias is not None:
             brinquedo.categorias.set(categorias)
 
-        self.logger.info(f'Brinquedo atualizado: id={brinquedo.id}')
+        self.logger.info(f'Brinquedo atualizado: id={brinquedo.pk}')
         return brinquedo
 
     def desativar(self, brinquedo_id):
         brinquedo = self.buscar(brinquedo_id)
         brinquedo.ativo = False
         self.repository.salvar(brinquedo)
-        self.logger.info(f'Brinquedo desativado: id={brinquedo.id}')
+        self.logger.info(f'Brinquedo desativado: id={brinquedo.pk}')

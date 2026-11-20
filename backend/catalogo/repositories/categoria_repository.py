@@ -7,7 +7,7 @@ class CategoriaRepository:
         return categoria
 
     def buscar_por_id(self, categoria_id):
-        return Categoria.objects.filter(id=categoria_id).first()
+        return Categoria.objects.filter(pk=categoria_id).first()
 
     def listar_ativas(self):
         return Categoria.objects.filter(ativo=True)
@@ -16,9 +16,9 @@ class CategoriaRepository:
         consulta = Categoria.objects.filter(nome__iexact=nome)
 
         if ignorar_id:
-            consulta = consulta.exclude(id=ignorar_id)
+            consulta = consulta.exclude(pk=ignorar_id)
 
         return consulta.exists()
 
     def buscar_ativas_por_ids(self, categorias_ids):
-        return list(Categoria.objects.filter(id__in=categorias_ids, ativo=True))
+        return list(Categoria.objects.filter(pk__in=categorias_ids, ativo=True))

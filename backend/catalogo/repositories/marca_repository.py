@@ -7,7 +7,7 @@ class MarcaRepository:
         return marca
 
     def buscar_por_id(self, marca_id):
-        return Marca.objects.filter(id=marca_id).first()
+        return Marca.objects.filter(pk=marca_id).first()
 
     def listar_ativas(self):
         return Marca.objects.filter(ativo=True)
@@ -16,6 +16,6 @@ class MarcaRepository:
         consulta = Marca.objects.filter(nome__iexact=nome)
 
         if ignorar_id:
-            consulta = consulta.exclude(id=ignorar_id)
+            consulta = consulta.exclude(pk=ignorar_id)
 
         return consulta.exists()

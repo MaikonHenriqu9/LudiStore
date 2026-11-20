@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 
 class BrinquedoResponseDTO(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(source='pk')
     sku = serializers.CharField()
     nome = serializers.CharField()
     descricao = serializers.CharField()

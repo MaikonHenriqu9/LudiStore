@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 
 class UsuarioResponseDTO(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(source='pk')
     nome = serializers.CharField()
     email = serializers.EmailField()
     perfil = serializers.CharField()

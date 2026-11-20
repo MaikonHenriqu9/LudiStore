@@ -8,8 +8,7 @@ class VendedorFactory(UsuarioFactory):
         return Usuario.Perfil.VENDEDOR
 
     def validar(self, dados):
-        if not dados.get('cpf'):
-            raise ValueError('CPF é obrigatório para vendedores.')
+        super().validar(dados)
 
         if not dados.get('telefone'):
             raise ValueError('Telefone é obrigatório para vendedores.')
