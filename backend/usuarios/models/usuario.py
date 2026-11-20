@@ -38,5 +38,8 @@ class Usuario(models.Model):
     ativo = models.BooleanField(default=True)
     criado_em = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table = "usuario"
+
     def __str__(self):
         return f'{self.nome} ({self.get_perfil_display()})'

@@ -5,15 +5,16 @@ from usuarios.models import Usuario
 from core import LoggerSistema
 
 class UsuarioService:
-
     FACTORIES_CADASTRO = {
         'CLIENTE': ClienteFactory(),
         'VENDEDOR': VendedorFactory(),
     }
 
+
     def __init__(self):
         self.repository = UsuarioRepository()
         self.logger = LoggerSistema()
+
 
     def cadastrar(self, dados):
         if self.repository.existe_email(dados.get('email')):
@@ -35,8 +36,10 @@ class UsuarioService:
         self.logger.info(f'Usuário cadastrado: {usuario.nome} ({usuario.perfil}) id={usuario.id}')
         return usuario
 
+
     def listar(self):
         return self.repository.listar_ativos()
+
 
     def buscar(self, usuario_id):
         usuario = self.repository.buscar_por_id(usuario_id)
@@ -45,6 +48,7 @@ class UsuarioService:
             raise LookupError('Usuário não encontrado.')
 
         return usuario
+
 
     def atualizar(self, usuario_id, dados):
         usuario = self.buscar(usuario_id)
@@ -71,6 +75,7 @@ class UsuarioService:
         usuario = self.repository.salvar(usuario)
         self.logger.info(f'Usuário atualizado: id={usuario.id}')
         return usuario
+
 
     def desativar(self, usuario_id):
         usuario = self.buscar(usuario_id)

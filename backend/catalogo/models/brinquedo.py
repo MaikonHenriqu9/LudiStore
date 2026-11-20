@@ -15,11 +15,14 @@ class Brinquedo(models.Model):
     ativo = models.BooleanField(default=True)
 
     marca = models.ForeignKey(Marca, on_delete=models.PROTECT, related_name='brinquedos')
-    categorias = models.ManyToManyField(Categoria, related_name='brinquedos')
+    categorias = models.ManyToManyField(Categoria, related_name='brinquedos', db_table='brinquedo_categoria')
     vendedor = models.ForeignKey(Usuario, on_delete=models.PROTECT, related_name='brinquedos')
 
     criado_em = models.DateTimeField(auto_now_add=True)
     atualizado_em = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "brinquedo"
 
     def __str__(self):
         return self.nome
