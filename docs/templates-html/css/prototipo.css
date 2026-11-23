@@ -1,0 +1,17 @@
+/* Só para navegar pelo protótipo. Não levar para o React. */
+.tela { display: none; }
+.tela.ativa { display: block; animation: aparece .25s ease; }
+@keyframes aparece { from { opacity: 0; } to { opacity: 1; } }
+
+.proto { position: fixed; right: 20px; bottom: 20px; z-index: 100; font-family: var(--fonte-texto); }
+.proto__botao { display: flex; align-items: center; gap: 10px; padding: 10px 16px 10px 12px; border: 0; border-radius: 999px; background: var(--marinho-900); color: #fff; box-shadow: var(--sombra-elevada); cursor: pointer; font: 700 14px var(--fonte-texto); }
+.proto__botao span { color: var(--amarelo-400); font: 800 12px var(--fonte-titulo); letter-spacing: .06em; text-transform: uppercase; }
+.proto__lista { display: none; position: absolute; right: 0; bottom: 56px; width: 300px; max-height: 70vh; overflow: auto; padding: 12px; border-radius: 18px; background: var(--marinho-900); box-shadow: var(--sombra-elevada); }
+.proto.aberto .proto__lista { display: block; }
+.proto__lista h6 { margin: 12px 8px 6px; font: 800 11px var(--fonte-titulo); letter-spacing: .08em; text-transform: uppercase; color: var(--amarelo-400); }
+.proto__lista a { display: flex; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 10px; color: var(--neutro-200); font-size: 14px; }
+.proto__lista a i { font: 800 11px var(--fonte-titulo); font-style: normal; width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; background: rgba(255,255,255,.08); flex: none; }
+.proto__lista a:hover { background: rgba(255,255,255,.07); }
+.proto__lista a.on { background: var(--azul-500); color: #fff; }
+
+@media (max-width: 768px) { .proto { right: 12px; bottom: 12px; } .proto__botao b { display: none; } .proto__lista { width: 270px; } }

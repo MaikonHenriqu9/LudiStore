@@ -10,7 +10,7 @@ class BrinquedoCreateDTO(serializers.Serializer):
     preco = serializers.DecimalField(max_digits=8, decimal_places=2, min_value=Decimal('0.01'))
     estoque = serializers.IntegerField(min_value=0, required=False, default=0)
     idade_minima = serializers.IntegerField(min_value=0, required=False, default=0)
-    imagem_url = serializers.URLField(required=False, allow_blank=True)
+    imagem_url = serializers.URLField(max_length=2048, required=False, allow_blank=True)
     marca_id = serializers.IntegerField()
     # Opcional: para o vendedor logado, vem do token. Só o admin informa (cadastrando para um vendedor).
     vendedor_id = serializers.IntegerField(required=False)

@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LudiStore · Templates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/componentes.css">
+<link rel="stylesheet" href="css/telas.css">
+<link rel="stylesheet" href="css/responsivo.css">
+<link rel="stylesheet" href="css/prototipo.css">
+</head>
+<body>
+
+<!-- =====================================================
+     Ícones (Lucide). No React use o pacote lucide-react:
+     <Search />, <ShoppingCart />, <Heart /> ...
+     ===================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-busca" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-usuario" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+  <symbol id="i-carrinho" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></symbol>
+  <symbol id="i-coracao" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+  <symbol id="i-pacote" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+  <symbol id="i-caminhao" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
+  <symbol id="i-cartao" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></symbol>
+  <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-troca" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></symbol>
+  <symbol id="i-estrela" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></symbol>
+  <symbol id="i-dir" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-baixo" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-esq" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-mais" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="i-menos" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-lixeira" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></symbol>
+  <symbol id="i-editar" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></symbol>
+  <symbol id="i-olho" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-fechar" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-sair" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></symbol>
+  <symbol id="i-painel" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+  <symbol id="i-usuarios" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-etiqueta" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1"/></symbol>
+  <symbol id="i-recibo" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></symbol>
+  <symbol id="i-grafico" viewBox="0 0 24 24"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-filtro" viewBox="0 0 24 24"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></symbol>
+  <symbol id="i-local" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-cadeado" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-email" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-raio" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-presente" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
+  <symbol id="i-loja" viewBox="0 0 24 24"><path d="M3 9l1.5-6h15L21 9"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M9 22v-6h6v6"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/></symbol>
+  <symbol id="i-calendario" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></symbol>
+  <symbol id="i-imagem" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></symbol>
+  <symbol id="i-sino" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-reativar" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-telefone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></symbol>
+  <symbol id="i-pix" viewBox="0 0 24 24"><path d="M12 2.5 21.5 12 12 21.5 2.5 12z"/><path d="M8 12h8"/></symbol>
+  <symbol id="i-boleto" viewBox="0 0 24 24"><path d="M3 5v14"/><path d="M7 5v14"/><path d="M11 5v14"/><path d="M14 5v14"/><path d="M18 5v14"/><path d="M21 5v14"/></symbol>
+  <symbol id="i-cubo" viewBox="0 0 100 100"><path d="M50 6 L93 23 L50 41 L7 23 Z" fill="#3E9BD3" stroke="#3E9BD3" stroke-width="5" stroke-linejoin="round"/><path d="M7 23 L50 41 L50 95 L7 77 Z" fill="#FCD20F" stroke="#FCD20F" stroke-width="5" stroke-linejoin="round"/><path d="M50 41 L93 23 L93 77 L50 95 Z" fill="#EC5040" stroke="#EC5040" stroke-width="5" stroke-linejoin="round"/><path d="M28 44 L32.5 53 L42 54.5 L35 61 L37 71 L28 66 L19 71 L21 61 L14 54.5 L23.5 53 Z" fill="#fff" stroke="none"/></symbol>
+</svg>
+
+<!-- =====================================================
+     Blocos compartilhados (viram componentes React).
+     O js/app.js copia cada <template> para os elementos
+     com data-inserir="...".
+     ===================================================== -->
+
+<!-- <Cabecalho /> -->
+<template id="tpl-cabecalho">
+  <header class="cabecalho">
+    <div class="cabecalho__faixa">
+      <span><svg class="ico ico--p"><use href="#i-escudo"/></svg>Compra segura com login</span>
+      <span><svg class="ico ico--p"><use href="#i-pacote"/></svg>Estoque atualizado em tempo real</span>
+      <span><svg class="ico ico--p"><use href="#i-loja"/></svg>Brinquedos de vendedores parceiros</span>
+    </div>
+    <div class="cabecalho__principal">
+      <a href="#home" class="logo"><svg><use href="#i-cubo"/></svg><div><b>Ludi</b><span>Store</span></div></a>
+      <form class="busca" onsubmit="location.hash='busca';return false">
+        <input placeholder="O que você está procurando? Busque por brinquedo, marca ou idade">
+        <button aria-label="Buscar"><svg class="ico"><use href="#i-busca"/></svg></button>
+      </form>
+      <div class="cabecalho__acoes">
+        <a href="#login" class="acao" data-conta>
+          <span class="acao__bolha"><svg class="ico"><use href="#i-usuario"/></svg></span>
+          <span><small data-saudacao>Olá, visitante</small><strong data-conta-texto>Entre ou cadastre-se</strong></span>
+        </a>
+        <a href="#pedidos" class="acao">
+          <span class="acao__bolha"><svg class="ico"><use href="#i-pacote"/></svg></span>
+          <span><small>Acompanhe</small><strong>Meus pedidos</strong></span>
+        </a>
+        <a href="#carrinho" class="acao">
+          <span class="acao__bolha acao__bolha--cheia"><svg class="ico"><use href="#i-carrinho"/></svg><span class="acao__qtd">4</span></span>
+          <span><small>Carrinho</small><strong>R$ 339,60</strong></span>
+        </a>
+      </div>
+    </div>
+    <nav class="cabecalho__menu">
+      <a href="#categoria" class="cabecalho__todas"><svg class="ico ico--p"><use href="#i-menu"/></svg>Todas as categorias</a>
+      <a href="#categoria">Por idade</a><a href="#categoria">Bonecas</a><a href="#categoria">Veículos</a><a href="#categoria">Jogos</a><a href="#categoria">Pelúcias</a><a href="#categoria">Blocos de montar</a><a href="#categoria">Baby</a><a href="#categoria">Marcas</a>
+      <a href="#categoria" class="cabecalho__ofertas"><svg class="ico ico--p"><use href="#i-estrela"/></svg>Novidades</a>
+    </nav>
+  </header>
+</template>
+
+<!-- <CabecalhoSimples /> (login, cadastro, checkout) -->
+<template id="tpl-cabecalho-simples">
+  <header class="cabecalho-simples">
+    <a href="#home" class="logo"><svg><use href="#i-cubo"/></svg><div><b>Ludi</b><span>Store</span></div></a>
+    <span class="cabecalho-simples__seg"><svg class="ico ico--p"><use href="#i-cadeado"/></svg><span data-texto>Ambiente 100% seguro</span></span>
+  </header>
+</template>
+
+<!-- <Rodape /> -->
+<template id="tpl-rodape">
+  <footer class="rodape">
+    <div class="rodape__cols">
+      <div>
+        <span class="logo logo--branco"><svg><use href="#i-cubo"/></svg><div><b>Ludi</b><span>Store</span></div></span>
+        <p style="margin-top:14px;max-width:280px">Brinquedos que acompanham cada fase da infância, de vendedores parceiros de todo o Brasil.</p>
+        <div class="rodape__social"><i>f</i><i>ig</i><i>yt</i><i>tk</i></div>
+      </div>
+      <div><h4>Institucional</h4><ul><li>Sobre a LudiStore</li><li><a href="#cadastro">Seja um vendedor</a></li><li>Trabalhe conosco</li><li>Blog Brincar &amp; Aprender</li></ul></div>
+      <div><h4>Ajuda</h4><ul><li>Central de atendimento</li><li>Trocas e devoluções</li><li>Como comprar</li><li>Privacidade e LGPD</li></ul></div>
+      <div><h4>Minha conta</h4><ul><li><a href="#minha-conta">Meus dados</a></li><li><a href="#pedidos">Meus pedidos</a></li><li><a href="#carrinho">Meu carrinho</a></li><li><a href="#painel-vendedor">Área do vendedor</a></li></ul></div>
+      <div><h4>Atendimento</h4><ul><li class="ic"><svg class="ico ico--p"><use href="#i-email"/></svg>sac@ludistore.com.br</li><li class="ic"><svg class="ico ico--p"><use href="#i-telefone"/></svg>(11) 4000-0000</li><li class="ic"><svg class="ico ico--p"><use href="#i-calendario"/></svg>Seg a sex, das 9h às 18h</li></ul></div>
+    </div>
+    <div class="rodape__base">
+      <div class="rodape__pag">Projeto IES300 · Engenharia de Software III</div>
+      <div class="seg"><svg class="ico ico--p"><use href="#i-escudo"/></svg>Senhas criptografadas · Dados protegidos pela LGPD</div>
+      <div>© 2026 LudiStore · FateCreators</div>
+    </div>
+  </footer>
+</template>
+
+<!-- <MenuLateral perfil="vendedor" /> -->
+<template id="tpl-lateral-vendedor">
+  <aside class="lateral">
+    <span class="logo logo--branco logo--p"><svg><use href="#i-cubo"/></svg><div><b>Ludi</b><span>Store</span></div></span>
+    <div class="lateral__grupo">Área do vendedor</div>
+    <a href="#painel-vendedor" class="item-menu" data-item="produtos"><svg class="ico"><use href="#i-pacote"/></svg>Meus produtos</a>
+    <a href="#produto-form" class="item-menu" data-item="novo"><svg class="ico"><use href="#i-mais"/></svg>Novo produto</a>
+    <a href="#vendas" class="item-menu" data-item="vendas"><svg class="ico"><use href="#i-grafico"/></svg>Minhas vendas</a>
+    <a href="#minha-conta" class="item-menu" data-item="perfil"><svg class="ico"><use href="#i-usuario"/></svg>Meu perfil</a>
+    <div class="lateral__grupo">Loja</div>
+    <a href="#home" class="item-menu"><svg class="ico"><use href="#i-loja"/></svg>Ver loja</a>
+    <a href="#login" class="item-menu"><svg class="ico"><use href="#i-sair"/></svg>Sair</a>
+    <div class="lateral__usuario"><span class="avatar avatar--p">SR</span><div><b>Sandra Rodrigues</b><small>Vendedora · PF</small></div></div>
+  </aside>
+</template>
+
+<!-- <MenuLateral perfil="admin" /> -->
+<template id="tpl-lateral-admin">
+  <aside class="lateral">
+    <span class="logo logo--branco logo--p"><svg><use href="#i-cubo"/></svg><div><b>Ludi</b><span>Store</span></div></span>
+    <div class="lateral__grupo">Administração</div>
+    <a href="#admin" class="item-menu" data-item="geral"><svg class="ico"><use href="#i-painel"/></svg>Visão geral</a>
+    <a href="#admin-produtos" class="item-menu" data-item="produtos"><svg class="ico"><use href="#i-pacote"/></svg>Produtos</a>
+    <a href="#admin-usuarios" class="item-menu" data-item="usuarios"><svg class="ico"><use href="#i-usuarios"/></svg>Usuários</a>
+    <a href="#admin-pedidos" class="item-menu" data-item="pedidos"><svg class="ico"><use href="#i-recibo"/></svg>Pedidos<span class="selo selo--rosa">4</span></a>
+    <a href="#admin-marcas" class="item-menu" data-item="marcas"><svg class="ico"><use href="#i-etiqueta"/></svg>Marcas e categorias</a>
+    <div class="lateral__grupo">Loja</div>
+    <a href="#home" class="item-menu"><svg class="ico"><use href="#i-loja"/></svg>Ver loja</a>
+    <a href="#login" class="item-menu"><svg class="ico"><use href="#i-sair"/></svg>Sair</a>
+    <div class="lateral__usuario"><span class="avatar avatar--p">AD</span><div><b>Admin LudiStore</b><small>admin@ludistore.com</small></div></div>
+  </aside>
+</template>
+
+<!-- <TopoPainel /> -->
+<template id="tpl-topo-painel">
+  <div class="painel__topo">
+    <div class="campo__caixa"><svg class="ico ico--p"><use href="#i-busca"/></svg><input placeholder="Buscar no painel…"></div>
+    <div class="linha" style="gap:16px">
+      <span class="sino"><svg class="ico"><use href="#i-sino"/></svg></span>
+      <span class="avatar" data-iniciais>SR</span>
+      <div class="t-pequeno"><b data-nome>Sandra Rodrigues</b><div class="c-suave" data-papel>Vendedora</div></div>
+    </div>
+  </div>
+</template>
+
+<!-- <MenuConta /> (área do cliente) -->
+<template id="tpl-menu-conta">
+  <nav class="conta__menu">
+    <div class="conta__perfil"><span class="avatar">AS</span><div><b>Ana Souza</b><div class="t-pequeno c-suave">Cliente desde 2026</div></div></div>
+    <a href="#minha-conta" data-item="dados"><svg class="ico"><use href="#i-usuario"/></svg>Meus dados</a>
+    <a href="#pedidos" data-item="pedidos"><svg class="ico"><use href="#i-pacote"/></svg>Meus pedidos</a>
+    <a href="#minha-conta" data-item="enderecos"><svg class="ico"><use href="#i-local"/></svg>Endereços</a>
+    <a href="#minha-conta" data-item="senha"><svg class="ico"><use href="#i-cadeado"/></svg>Alterar senha</a>
+    <a href="#login" class="sair"><svg class="ico"><use href="#i-sair"/></svg>Sair</a>
+  </nav>
+</template>
+
+<!-- Navegador do protótipo (não faz parte do site) -->
+<nav class="proto" id="proto">
+  <button class="proto__botao" onclick="document.getElementById('proto').classList.toggle('aberto')"><svg class="ico"><use href="#i-menu"/></svg><span>Telas</span><b id="proto-atual">01 · Home</b></button>
+  <div class="proto__lista" id="proto-lista"></div>
+</nav>
+
+<main id="telas">
+
+<!-- ===================================================== 01 · HOME  (pages/Home.jsx) -->
+<section class="tela" id="home" data-titulo="01 · Home" data-grupo="Loja">
+  <div data-inserir="cabecalho"></div>
+  <div class="container">
+    <div class="hero">
+      <div class="hero__confete"></div>
+      <div class="hero__texto">
+        <span><span class="selo selo--rosa">Natal LudiStore</span></span>
+        <h1 class="t-display">Brinquedos que viram memórias de infância</h1>
+        <p>Presentes para todas as idades, escolhidos por faixa etária e vendidos por lojas parceiras.</p>
+        <div class="linha"><a href="#categoria" class="btn btn--destaque btn--g">Ver novidades</a><a href="#categoria" class="btn btn--contorno btn--g">Presentes por idade</a></div>
+      </div>
+      <div class="hero__fotos">
+        <div class="hero__foto"><img src="img/urso.jpg" alt=""></div>
+        <div class="hero__foto"><img src="img/blocos.jpg" alt=""></div>
+        <div class="hero__foto"><img src="img/argolas.jpg" alt=""></div>
+        <div class="hero__foto"><img src="img/carro.jpg" alt=""></div>
+      </div>
+      <button class="hero__seta esq"><svg class="ico"><use href="#i-esq"/></svg></button>
+      <button class="hero__seta dir"><svg class="ico"><use href="#i-dir"/></svg></button>
+      <div class="hero__dots"><i class="on"></i><i></i><i></i><i></i></div>
+    </div>
+
+    <div class="beneficios">
+      <div class="beneficio"><span class="bolha bolha--azul"><svg class="ico ico--g"><use href="#i-escudo"/></svg></span><div><div class="t-corpo-forte">Compra segura</div><div class="t-pequeno c-suave">Login com token e senha criptografada</div></div></div>
+      <div class="beneficio"><span class="bolha bolha--verde"><svg class="ico ico--g"><use href="#i-pacote"/></svg></span><div><div class="t-corpo-forte">Estoque garantido</div><div class="t-pequeno c-suave">O item é reservado no momento do pedido</div></div></div>
+      <div class="beneficio"><span class="bolha bolha--amarelo"><svg class="ico ico--g"><use href="#i-presente"/></svg></span><div><div class="t-corpo-forte">Para cada idade</div><div class="t-pequeno c-suave">Todo brinquedo informa a idade mínima</div></div></div>
+      <div class="beneficio"><span class="bolha bolha--rosa"><svg class="ico ico--g"><use href="#i-loja"/></svg></span><div><div class="t-corpo-forte">Lojas parceiras</div><div class="t-pequeno c-suave">Vendedores identificados por CPF ou CNPJ</div></div></div>
+    </div>
+
+    <div class="secao">
+      <div class="secao-titulo"><h2 class="t-h2">Compre por idade mínima</h2><a href="#categoria" class="ver-tudo">Ver catálogo <svg class="ico ico--p"><use href="#i-dir"/></svg></a></div>
+      <div class="idades">
+        <a href="#categoria" class="idade"><span class="idade__circulo" style="background:var(--azul-50);color:var(--azul-500)"><b>0+</b><small>todas as idades</small></span>Bebês</a>
+        <a href="#categoria" class="idade"><span class="idade__circulo" style="background:var(--rosa-50);color:var(--rosa-600)"><b>1+</b><small>ano</small></span>A partir de 1 ano</a>
+        <a href="#categoria" class="idade"><span class="idade__circulo" style="background:var(--amarelo-50);color:var(--marinho-900)"><b>3+</b><small>anos</small></span>A partir de 3 anos</a>
+        <a href="#categoria" class="idade"><span class="idade__circulo" style="background:var(--verde-50);color:var(--verde-600)"><b>6+</b><small>anos</small></span>A partir de 6 anos</a>
+        <a href="#categoria" class="idade"><span class="idade__circulo" style="background:var(--azul-50);color:var(--azul-700)"><b>9+</b><small>anos</small></span>A partir de 9 anos</a>
+        <a href="#categoria" class="idade"><span class="idade__circulo" style="background:var(--rosa-50);color:var(--rosa-600)"><b>12+</b><small>anos</small></span>A partir de 12 anos</a>
+      </div>
+    </div>
+
+    <div class="secao">
+      <div class="secao-titulo">
+        <div class="linha" style="gap:8px"><h2 class="t-h2" style="margin-right:16px">Catálogo</h2><span class="pilula pilula--ativa">Mais recentes</span><span class="pilula">Menor preço</span><span class="pilula">Maior preço</span><span class="pilula">A–Z</span></div>
+        <a href="#categoria" class="ver-tudo">Ver tudo <svg class="ico ico--p"><use href="#i-dir"/></svg></a>
+      </div>
+      <div class="prateleira" data-produtos="3,2,0,1,5"></div>
+    </div>
+
+    <div class="secao">
+      <div class="secao-titulo"><h2 class="t-h2">Navegue por categoria</h2><a href="#categoria" class="ver-tudo">Todas as categorias <svg class="ico ico--p"><use href="#i-dir"/></svg></a></div>
+      <div class="categorias">
+        <a href="#categoria" class="categoria" style="background:var(--rosa-50)"><img src="img/boneca.jpg" alt=""><b class="t-h3">Bonecas</b><span class="t-pequeno c-suave">248 itens</span></a>
+        <a href="#categoria" class="categoria" style="background:var(--azul-50)"><img src="img/carro.jpg" alt=""><b class="t-h3">Veículos</b><span class="t-pequeno c-suave">312 itens</span></a>
+        <a href="#categoria" class="categoria" style="background:var(--verde-50)"><img src="img/jogo.jpg" alt=""><b class="t-h3">Jogos</b><span class="t-pequeno c-suave">186 itens</span></a>
+        <a href="#categoria" class="categoria" style="background:var(--amarelo-50)"><img src="img/urso.jpg" alt=""><b class="t-h3">Pelúcias</b><span class="t-pequeno c-suave">204 itens</span></a>
+        <a href="#categoria" class="categoria" style="background:var(--azul-50)"><img src="img/blocos.jpg" alt=""><b class="t-h3">Blocos de montar</b><span class="t-pequeno c-suave">97 itens</span></a>
+        <a href="#categoria" class="categoria" style="background:var(--rosa-50)"><img src="img/argolas.jpg" alt=""><b class="t-h3">Baby</b><span class="t-pequeno c-suave">156 itens</span></a>
+      </div>
+    </div>
+
+    <div class="secao banners">
+      <div class="banner" style="background:var(--amarelo-400)">
+        <div><span class="selo selo--rosa">Pelúcias</span><h3 class="t-h1">Abraços que<br>duram para sempre</h3><p class="t-corpo" style="color:var(--marinho-700)">Macias, laváveis e para todas as idades</p><a href="#categoria" class="btn btn--contorno btn--p">Ver pelúcias</a></div>
+        <img src="img/urso.jpg" alt="">
+      </div>
+      <div class="banner" style="background:var(--azul-50)">
+        <div><span class="selo selo--azul" style="background:#fff">Primeira infância</span><h3 class="t-h1">Brinquedos<br>Montessori</h3><p class="t-corpo" style="color:var(--marinho-700)">Estímulo sensorial de 0 a 3 anos</p><a href="#categoria" class="btn btn--primario btn--p">Explorar</a></div>
+        <img src="img/argolas.jpg" alt="">
+      </div>
+    </div>
+
+    <div class="secao">
+      <div class="secao-titulo"><h2 class="t-h2">Até R$ 100</h2><a href="#categoria" class="ver-tudo">Ver tudo <svg class="ico ico--p"><use href="#i-dir"/></svg></a></div>
+      <div class="prateleira" data-produtos="5,4,1,0"></div>
+    </div>
+
+    <div class="secao">
+      <div class="secao-titulo"><h2 class="t-h2">Marcas</h2><a href="#categoria" class="ver-tudo">Ver todas <svg class="ico ico--p"><use href="#i-dir"/></svg></a></div>
+      <div class="marcas">
+        <div class="marca"><i style="background:var(--azul-500)"></i>Brinca Mais</div>
+        <div class="marca"><i style="background:var(--rosa-500)"></i>Toy Center</div>
+        <div class="marca"><i style="background:var(--verde-600)"></i>Mundo dos Brinquedos</div>
+        <div class="marca"><i style="background:var(--amarelo-400)"></i>Estrela Guia</div>
+        <div class="marca"><i style="background:var(--rosa-600)"></i>Ateliê Pequenos</div>
+        <div class="marca"><i style="background:var(--azul-700)"></i>Kids &amp; Cia</div>
+      </div>
+    </div>
+  </div>
+  <div data-inserir="rodape"></div>
+</section>
+
+<!-- ===================================================== 02 · LISTAGEM  (pages/Categoria.jsx) -->
+<section class="tela" id="categoria" data-titulo="02 · Listagem por categoria" data-grupo="Loja">
+  <div data-inserir="cabecalho"></div>
+  <div class="container">
+    <div class="migalhas">Início <svg class="ico"><use href="#i-dir"/></svg> <b>Brinquedos</b></div>
+    <div class="cat-topo">
+      <div>
+        <h1 class="t-h1">Brinquedos</h1>
+        <p class="t-corpo c-suave" style="margin-top:4px">Todo o catálogo de brinquedos ativos, de todas as marcas e vendedores.</p>
+        <div class="cat-topo__sub"><span class="pilula pilula--ativa">Todas</span><span class="pilula">Bonecas</span><span class="pilula">Veículos</span><span class="pilula">Jogos</span><span class="pilula">Pelúcias</span><span class="pilula">Blocos de montar</span><span class="pilula">Baby</span></div>
+      </div>
+      <div class="cat-topo__imgs"><img src="img/blocos.jpg" alt=""><img src="img/carro.jpg" alt=""><img src="img/urso.jpg" alt=""></div>
+    </div>
+    <div class="listagem">
+      <aside class="filtros">
+        <div class="linha entre" style="margin-bottom:8px"><h3 class="t-h3 linha" style="gap:8px"><svg class="ico"><use href="#i-filtro"/></svg>Filtros</h3><a class="t-pequeno-forte c-azul">Limpar</a></div>
+        <div class="filtro"><h4>Categoria <svg class="ico ico--p"><use href="#i-baixo"/></svg></h4>
+          <label class="check"><i></i>Bonecas<small>1</small></label><label class="check"><i></i>Veículos<small>1</small></label><label class="check"><i></i>Jogos<small>1</small></label><label class="check"><i></i>Pelúcias<small>1</small></label><label class="check"><i></i>Blocos de montar<small>1</small></label><label class="check"><i></i>Baby<small>1</small></label></div>
+        <div class="filtro"><h4>Idade mínima <svg class="ico ico--p"><use href="#i-baixo"/></svg></h4>
+          <label class="check radio"><i class="on"></i>Qualquer idade</label><label class="check radio"><i></i>Até 3 anos</label><label class="check radio"><i></i>Até 6 anos</label><label class="check radio"><i></i>Até 9 anos</label></div>
+        <div class="filtro"><h4>Marca <svg class="ico ico--p"><use href="#i-baixo"/></svg></h4>
+          <label class="check"><i></i>Brinca Mais<small>2</small></label><label class="check"><i></i>Toy Center<small>1</small></label><label class="check"><i></i>Estrela Guia<small>1</small></label><label class="check"><i></i>Ateliê Pequenos<small>1</small></label><label class="check"><i></i>Mundo dos Brinquedos<small>1</small></label></div>
+        <div class="filtro"><h4>Preço <svg class="ico ico--p"><use href="#i-baixo"/></svg></h4>
+          <div class="faixa-preco"><span></span><i style="left:6%"></i><i style="right:33%"></i></div>
+          <div class="linha"><div class="campo__caixa" style="height:40px">R$ 20</div><span class="c-fraco">–</span><div class="campo__caixa" style="height:40px">R$ 200</div></div></div>
+        <div class="filtro"><h4>Disponibilidade</h4><label class="check"><i></i>Só com estoque</label></div>
+        <p class="t-pequeno c-suave" style="margin-top:12px">A API entrega o catálogo completo; os filtros são aplicados no front.</p>
+      </aside>
+      <div>
+        <div class="barra-lista"><span class="t-corpo"><b>6</b> brinquedos</span>
+          <div class="linha"><button class="btn btn--contorno btn--p so-mobile" onclick="this.closest('.tela').querySelector('.filtros').classList.toggle('aberto')"><svg class="ico ico--p"><use href="#i-filtro"/></svg>Filtros</button><span class="t-pequeno c-suave">Ordenar por</span><div class="campo__caixa"><select><option>Nome (A–Z)</option><option>Menor preço</option><option>Maior preço</option><option>Mais recentes</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div></div></div>
+        
+        <div class="grade-produtos" data-produtos="0,1,2,3,4,5"></div>
+        <div class="paginacao"><a><svg class="ico ico--p"><use href="#i-esq"/></svg></a><a class="on">1</a><a><svg class="ico ico--p"><use href="#i-dir"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+  <div data-inserir="rodape"></div>
+</section>
+
+<!-- ===================================================== 03 · BUSCA  (pages/Busca.jsx) -->
+<section class="tela" id="busca" data-titulo="03 · Resultado de busca" data-grupo="Loja">
+  <div style="position:relative">
+    <div data-inserir="cabecalho" data-busca="blocos"></div>
+    <div class="sugestoes">
+      <div><h5>Categorias</h5><ul class="coluna" style="gap:0"><li><svg class="ico ico--p c-fraco"><use href="#i-etiqueta"/></svg><span><mark>Blocos</mark> de montar</span></li></ul><h5 style="margin-top:12px">Marcas</h5><ul><li><svg class="ico ico--p c-fraco"><use href="#i-loja"/></svg><span>Brinca Mais</span></li></ul></div>
+      <div><h5>Produtos</h5><ul>
+        <li><img src="img/blocos.jpg" alt=""><span class="cresce">Kit <mark>Blocos</mark> de Montar 120 peças</span><b>R$ 99,90</b></li>
+        </ul><p class="t-pequeno c-suave" style="margin-top:10px">Busca no nome, na descrição, na marca e no SKU (feita no front).</p></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="migalhas">Início <svg class="ico"><use href="#i-dir"/></svg> <b>Busca</b></div>
+    <div class="linha entre" style="margin-bottom:20px;align-items:flex-end"><div><h1 class="t-h1">Resultados para “blocos”</h1><p class="t-corpo c-suave">1 brinquedo encontrado</p></div>
+      <div class="linha"><button class="btn btn--contorno btn--p so-mobile" onclick="this.closest('.tela').querySelector('.filtros').classList.toggle('aberto')"><svg class="ico ico--p"><use href="#i-filtro"/></svg>Filtros</button><span class="t-pequeno c-suave">Ordenar por</span><div class="campo__caixa" style="width:200px;height:42px"><select><option>Nome (A–Z)</option><option>Menor preço</option><option>Maior preço</option><option>Mais recentes</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div></div></div>
+    <div class="listagem">
+      <aside class="filtros">
+        <h3 class="t-h3" style="margin-bottom:8px">Refinar busca</h3>
+        <div class="filtro"><h4>Categoria</h4><label class="check"><i class="on"></i>Blocos de montar<small>1</small></label></div>
+        <div class="filtro"><h4>Marca</h4><label class="check"><i></i>Brinca Mais<small>1</small></label></div>
+        <div class="filtro"><h4>Disponibilidade</h4><label class="check"><i class="on"></i>Só com estoque</label></div>
+      </aside>
+      <div>
+        <div class="grade-produtos" data-produtos="0"></div>
+        <div class="caixa vazio" style="margin-top:36px">
+          <span class="anotacao" style="margin-bottom:18px">Estado vazio · quando a busca não retorna nada</span>
+          <div class="vazio__icone"><svg class="ico" style="width:40px;height:40px"><use href="#i-busca"/></svg></div>
+          <h3 class="t-h2">Nenhum resultado para “xyzbrinquedo”</h3>
+          <p class="t-corpo c-suave" style="margin:6px 0 18px">Confira a ortografia ou tente termos mais gerais, como “pelúcia” ou “carrinho”.</p>
+          <a href="#home" class="btn btn--primario">Voltar para a loja</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-inserir="rodape"></div>
+</section>
+
+<!-- ===================================================== 04 · PRODUTO  (pages/Produto.jsx) -->
+<section class="tela" id="produto" data-titulo="04 · Detalhe do produto" data-grupo="Loja">
+  <div data-inserir="cabecalho"></div>
+  <div class="container">
+    <div class="migalhas">Início <svg class="ico"><use href="#i-dir"/></svg> Blocos de montar <svg class="ico"><use href="#i-dir"/></svg> <b>Kit Blocos de Montar 120 peças</b></div>
+    <div class="produto">
+      <div class="galeria galeria--unica">
+        <div class="galeria__principal"><img src="img/blocos.jpg" alt="Kit Blocos de Montar 120 peças"></div>
+      </div>
+      <div class="info-produto">
+        <div class="linha" style="gap:8px;flex-wrap:wrap"><span class="selo selo--azul">Blocos de montar</span><span class="selo selo--verde">12 em estoque</span></div>
+        <h1 class="t-h1">Kit Blocos de Montar 120 peças</h1>
+        <div class="linha t-pequeno c-suave" style="gap:14px;flex-wrap:wrap"><span>SKU BRM-BLC-120</span><span>Marca <b style="color:var(--marinho-900)">Brinca Mais</b></span><span>A partir de 3 anos</span></div>
+        <div class="preco-caixa"><div class="t-preco-g">R$ 99,90</div><div class="t-pequeno c-suave" style="margin-top:4px">Preço por unidade</div></div>
+        <div class="vendedor-caixa"><span class="avatar">SR</span><div class="cresce"><div class="t-pequeno c-suave">Vendido por</div><b>Sandra Rodrigues</b></div><svg class="ico c-fraco"><use href="#i-loja"/></svg></div>
+        <div class="linha" style="gap:16px;flex-wrap:wrap"><span class="t-corpo-forte">Quantidade</span><div class="qtd"><button><svg class="ico ico--p"><use href="#i-menos"/></svg></button><span>1</span><button><svg class="ico ico--p"><use href="#i-mais"/></svg></button></div><span class="t-pequeno c-suave">Máximo: 12 (estoque disponível)</span></div>
+        <div class="grade" style="grid-template-columns:1fr 1fr;gap:12px">
+          <a href="#checkout" class="btn btn--destaque btn--g">Comprar agora</a>
+          <a href="#carrinho" class="btn btn--primario btn--g"><svg class="ico"><use href="#i-carrinho"/></svg>Adicionar ao carrinho</a>
+        </div>
+        <div class="alerta alerta--info t-pequeno"><svg class="ico ico--p" style="margin-top:2px"><use href="#i-pacote"/></svg><span>O estoque é reservado só quando o pedido é confirmado. Se outra pessoa comprar antes, avisamos no checkout.</span></div>
+      </div>
+    </div>
+    <div class="caixa secao" style="padding:8px 28px 28px">
+      <div class="abas"><a class="on">Descrição</a><a>Detalhes</a></div>
+      <div class="grade" style="grid-template-columns:1.25fr 1fr;gap:40px;margin-top:22px">
+        <div class="coluna t-corpo" style="color:var(--marinho-700)">
+          <p>Um kit colorido com 120 blocos de madeira para construir torres, castelos e tudo o que a imaginação mandar. Peças com cantos arredondados e pintura atóxica.</p>
+          <p>Ajuda a desenvolver coordenação motora, noção de equilíbrio e criatividade.</p>
+        </div>
+        <table class="ficha"><tr><td>SKU</td><td>BRM-BLC-120</td></tr><tr><td>Marca</td><td>Brinca Mais</td></tr><tr><td>Categorias</td><td>Blocos de montar</td></tr><tr><td>Idade mínima</td><td>3 anos</td></tr><tr><td>Estoque</td><td>12 unidades</td></tr><tr><td>Vendedor</td><td>Sandra Rodrigues</td></tr></table>
+      </div>
+    </div>
+    <div class="secao"><div class="secao-titulo"><h2 class="t-h2">Mais brinquedos para a mesma idade</h2></div><div class="prateleira" data-produtos="5,1,3,4,2"></div></div>
+  </div>
+  <div data-inserir="rodape"></div>
+</section>
+
+<!-- ===================================================== 05 · LOGIN  (pages/Login.jsx · POST /api/auth/login/) -->
+<section class="tela" id="login" data-titulo="05 · Login" data-grupo="Acesso">
+  <div data-inserir="cabecalho-simples" data-texto="Precisa de ajuda? Central de atendimento"></div>
+  <div class="acesso">
+    <div class="acesso__arte">
+      <div class="acesso__fotos"><img src="img/urso.jpg" alt=""><img src="img/blocos.jpg" alt=""><img src="img/boneca.jpg" alt=""></div>
+      <span class="selo selo--amarelo" style="align-self:flex-start">Bem-vindo de volta</span>
+      <h2 class="t-display" style="font-size:42px">Que bom te ver<br>por aqui de novo!</h2>
+      <p>Acompanhe seus pedidos e, se você vende na LudiStore, gerencie seus produtos e vendas.</p>
+    </div>
+    <div class="acesso__form"><div>
+      <div><h1 class="t-h1">Entrar</h1><p class="t-corpo c-suave">Use o e-mail e a senha da sua conta LudiStore.</p></div>
+      <div class="alerta"><svg class="ico ico--p" style="margin-top:2px"><use href="#i-fechar"/></svg><span><b>E-mail ou senha inválidos.</b> Confira os dados e tente de novo.</span></div>
+      <div class="campo campo--foco"><label>E-mail</label><div class="campo__caixa"><svg class="ico ico--p"><use href="#i-email"/></svg><input value="ana@email.com"></div></div>
+      <div class="campo"><label>Senha</label><div class="campo__caixa"><svg class="ico ico--p"><use href="#i-cadeado"/></svg><input type="password" value="senha123"><svg class="ico ico--p"><use href="#i-olho"/></svg></div></div>
+      <p class="t-pequeno c-suave">Por segurança, a sessão expira depois de 8 horas.</p>
+      <a href="#home" class="btn btn--primario btn--g btn--bloco">Entrar</a>
+      <div class="separador">ou</div>
+      <p class="t-corpo" style="text-align:center">Ainda não tem conta? <a href="#cadastro" class="c-rosa" style="font-weight:700">Cadastre-se grátis</a></p>
+      <div class="alerta alerta--info t-pequeno"><svg class="ico ico--p" style="margin-top:2px"><use href="#i-usuario"/></svg><span>Depois do login, a API devolve o perfil: <b>cliente</b> vai para a loja, <b>vendedor</b> para <a href="#painel-vendedor"><u>Meus produtos</u></a> e <b>admin</b> para a <a href="#admin"><u>Visão geral</u></a>.</span></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ===================================================== 06 · CADASTRO  (pages/Cadastro.jsx · POST /api/usuarios/) -->
+<section class="tela" id="cadastro" data-titulo="06 · Cadastro" data-grupo="Acesso">
+  <div data-inserir="cabecalho-simples" data-texto="Já tem conta? Entrar"></div>
+  <div class="acesso" style="grid-template-columns:.85fr 1.15fr">
+    <div class="acesso__arte" style="background:linear-gradient(150deg,var(--rosa-500),#FDA4AF 70%,#FECDD3)">
+      <div class="acesso__fotos" style="left:40px"><img src="img/argolas.jpg" alt=""><img src="img/carro.jpg" alt=""><img src="img/jogo.jpg" alt="" style="left:300px"></div>
+      <span class="selo selo--marinho" style="align-self:flex-start">Crie sua conta</span>
+      <h2 class="t-display" style="font-size:40px">Compre ou venda<br>brinquedos na LudiStore</h2>
+      <p style="color:#fff">Clientes compram brinquedos de várias lojas. Vendedores cadastram os próprios produtos e acompanham as vendas.</p>
+    </div>
+    <div class="acesso__form"><div style="width:560px">
+      <div><h1 class="t-h1">Criar conta</h1><p class="t-corpo c-suave">Escolha como você quer usar a LudiStore.</p></div>
+      <div class="perfis">
+        <div class="perfil-op on"><span class="bolha bolha--azul"><svg class="ico"><use href="#i-carrinho"/></svg></span><div><b>Sou cliente</b><div class="t-pequeno c-suave">Quero comprar brinquedos</div></div></div>
+        <div class="perfil-op"><span class="bolha bolha--rosa"><svg class="ico"><use href="#i-loja"/></svg></span><div><b>Sou vendedor</b><div class="t-pequeno c-suave">Quero vender meus produtos</div></div></div>
+      </div>
+      <div class="linha entre"><span class="t-corpo-forte">Tipo de pessoa</span><div class="segmento"><a class="on">Pessoa física</a><a>Pessoa jurídica</a></div></div>
+      <div class="form-grade">
+        <div class="campo inteiro"><label>Nome completo *</label><div class="campo__caixa"><input value="Ana Souza"></div></div>
+        <div class="campo"><label>E-mail *</label><div class="campo__caixa"><input value="ana@email.com"></div></div>
+        <div class="campo campo--erro"><label>CPF * <span class="c-fraco">(só números)</span></label><div class="campo__caixa"><input value="12345678900"></div><span class="campo__ajuda">CPF já cadastrado.</span></div>
+        <div class="campo"><label>Telefone <span class="c-fraco">(obrigatório para vendedor)</span></label><div class="campo__caixa"><input placeholder="11900000000"></div></div>
+        <div class="campo"><label>CNPJ <span class="c-fraco">(opcional para PF)</span></label><div class="campo__caixa"><input placeholder="14 dígitos"></div></div>
+        <div class="campo"><label>Data de nascimento</label><div class="campo__caixa"><input placeholder="dd/mm/aaaa"><svg class="ico ico--p"><use href="#i-calendario"/></svg></div></div>
+        <div class="campo"><label>Sexo</label><div class="campo__caixa"><select><option>Não informar</option><option>Feminino</option><option>Masculino</option><option>Outro</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div></div>
+        <div class="campo"><label>Senha *</label><div class="campo__caixa"><input type="password" value="12345678"></div><div class="forca"><i class="on"></i><i class="on"></i><i></i><i></i></div><span class="campo__ajuda">Força da senha: média</span></div>
+        <div class="campo"><label>Confirmar senha *</label><div class="campo__caixa"><input type="password" value="12345678"><svg class="ico ico--p c-verde"><use href="#i-check"/></svg></div></div>
+      </div>
+      <p class="t-pequeno c-suave">O endereço é opcional e pode ser preenchido depois, em Minha conta.</p>
+      <label class="check"><i class="on"></i><span>Li e aceito os <b class="c-azul">Termos de uso</b> e a <b class="c-azul">Política de privacidade</b></span></label>
+      <a href="#login" class="btn btn--destaque btn--g btn--bloco">Criar minha conta</a>
+      <p class="t-pequeno c-suave" style="text-align:center">Contas de administrador só são criadas por outro administrador.</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- ===================================================== 07 · MINHA CONTA  (pages/MinhaConta.jsx · GET/PATCH /api/usuarios/<id>/) -->
+<section class="tela" id="minha-conta" data-titulo="07 · Minha conta" data-grupo="Cliente">
+  <div data-inserir="cabecalho" data-logado></div>
+  <div class="container">
+    <div class="migalhas">Início <svg class="ico"><use href="#i-dir"/></svg> Minha conta <svg class="ico"><use href="#i-dir"/></svg> <b>Meus dados</b></div>
+    <div class="conta">
+      <div data-inserir="menu-conta" data-ativo="dados"></div>
+      <div class="coluna" style="gap:20px">
+        <div class="caixa">
+          <div class="linha entre"><div><h2 class="t-h2">Meus dados</h2><p class="t-pequeno c-suave">Mantenha suas informações atualizadas para receber seus pedidos.</p></div><span class="selo selo--azul">Cliente · Pessoa física</span></div>
+          <div class="linha" style="gap:18px;margin:22px 0"><span class="avatar avatar--g">AS</span><div><b class="t-h3">Ana Souza</b><div class="t-pequeno c-suave">Cliente desde 16/11/2026 · Perfil não pode ser alterado</div></div></div>
+          <div class="form-grade">
+            <div class="campo"><label>Nome completo</label><div class="campo__caixa"><input value="Ana Souza"></div></div>
+            <div class="campo"><label>E-mail</label><div class="campo__caixa"><input value="ana@email.com"></div></div>
+            <div class="campo"><label>CPF</label><div class="campo__caixa"><input value="12345678900"></div></div>
+            <div class="campo"><label>Telefone</label><div class="campo__caixa"><input value="11988887777"></div></div>
+            <div class="campo"><label>CNPJ <span class="c-fraco">(opcional)</span></label><div class="campo__caixa"><input placeholder="14 dígitos"></div></div>
+            <div class="campo"><label>Data de nascimento</label><div class="campo__caixa"><input value="14/03/1995"></div></div>
+            <div class="campo"><label>Sexo</label><div class="campo__caixa"><select><option>Feminino</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div></div>
+          </div>
+          <div class="linha" style="justify-content:flex-end;margin-top:22px"><button class="btn btn--contorno">Cancelar</button><button class="btn btn--primario">Salvar alterações</button></div>
+        </div>
+        <div class="caixa">
+          <div class="linha entre" style="margin-bottom:16px"><h2 class="t-h2">Endereço</h2><span class="t-pequeno c-suave">Opcional · usado como endereço de entrega</span></div>
+          <div class="form-grade" style="grid-template-columns:1fr 2fr 1fr">
+            <div class="campo"><label>CEP</label><div class="campo__caixa"><input value="01310100"></div></div>
+            <div class="campo"><label>Logradouro</label><div class="campo__caixa"><input value="Avenida Paulista"></div></div>
+            <div class="campo"><label>Número</label><div class="campo__caixa"><input value="1000"></div></div>
+            <div class="campo"><label>Complemento</label><div class="campo__caixa"><input value="Apto 52"></div></div>
+            <div class="campo"><label>Bairro</label><div class="campo__caixa"><input value="Bela Vista"></div></div>
+            <div class="campo"><label>Cidade</label><div class="campo__caixa"><input value="São Paulo"></div></div>
+            <div class="campo"><label>UF</label><div class="campo__caixa"><input value="SP"></div></div>
+          </div>
+        </div>
+        <div class="caixa">
+          <h2 class="t-h2" style="margin-bottom:16px">Alterar senha</h2>
+          <div class="form-grade">
+            <div class="campo"><label>Nova senha</label><div class="campo__caixa"><input type="password" placeholder="Mínimo 8 caracteres"></div></div>
+            <div class="campo"><label>Confirmar nova senha</label><div class="campo__caixa"><input type="password"></div></div>
+          </div>
+          <div class="linha" style="justify-content:flex-end;margin-top:18px"><button class="btn btn--contorno">Atualizar senha</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-inserir="rodape"></div>
+</section>
+
+<!-- ===================================================== 13 · CARRINHO  (pages/Carrinho.jsx · estado local) -->
+<section class="tela" id="carrinho" data-titulo="13 · Carrinho" data-grupo="Compra">
+  <div data-inserir="cabecalho" data-logado></div>
+  <div class="container">
+    <div class="migalhas">Início <svg class="ico"><use href="#i-dir"/></svg> <b>Carrinho</b></div>
+    <div class="linha" style="margin-bottom:20px;gap:12px"><h1 class="t-h1">Meu carrinho</h1><span class="selo selo--azul">4 itens</span></div>
+    <div class="carrinho">
+      <div class="coluna" style="gap:16px">
+        <div class="alerta alerta--info"><svg class="ico ico--p" style="margin-top:2px"><use href="#i-pacote"/></svg><span>O carrinho fica salvo neste navegador. O estoque só é reservado quando você confirma o pedido.</span></div>
+        <div class="caixa" style="padding:8px 24px">
+          <div class="linha entre" style="padding:14px 0 10px"><span class="t-pequeno c-suave">Vendido por <b class="c-azul">Sandra Rodrigues</b></span><span class="t-pequeno c-suave">2 itens</span></div>
+          <div class="item-carrinho"><img src="img/blocos.jpg" alt=""><div class="cresce"><b class="t-corpo-forte">Kit Blocos de Montar 120 peças</b><div class="t-pequeno c-suave">SKU BRM-BLC-120 · 12 em estoque</div><div class="qtd qtd--p" style="margin-top:10px"><button><svg class="ico ico--p"><use href="#i-menos"/></svg></button><span>1</span><button><svg class="ico ico--p"><use href="#i-mais"/></svg></button></div></div><div style="text-align:right"><div class="t-pequeno c-suave">R$ 99,90 cada</div><div class="t-preco-card">R$ 99,90</div><button class="btn btn--texto btn--p c-rosa"><svg class="ico ico--p"><use href="#i-lixeira"/></svg>Remover</button></div></div>
+          <div class="item-carrinho"><img src="img/urso.jpg" alt=""><div class="cresce"><b class="t-corpo-forte">Urso de Pelúcia Fofinho 40 cm</b><div class="t-pequeno c-suave">SKU BRM-URS-040 · 30 em estoque</div><div class="qtd qtd--p" style="margin-top:10px"><button><svg class="ico ico--p"><use href="#i-menos"/></svg></button><span>2</span><button><svg class="ico ico--p"><use href="#i-mais"/></svg></button></div></div><div style="text-align:right"><div class="t-pequeno c-suave">R$ 89,90 cada</div><div class="t-preco-card">R$ 179,80</div><button class="btn btn--texto btn--p c-rosa"><svg class="ico ico--p"><use href="#i-lixeira"/></svg>Remover</button></div></div>
+        </div>
+        <div class="caixa" style="padding:8px 24px">
+          <div class="linha entre" style="padding:14px 0 10px"><span class="t-pequeno c-suave">Vendido por <b class="c-azul">Mundo dos Brinquedos</b></span><span class="t-pequeno c-suave">1 item</span></div>
+          <div class="item-carrinho"><img src="img/argolas.jpg" alt=""><div class="cresce"><b class="t-corpo-forte">Torre de Argolas Montessori</b><div class="t-pequeno c-suave">SKU MDB-ARG-001 · <span class="c-rosa">Últimas 2 unidades</span></div><div class="qtd qtd--p" style="margin-top:10px"><button><svg class="ico ico--p"><use href="#i-menos"/></svg></button><span>1</span><button><svg class="ico ico--p"><use href="#i-mais"/></svg></button></div></div><div style="text-align:right"><div class="t-pequeno c-suave">R$ 59,90 cada</div><div class="t-preco-card">R$ 59,90</div><button class="btn btn--texto btn--p c-rosa"><svg class="ico ico--p"><use href="#i-lixeira"/></svg>Remover</button></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="caixa resumo">
+        <h3 class="t-h2" style="margin-bottom:12px">Resumo do pedido</h3>
+        <ul><li><span>Kit Blocos de Montar × 1</span><b>R$ 99,90</b></li><li><span>Urso de Pelúcia × 2</span><b>R$ 179,80</b></li><li><span>Torre de Argolas × 1</span><b>R$ 59,90</b></li></ul>
+        <div class="resumo__total"><b class="t-corpo-forte">Total (4 itens)</b><span class="t-preco-g" style="font-size:30px">R$ 339,60</span></div>
+        <a href="#checkout" class="btn btn--destaque btn--g btn--bloco" style="margin-top:18px">Continuar para o pedido</a>
+        <a href="#home" class="btn btn--contorno btn--bloco" style="margin-top:10px">Continuar comprando</a>
+        <p class="t-pequeno c-suave" style="margin-top:14px;text-align:center">É preciso estar logado para fazer o pedido.</p>
+      </div>
+    </div>
+    <div class="secao"><div class="secao-titulo"><h2 class="t-h2">Aproveite e leve também</h2></div><div class="prateleira" data-produtos="3,4,2,0,5"></div></div>
+  </div>
+  <div data-inserir="rodape"></div>
+</section>
+
+<!-- ===================================================== 14 · CHECKOUT  (pages/Checkout.jsx · POST /api/pedidos/) -->
+<section class="tela" id="checkout" data-titulo="14 · Checkout" data-grupo="Compra">
+  <div data-inserir="cabecalho-simples" data-texto="Pedido em ambiente seguro"></div>
+  <div class="container" style="padding-bottom:64px">
+    <div class="etapas" style="margin:32px 0 30px"><div class="etapa ok"><i><svg class="ico ico--p"><use href="#i-check"/></svg></i>Carrinho</div><hr class="ok"><div class="etapa on"><i>2</i>Revisão</div><hr><div class="etapa"><i>3</i>Pedido confirmado</div></div>
+    <div class="carrinho">
+      <div class="coluna" style="gap:16px">
+        <div class="alerta"><svg class="ico ico--p" style="margin-top:2px"><use href="#i-fechar"/></svg><span><b>Estoque insuficiente para “Torre de Argolas Montessori”.</b> Disponível: 1. Ajuste a quantidade e confirme de novo. <span class="c-fraco">(exemplo de erro 400 da API)</span></span></div>
+        <div class="caixa">
+          <div class="linha entre" style="margin-bottom:6px"><h2 class="t-h2">Revise seus itens</h2><a href="#carrinho" class="btn btn--texto btn--p"><svg class="ico ico--p"><use href="#i-editar"/></svg>Editar carrinho</a></div>
+          <div class="item-carrinho"><img src="img/blocos.jpg" alt=""><div class="cresce"><b class="t-corpo-forte">Kit Blocos de Montar 120 peças</b><div class="t-pequeno c-suave">Vendido por Sandra Rodrigues · R$ 99,90 cada</div></div><div style="text-align:right"><div class="t-pequeno c-suave">Qtd 1</div><div class="t-preco-card">R$ 99,90</div></div></div>
+          <div class="item-carrinho"><img src="img/urso.jpg" alt=""><div class="cresce"><b class="t-corpo-forte">Urso de Pelúcia Fofinho 40 cm</b><div class="t-pequeno c-suave">Vendido por Sandra Rodrigues · R$ 89,90 cada</div></div><div style="text-align:right"><div class="t-pequeno c-suave">Qtd 2</div><div class="t-preco-card">R$ 179,80</div></div></div>
+          <div class="item-carrinho"><img src="img/argolas.jpg" alt=""><div class="cresce"><b class="t-corpo-forte">Torre de Argolas Montessori</b><div class="t-pequeno c-suave">Vendido por Mundo dos Brinquedos · R$ 59,90 cada</div></div><div style="text-align:right"><div class="qtd qtd--p" style="border-color:var(--rosa-500)"><button><svg class="ico ico--p"><use href="#i-menos"/></svg></button><span>1</span><button><svg class="ico ico--p"><use href="#i-mais"/></svg></button></div><div class="t-preco-card" style="margin-top:6px">R$ 59,90</div></div></div>
+        </div>
+        <div class="caixa linha" style="gap:16px"><span class="bolha bolha--verde"><svg class="ico"><use href="#i-local"/></svg></span><div class="cresce"><b>Endereço do seu cadastro</b><div class="t-pequeno c-suave">Avenida Paulista, 1000, Apto 52 · Bela Vista · São Paulo/SP · 01310-100</div></div><a href="#minha-conta" class="btn btn--texto btn--p">Alterar em Minha conta</a></div>
+        <div class="alerta alerta--info"><svg class="ico ico--p" style="margin-top:2px"><use href="#i-cadeado"/></svg><span>Ao confirmar, a API grava o pedido numa única transação: confere o estoque de cada item, guarda o preço do momento e baixa o estoque. Se um item falhar, nada é gravado.</span></div>
+      </div>
+      <div class="caixa resumo">
+        <h3 class="t-h2" style="margin-bottom:12px">Seu pedido</h3>
+        <ul><li><span>Itens</span><b>4</b></li><li><span>Vendedores</span><b>2</b></li></ul>
+        <div class="resumo__total"><b class="t-corpo-forte">Total</b><span class="t-preco-g" style="font-size:30px">R$ 339,60</span></div>
+        <a href="#pedidos" class="btn btn--destaque btn--g btn--bloco" style="margin-top:18px">Confirmar pedido</a>
+        <a href="#carrinho" class="btn btn--texto btn--bloco" style="margin-top:6px"><svg class="ico ico--p"><use href="#i-esq"/></svg>Voltar ao carrinho</a>
+        <p class="t-pequeno c-suave" style="margin-top:12px;text-align:center">Você não pode comprar um produto que você mesmo vende.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== 15 · MEUS PEDIDOS  (pages/MeusPedidos.jsx · GET /api/pedidos/) -->
+<section class="tela" id="pedidos" data-titulo="15 · Meus pedidos" data-grupo="Compra">
+  <div data-inserir="cabecalho" data-logado></div>
+  <div class="container">
+    <div class="migalhas">Início <svg class="ico"><use href="#i-dir"/></svg> Minha conta <svg class="ico"><use href="#i-dir"/></svg> <b>Meus pedidos</b></div>
+    <div class="conta">
+      <div data-inserir="menu-conta" data-ativo="pedidos"></div>
+      <div class="coluna" style="gap:16px">
+        <div class="aviso"><svg class="ico"><use href="#i-check"/></svg><span><b>Pedido #10482 confirmado!</b> O estoque dos itens já foi reservado.</span></div>
+        <div class="linha entre"><h2 class="t-h1">Meus pedidos</h2><span class="t-pequeno c-suave">3 pedidos</span></div>
+        <div class="pedido-card" style="outline:2px solid var(--azul-500)">
+          <div class="linha entre"><div><b class="t-h3">Pedido #10482</b><div class="t-pequeno c-suave">Realizado em 22/11/2026 às 10:42 · 4 itens</div></div><span class="selo selo--verde">Confirmado</span><div style="text-align:right"><div class="t-pequeno c-suave">Total</div><div class="t-preco-card">R$ 339,60</div></div></div>
+          <div class="divisor"></div>
+          <ul class="lista-simples">
+            <li><img src="img/blocos.jpg" style="width:48px;height:48px;border-radius:10px" alt=""><span class="cresce"><b>Kit Blocos de Montar 120 peças</b><div class="t-pequeno c-suave">1 × R$ 99,90</div></span><b>R$ 99,90</b></li>
+            <li><img src="img/urso.jpg" style="width:48px;height:48px;border-radius:10px" alt=""><span class="cresce"><b>Urso de Pelúcia Fofinho 40 cm</b><div class="t-pequeno c-suave">2 × R$ 89,90</div></span><b>R$ 179,80</b></li>
+            <li><img src="img/argolas.jpg" style="width:48px;height:48px;border-radius:10px" alt=""><span class="cresce"><b>Torre de Argolas Montessori</b><div class="t-pequeno c-suave">1 × R$ 59,90</div></span><b>R$ 59,90</b></li>
+          </ul>
+          <p class="t-pequeno c-suave" style="margin-top:10px">Os preços são os do momento da compra, mesmo que o vendedor mude o valor depois.</p>
+        </div>
+        <div class="pedido-card linha entre"><div class="linha" style="gap:14px"><img src="img/carro.jpg" style="width:56px;height:56px;border-radius:12px" alt=""><div><b>Pedido #10377</b><div class="t-pequeno c-suave">02/11/2026 · 1 item</div></div></div><span class="selo selo--verde">Confirmado</span><b class="t-preco-card">R$ 199,90</b><button class="btn btn--contorno btn--p">Ver itens</button></div>
+        <div class="pedido-card linha entre"><div class="linha" style="gap:14px"><img src="img/jogo.jpg" style="width:56px;height:56px;border-radius:12px" alt=""><div><b>Pedido #10251</b><div class="t-pequeno c-suave">21/10/2026 · 2 itens</div></div></div><span class="selo selo--verde">Confirmado</span><b class="t-preco-card">R$ 209,80</b><button class="btn btn--contorno btn--p">Ver itens</button></div>
+        <div class="anotacao">A API tem só o status CONFIRMADO. Cancelamento com devolução de estoque está nos próximos passos do back-end.</div>
+      </div>
+    </div>
+  </div>
+  <div data-inserir="rodape"></div>
+</section>
+
+<!-- ===================================================== 08 · VENDEDOR · MEUS PRODUTOS  (GET /api/brinquedos/meus/) -->
+<section class="tela" id="painel-vendedor" data-titulo="08 · Vendedor · Meus produtos" data-grupo="Vendedor">
+  <div class="painel">
+    <div data-inserir="lateral-vendedor" data-ativo="produtos"></div>
+    <div class="painel__main">
+      <div data-inserir="topo-painel"></div>
+      <div class="painel__corpo">
+        <div class="painel__titulo"><div><h1 class="t-h1">Meus produtos</h1><p>Seus brinquedos, inclusive os desativados. Desativados não aparecem no catálogo.</p></div><a href="#produto-form" class="btn btn--destaque"><svg class="ico ico--p"><use href="#i-mais"/></svg>Novo produto</a></div>
+        <div class="indicadores">
+          <div class="card-indicador"><span class="card-indicador__bolha"><svg class="ico"><use href="#i-pacote"/></svg></span><div><b>24</b><small>Produtos ativos</small></div></div>
+          <div class="card-indicador"><span class="card-indicador__bolha rosa"><svg class="ico"><use href="#i-fechar"/></svg></span><div><b>3</b><small>Desativados</small></div></div>
+          <div class="card-indicador"><span class="card-indicador__bolha amarelo"><svg class="ico"><use href="#i-etiqueta"/></svg></span><div><b>2</b><small>Sem estoque</small></div></div>
+          <div class="card-indicador"><span class="card-indicador__bolha verde"><svg class="ico"><use href="#i-grafico"/></svg></span><div><b>R$ 3.480</b><small>Vendido em 30 dias</small></div></div>
+        </div>
+        <div class="tabela-caixa">
+          <div class="tabela-caixa__barra"><div class="campo__caixa" style="width:300px"><svg class="ico ico--p"><use href="#i-busca"/></svg><input placeholder="Buscar por nome ou SKU"></div><div class="campo__caixa" style="width:210px"><select><option>Todas as categorias</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div><div class="campo__caixa" style="width:180px"><select><option>Todos os status</option><option>Ativos</option><option>Desativados</option><option>Sem estoque</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div></div>
+          <table class="tabela">
+            <tr><th>Produto</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Cadastrado em</th><th style="width:130px">Ações</th></tr>
+            <tr><td><div class="prod"><img src="img/blocos.jpg" alt=""><div><b>Kit Blocos de Montar 120 peças</b><small>BRM-BLC-120</small></div></div></td><td>Blocos de montar</td><td><b>R$ 99,90</b></td><td>12</td><td><span class="selo selo--verde">Ativo</span></td><td class="c-suave">22/11/2026</td><td><div class="acoes"><a href="#produto-form" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></a><a href="#produto" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-olho"/></svg></a><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+            <tr><td><div class="prod"><img src="img/urso.jpg" alt=""><div><b>Urso de Pelúcia Fofinho 40 cm</b><small>BRM-URS-040</small></div></div></td><td>Pelúcias</td><td><b>R$ 89,90</b></td><td>30</td><td><span class="selo selo--verde">Ativo</span></td><td class="c-suave">21/11/2026</td><td><div class="acoes"><a href="#produto-form" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></a><a href="#produto" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-olho"/></svg></a><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+            <tr><td><div class="prod"><img src="img/carro.jpg" alt=""><div><b>Carrinho de Controle Remoto Turbo</b><small>BRM-CAR-777</small></div></div></td><td>Veículos</td><td><b>R$ 199,90</b></td><td class="c-rosa"><b>0</b></td><td><span class="selo selo--amarelo">Sem estoque</span></td><td class="c-suave">18/11/2026</td><td><div class="acoes"><a href="#produto-form" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></a><a href="#produto" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-olho"/></svg></a><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+            <tr><td><div class="prod"><img src="img/jogo.jpg" alt=""><div><b>Jogo de Tabuleiro Aventura em Família</b><small>BRM-JOG-010</small></div></div></td><td>Jogos</td><td><b>R$ 129,90</b></td><td>8</td><td><span class="selo selo--verde">Ativo</span></td><td class="c-suave">15/11/2026</td><td><div class="acoes"><a href="#produto-form" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></a><a href="#produto" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-olho"/></svg></a><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+            <tr class="inativo"><td><div class="prod"><img src="img/boneca.jpg" alt=""><div><b>Boneca de Pano Lulu</b><small>BRM-BON-002</small></div></div></td><td>Bonecas</td><td><b>R$ 79,90</b></td><td>4</td><td><span class="selo selo--cinza">Desativado</span></td><td>10/11/2026</td><td><div class="acoes"><button class="btn btn--contorno btn--p"><svg class="ico ico--p"><use href="#i-reativar"/></svg>Reativar</button></div></td></tr>
+            <tr><td><div class="prod"><img src="img/argolas.jpg" alt=""><div><b>Torre de Argolas Montessori</b><small>BRM-ARG-001</small></div></div></td><td>Baby</td><td><b>R$ 59,90</b></td><td>15</td><td><span class="selo selo--verde">Ativo</span></td><td class="c-suave">08/11/2026</td><td><div class="acoes"><a href="#produto-form" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></a><a href="#produto" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-olho"/></svg></a><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+          </table>
+          <div class="tabela-caixa__rodape"><span>6 brinquedos · DELETE desativa (exclusão lógica) e PATCH …/reativar/ volta a ativar</span></div>
+        </div>
+        <div class="linha" style="align-items:flex-start;gap:20px">
+          <span class="anotacao">Diálogo ao clicar na lixeira →</span>
+          <div class="dialogo"><div class="dialogo__icone"><svg class="ico ico--g"><use href="#i-lixeira"/></svg></div><h3 class="t-h3">Desativar “Urso de Pelúcia Fofinho”?</h3><p class="t-corpo c-suave" style="margin-top:6px">O brinquedo sai do catálogo, mas continua salvo nos pedidos antigos. Você pode reativá-lo depois.</p><div class="dialogo__acoes"><button class="btn btn--contorno btn--p">Cancelar</button><button class="btn btn--destaque btn--p">Desativar produto</button></div></div>
+          <div class="aviso" style="align-self:flex-end"><svg class="ico"><use href="#i-check"/></svg>Produto desativado. <a class="c-azul" style="color:#7DD3FC;font-weight:700">Desfazer</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== 09 · CADASTRO / EDIÇÃO DE PRODUTO  (POST/PATCH /api/brinquedos/) -->
+<section class="tela" id="produto-form" data-titulo="09 · Cadastro / edição de produto" data-grupo="Vendedor">
+  <div class="painel">
+    <div data-inserir="lateral-vendedor" data-ativo="novo"></div>
+    <div class="painel__main">
+      <div data-inserir="topo-painel"></div>
+      <div class="painel__corpo">
+        <div class="migalhas" style="padding:0"><a href="#painel-vendedor">Meus produtos</a> <svg class="ico"><use href="#i-dir"/></svg> <b>Novo produto</b></div>
+        <div class="painel__titulo"><div><h1 class="t-h1">Novo produto</h1><p>Campos com * são obrigatórios. Marca e categorias são cadastradas pelo admin.</p></div><div class="linha"><a href="#painel-vendedor" class="btn btn--contorno">Cancelar</a><a href="#painel-vendedor" class="btn btn--primario"><svg class="ico ico--p"><use href="#i-check"/></svg>Salvar produto</a></div></div>
+        <div class="duas-colunas">
+          <div class="coluna" style="gap:20px">
+            <div class="caixa"><h3 class="t-h3" style="margin-bottom:16px">Informações básicas</h3>
+              <div class="form-grade">
+                <div class="campo inteiro campo--foco"><label>Nome do produto *</label><div class="campo__caixa"><input value="Kit Blocos de Montar 120 peças"></div></div>
+                <div class="campo"><label>SKU *</label><div class="campo__caixa"><input value="BRM-BLC-120"></div><span class="campo__ajuda">Código único do produto</span></div>
+                <div class="campo"><label>Marca *</label><div class="campo__caixa"><select><option>Brinca Mais</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div></div>
+                <div class="campo inteiro so-admin-nota"><label>Vendedor <span class="selo selo--amarelo" style="margin-left:4px">só admin</span></label><div class="campo__caixa"><select><option>Sandra Rodrigues</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div><span class="campo__ajuda">Para o vendedor, o campo não aparece: o produto fica com o usuário logado.</span></div>
+                <div class="campo inteiro"><label>Categorias * <span class="c-fraco">(ao menos uma)</span></label><div class="chips-cat"><span>Blocos de montar <svg class="ico ico--p"><use href="#i-fechar"/></svg></span><span class="c-fraco" style="background:none;font-weight:400">+ adicionar categoria</span></div></div>
+                <div class="campo inteiro"><label>Descrição</label><textarea>Um kit colorido com 120 blocos de madeira certificada para construir torres, castelos e tudo o que a imaginação mandar.</textarea></div>
+              </div>
+            </div>
+            <div class="caixa"><h3 class="t-h3" style="margin-bottom:6px">Imagem do produto</h3><p class="t-pequeno c-suave" style="margin-bottom:14px">Cada brinquedo tem uma imagem. Cole o link (URL) de uma foto já hospedada.</p>
+              <div class="linha" style="gap:16px;align-items:flex-start">
+                <div class="miniaturas" style="grid-template-columns:1fr;width:140px;margin:0;flex:none"><div class="capa"><img src="img/blocos.jpg" alt=""></div></div>
+                <div class="campo cresce"><label>URL da imagem</label><div class="campo__caixa"><svg class="ico ico--p"><use href="#i-imagem"/></svg><input value="https://exemplo.com/fotos/blocos-120.jpg"></div><span class="campo__ajuda">Opcional. Sem imagem, o card mostra um ícone no lugar da foto.</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="coluna" style="gap:20px">
+            <div class="caixa"><h3 class="t-h3" style="margin-bottom:16px">Preço e estoque</h3>
+              <div class="coluna" style="gap:14px">
+                <div class="campo campo--erro"><label>Preço *</label><div class="campo__caixa"><b class="c-fraco">R$</b><input value="0,00"></div><span class="campo__ajuda">O preço deve ser maior que zero.</span></div>
+                <div class="campo"><label>Estoque *</label><div class="campo__caixa"><input value="12"><span class="t-pequeno">unidades</span></div></div>
+                <div class="campo"><label>Idade mínima</label><div class="campo__caixa"><input value="3"><span class="t-pequeno">anos</span></div></div>
+              </div>
+            </div>
+            <div class="caixa"><h3 class="t-h3" style="margin-bottom:8px">Status</h3><div class="linha"><span class="selo selo--verde">Ativo</span><span class="t-pequeno c-suave">Todo produto novo nasce ativo. Para tirar do catálogo, use “Desativar” na lista.</span></div></div>
+            <div class="caixa"><h3 class="t-h3" style="margin-bottom:12px">Pré-visualização</h3><div style="max-width:250px" data-produtos="0" data-sem-botao></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== 16 · VENDEDOR · MINHAS VENDAS  (GET /api/pedidos/vendas/) -->
+<section class="tela" id="vendas" data-titulo="16 · Vendedor · Minhas vendas" data-grupo="Vendedor">
+  <div class="painel">
+    <div data-inserir="lateral-vendedor" data-ativo="vendas"></div>
+    <div class="painel__main">
+      <div data-inserir="topo-painel"></div>
+      <div class="painel__corpo">
+        <div class="painel__titulo"><div><h1 class="t-h1">Minhas vendas</h1><p>Todos os itens dos seus produtos vendidos na LudiStore.</p></div><div class="campo__caixa" style="width:200px"><svg class="ico ico--p"><use href="#i-calendario"/></svg><select><option>Últimos 30 dias</option></select></div></div>
+        <div class="indicadores">
+          <div class="card-indicador"><span class="card-indicador__bolha verde"><svg class="ico"><use href="#i-grafico"/></svg></span><div><b>R$ 3.480,20</b><small>Faturamento no período</small></div></div>
+          <div class="card-indicador"><span class="card-indicador__bolha"><svg class="ico"><use href="#i-recibo"/></svg></span><div><b>31</b><small>Pedidos com seus produtos</small></div></div>
+          <div class="card-indicador"><span class="card-indicador__bolha amarelo"><svg class="ico"><use href="#i-pacote"/></svg></span><div><b>47</b><small>Unidades vendidas</small></div></div>
+          <div class="card-indicador"><span class="card-indicador__bolha rosa"><svg class="ico"><use href="#i-estrela"/></svg></span><div><b>R$ 112,26</b><small>Ticket médio</small></div></div>
+        </div>
+        <div class="duas-colunas">
+          <div class="tabela-caixa">
+            <div class="tabela-caixa__barra"><h3 class="t-h3 cresce">Vendas recentes</h3><div class="campo__caixa" style="width:240px"><svg class="ico ico--p"><use href="#i-busca"/></svg><input placeholder="Buscar produto ou comprador"></div></div>
+            <table class="tabela">
+              <tr><th>Data</th><th>Pedido</th><th>Produto</th><th>Comprador</th><th>Qtd</th><th>Valor</th></tr>
+              <tr><td>22/11/2026</td><td><b>#10482</b></td><td><div class="prod"><img src="img/blocos.jpg" alt=""><b>Kit Blocos 120 peças</b></div></td><td>Ana Souza</td><td>1</td><td><b>R$ 99,90</b></td></tr>
+              <tr><td>22/11/2026</td><td><b>#10482</b></td><td><div class="prod"><img src="img/urso.jpg" alt=""><b>Urso de Pelúcia 40 cm</b></div></td><td>Ana Souza</td><td>2</td><td><b>R$ 179,80</b></td></tr>
+              <tr><td>20/11/2026</td><td><b>#10455</b></td><td><div class="prod"><img src="img/jogo.jpg" alt=""><b>Jogo Aventura em Família</b></div></td><td>Bruno Lima</td><td>1</td><td><b>R$ 129,90</b></td></tr>
+              <tr><td>18/11/2026</td><td><b>#10431</b></td><td><div class="prod"><img src="img/argolas.jpg" alt=""><b>Torre de Argolas</b></div></td><td>Pequeno Saber Ltda</td><td>6</td><td><b>R$ 359,40</b></td></tr>
+              <tr><td>15/11/2026</td><td><b>#10398</b></td><td><div class="prod"><img src="img/carro.jpg" alt=""><b>Carrinho Turbo</b></div></td><td>Bruno Lima</td><td>1</td><td><b>R$ 199,90</b></td></tr>
+            </table>
+            <div class="tabela-caixa__rodape"><span>Preço registrado no momento da compra (RN13)</span></div>
+          </div>
+          <div class="caixa"><h3 class="t-h3">Mais vendidos</h3><ul class="lista-simples" style="margin-top:10px">
+            <li><img src="img/urso.jpg" style="width:44px;height:44px;border-radius:10px" alt=""><span class="cresce"><b>Urso de Pelúcia</b><div class="t-pequeno c-suave">14 unidades</div></span><b>R$ 1.258,60</b></li>
+            <li><img src="img/blocos.jpg" style="width:44px;height:44px;border-radius:10px" alt=""><span class="cresce"><b>Kit Blocos 120 peças</b><div class="t-pequeno c-suave">9 unidades</div></span><b>R$ 899,10</b></li>
+            <li><img src="img/argolas.jpg" style="width:44px;height:44px;border-radius:10px" alt=""><span class="cresce"><b>Torre de Argolas</b><div class="t-pequeno c-suave">11 unidades</div></span><b>R$ 658,90</b></li>
+            <li><img src="img/jogo.jpg" style="width:44px;height:44px;border-radius:10px" alt=""><span class="cresce"><b>Jogo Aventura</b><div class="t-pequeno c-suave">4 unidades</div></span><b>R$ 519,60</b></li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== 10 · ADMIN · VISÃO GERAL -->
+<section class="tela" id="admin" data-titulo="10 · Admin · Visão geral" data-grupo="Admin">
+  <div class="painel">
+    <div data-inserir="lateral-admin" data-ativo="geral"></div>
+    <div class="painel__main">
+      <div data-inserir="topo-painel" data-admin></div>
+      <div class="painel__corpo">
+        <div class="painel__titulo"><div><h1 class="t-h1">Olá, Admin 👋</h1><p>Resumo da LudiStore hoje, 22 de novembro de 2026.</p></div><div class="linha"><a href="#admin-marcas" class="btn btn--contorno"><svg class="ico ico--p"><use href="#i-etiqueta"/></svg>Marcas e categorias</a><a href="#admin-pedidos" class="btn btn--primario"><svg class="ico ico--p"><use href="#i-recibo"/></svg>Ver pedidos</a></div></div>
+        <div class="indicadores">
+          <div class="card-indicador"><span class="card-indicador__bolha"><svg class="ico"><use href="#i-usuarios"/></svg></span><div><b>1.284</b><small>Clientes</small></div></div>
+          <div class="card-indicador"><span class="card-indicador__bolha rosa"><svg class="ico"><use href="#i-loja"/></svg></span><div><b>37</b><small>Vendedores</small></div></div>
+          <div class="card-indicador"><span class="card-indicador__bolha amarelo"><svg class="ico"><use href="#i-pacote"/></svg></span><div><b>612</b><small>Brinquedos ativos</small></div></div>
+          <div class="card-indicador"><span class="card-indicador__bolha verde"><svg class="ico"><use href="#i-recibo"/></svg></span><div><b>158</b><small>Pedidos no mês</small></div></div>
+        </div>
+        <div class="duas-colunas">
+          <div class="caixa"><div class="linha entre"><h3 class="t-h3">Pedidos por mês</h3><div class="campo__caixa" style="height:38px;width:170px"><select><option>Últimos 6 meses</option></select></div></div>
+            <div class="grafico"><div><span style="height:42%"></span>jun</div><div><span style="height:55%"></span>jul</div><div><span style="height:48%"></span>ago</div><div><span style="height:70%"></span>set</div><div><span style="height:62%"></span>out</div><div class="on"><span style="height:88%"></span><b style="color:var(--marinho-900)">nov</b></div></div></div>
+          <div class="caixa"><div class="linha entre"><h3 class="t-h3">Novos usuários</h3><a href="#admin-usuarios" class="ver-tudo">Ver todos</a></div><ul class="lista-simples" style="margin-top:8px">
+            <li><span class="avatar avatar--p">BL</span><span class="cresce"><b>Bruno Lima</b><div class="t-pequeno c-suave">bruno@email.com</div></span><span class="selo selo--azul">Cliente</span></li>
+            <li><span class="avatar avatar--p">MB</span><span class="cresce"><b>Mundo dos Brinquedos</b><div class="t-pequeno c-suave">contato@mundo…</div></span><span class="selo selo--rosa">Vendedor</span></li>
+            <li><span class="avatar avatar--p">PS</span><span class="cresce"><b>Pequeno Saber Ltda</b><div class="t-pequeno c-suave">compras@pequeno…</div></span><span class="selo selo--azul">Cliente</span></li>
+            <li><span class="avatar avatar--p">AS</span><span class="cresce"><b>Ana Souza</b><div class="t-pequeno c-suave">ana@email.com</div></span><span class="selo selo--azul">Cliente</span></li></ul></div>
+        </div>
+        <div class="tabela-caixa">
+          <div class="tabela-caixa__barra"><h3 class="t-h3 cresce">Últimos brinquedos cadastrados</h3><a href="#admin-produtos" class="ver-tudo">Gerenciar produtos <svg class="ico ico--p"><use href="#i-dir"/></svg></a></div>
+          <table class="tabela"><tr><th>Brinquedo</th><th>Criado por</th><th>Categoria</th><th>Data</th><th>Status</th></tr>
+            <tr><td><div class="prod"><img src="img/carro.jpg" alt=""><b>Carrinho de Controle Remoto Turbo</b></div></td><td><div class="linha"><span class="avatar avatar--p">SR</span>Sandra Rodrigues</div></td><td>Veículos</td><td>22/11</td><td><span class="selo selo--verde">Ativo</span></td></tr>
+            <tr><td><div class="prod"><img src="img/boneca.jpg" alt=""><b>Boneca de Pano Lulu</b></div></td><td><div class="linha"><span class="avatar avatar--p">MB</span>Mundo dos Brinquedos</div></td><td>Bonecas</td><td>21/11</td><td><span class="selo selo--verde">Ativo</span></td></tr>
+            <tr><td><div class="prod"><img src="img/jogo.jpg" alt=""><b>Jogo Aventura em Família</b></div></td><td><div class="linha"><span class="avatar avatar--p">AD</span>Admin LudiStore</div></td><td>Jogos</td><td>20/11</td><td><span class="selo selo--verde">Ativo</span></td></tr></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== 11 · ADMIN · PRODUTOS -->
+<section class="tela" id="admin-produtos" data-titulo="11 · Admin · Gestão de produtos" data-grupo="Admin">
+  <div class="painel">
+    <div data-inserir="lateral-admin" data-ativo="produtos"></div>
+    <div class="painel__main">
+      <div data-inserir="topo-painel" data-admin></div>
+      <div class="painel__corpo">
+        <div class="painel__titulo"><div><h1 class="t-h1">Produtos</h1><p>Brinquedos ativos de todos os vendedores. O admin pode editar e desativar qualquer um.</p></div><a href="#produto-form" class="btn btn--destaque"><svg class="ico ico--p"><use href="#i-mais"/></svg>Cadastrar em nome de um vendedor</a></div>
+        <div class="abas"><a class="on">Ativos <small>5</small></a><a>Sem estoque <small>1</small></a></div>
+        <div class="tabela-caixa">
+          <div class="tabela-caixa__barra"><div class="campo__caixa" style="width:280px"><svg class="ico ico--p"><use href="#i-busca"/></svg><input placeholder="Buscar por nome ou SKU"></div><div class="campo__caixa" style="width:220px"><select><option>Todos os vendedores</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div><div class="campo__caixa" style="width:210px"><select><option>Todas as categorias</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div><div class="campo__caixa" style="width:190px"><select><option>Todas as marcas</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div></div>
+          <table class="tabela">
+            <tr><th>Brinquedo</th><th>Vendedor (criado por)</th><th>Marca</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ações</th></tr>
+            <tr><td><div class="prod"><img src="img/blocos.jpg" alt=""><div><b>Kit Blocos de Montar 120 peças</b><small>BRM-BLC-120</small></div></div></td><td><div class="linha"><span class="avatar avatar--p">SR</span>Sandra Rodrigues</div></td><td>Brinca Mais</td><td><b>R$ 99,90</b></td><td>12</td><td><span class="selo selo--verde">Ativo</span></td><td><div class="acoes"><a href="#produto-form" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></a><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+            <tr><td><div class="prod"><img src="img/urso.jpg" alt=""><div><b>Urso de Pelúcia Fofinho 40 cm</b><small>BRM-URS-040</small></div></div></td><td><div class="linha"><span class="avatar avatar--p">SR</span>Sandra Rodrigues</div></td><td>Brinca Mais</td><td><b>R$ 89,90</b></td><td>30</td><td><span class="selo selo--verde">Ativo</span></td><td><div class="acoes"><a href="#produto-form" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></a><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+            <tr><td><div class="prod"><img src="img/boneca.jpg" alt=""><div><b>Boneca de Pano Lulu</b><small>MDB-BON-002</small></div></div></td><td><div class="linha"><span class="avatar avatar--p">MB</span>Mundo dos Brinquedos</div></td><td>Ateliê Pequenos</td><td><b>R$ 79,90</b></td><td>4</td><td><span class="selo selo--verde">Ativo</span></td><td><div class="acoes"><a href="#produto-form" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></a><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+            <tr><td><div class="prod"><img src="img/carro.jpg" alt=""><div><b>Carrinho de Controle Remoto Turbo</b><small>MDB-CAR-777</small></div></div></td><td><div class="linha"><span class="avatar avatar--p">MB</span>Mundo dos Brinquedos</div></td><td>Toy Center</td><td><b>R$ 199,90</b></td><td class="c-rosa"><b>0</b></td><td><span class="selo selo--amarelo">Sem estoque</span></td><td><div class="acoes"><a href="#produto-form" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></a><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+            
+            <tr><td><div class="prod"><img src="img/argolas.jpg" alt=""><div><b>Torre de Argolas Montessori</b><small>MDB-ARG-001</small></div></div></td><td><div class="linha"><span class="avatar avatar--p">MB</span>Mundo dos Brinquedos</div></td><td>Brinca Mais</td><td><b>R$ 59,90</b></td><td>2</td><td><span class="selo selo--verde">Ativo</span></td><td><div class="acoes"><a href="#produto-form" class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></a><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+          </table>
+          <div class="tabela-caixa__rodape"><span>A API lista só os ativos. Um brinquedo desativado é reativado pela tela Meus produtos do vendedor ou pelo endpoint …/reativar/.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== 12 · ADMIN · USUÁRIOS  (GET /api/usuarios/?busca=) -->
+<section class="tela" id="admin-usuarios" data-titulo="12 · Admin · Gestão de usuários" data-grupo="Admin">
+  <div class="painel">
+    <div data-inserir="lateral-admin" data-ativo="usuarios"></div>
+    <div class="painel__main">
+      <div data-inserir="topo-painel" data-admin></div>
+      <div class="painel__corpo">
+        <div class="painel__titulo"><div><h1 class="t-h1">Usuários</h1><p>Pesquise por nome, e-mail, CPF, CNPJ, telefone ou id.</p></div></div>
+        <div class="abas"><a class="on">Todos <small>8</small></a><a>Clientes <small>3</small></a><a>Vendedores <small>2</small></a><a>Administradores <small>2</small></a><a>Desativados <small>1</small></a></div>
+        <div class="tabela-caixa">
+          <div class="tabela-caixa__barra"><div class="campo__caixa" style="width:340px"><svg class="ico ico--p"><use href="#i-busca"/></svg><input value="ana"></div><span class="t-pequeno c-suave">4 resultados para “ana”</span></div>
+          <table class="tabela">
+            <tr><th>Usuário</th><th>Documento</th><th>Perfil</th><th>Tipo</th><th>Cadastro</th><th>Status</th><th>Ações</th></tr>
+            <tr><td><div class="linha"><span class="avatar avatar--p">AS</span><div><b>Ana Souza</b><div class="t-pequeno c-suave">ana@email.com</div></div></div></td><td>123.456.789-00</td><td><span class="selo selo--azul">Cliente</span></td><td>PF</td><td>16/11/2026</td><td><span class="selo selo--verde">Ativo</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+            <tr><td><div class="linha"><span class="avatar avatar--p">SR</span><div><b>Sandra Rodrigues</b><div class="t-pequeno c-suave">sandra@email.com</div></div></div></td><td>987.654.321-00</td><td><span class="selo selo--rosa">Vendedor</span></td><td>PF</td><td>09/11/2026</td><td><span class="selo selo--verde">Ativo</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+            <tr><td><div class="linha"><span class="avatar avatar--p">AD</span><div><b>Admin LudiStore</b><div class="t-pequeno c-suave">admin@ludistore.com</div></div></div></td><td class="c-fraco">dispensado</td><td><span class="selo selo--amarelo">Admin</span></td><td>PF</td><td>01/11/2026</td><td><span class="selo selo--verde">Ativo</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button></div></td></tr>
+            <tr class="inativo"><td><div class="linha"><span class="avatar avatar--p" style="filter:grayscale(1)">MA</span><div><b>Mariana Alves</b><div class="t-pequeno">mariana@email.com</div></div></div></td><td>111.222.333-44</td><td><span class="selo selo--cinza">Cliente</span></td><td>PF</td><td>05/11/2026</td><td><span class="selo selo--cinza">Desativado</span></td><td><div class="acoes"><button class="btn btn--contorno btn--p"><svg class="ico ico--p"><use href="#i-reativar"/></svg>Reativar</button></div></td></tr>
+          </table>
+        </div>
+        <div class="linha" style="align-items:flex-start;gap:20px">
+          <span class="anotacao">Diálogo ao clicar em editar →</span>
+          <div class="dialogo" style="width:480px"><div class="linha entre" style="margin-bottom:6px"><h3 class="t-h3">Editar usuário</h3><svg class="ico c-fraco"><use href="#i-fechar"/></svg></div><p class="t-pequeno c-suave" style="margin-bottom:14px">O perfil não pode ser alterado (RN20). As regras do cadastro valem de novo: vendedor precisa de telefone.</p>
+            <div class="coluna" style="gap:12px"><div class="campo"><label>Nome</label><div class="campo__caixa"><input value="Sandra Rodrigues"></div></div><div class="campo"><label>E-mail</label><div class="campo__caixa"><input value="sandra@email.com"></div></div><div class="campo campo--erro"><label>Telefone</label><div class="campo__caixa"><input value=""></div><span class="campo__ajuda">Telefone é obrigatório para vendedores.</span></div><div class="linha"><span class="t-pequeno c-suave">Perfil</span><span class="selo selo--rosa">Vendedor</span></div></div>
+            <div class="dialogo__acoes"><button class="btn btn--contorno btn--p">Cancelar</button><button class="btn btn--primario btn--p">Salvar</button></div></div>
+          <span class="anotacao" style="align-self:flex-end">Administradores são criados pelo comando popular_banco ou pelo shell (RN01).</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== 17 · ADMIN · PEDIDOS  (GET /api/pedidos/?comprador_id=) -->
+<section class="tela" id="admin-pedidos" data-titulo="17 · Admin · Pedidos" data-grupo="Admin">
+  <div class="painel">
+    <div data-inserir="lateral-admin" data-ativo="pedidos"></div>
+    <div class="painel__main">
+      <div data-inserir="topo-painel" data-admin></div>
+      <div class="painel__corpo">
+        <div class="painel__titulo"><div><h1 class="t-h1">Pedidos</h1><p>Pedidos confirmados não são alterados nem apagados.</p></div><div class="campo__caixa" style="width:200px"><svg class="ico ico--p"><use href="#i-calendario"/></svg><select><option>Todos os períodos</option></select></div></div>
+        <div class="duas-colunas" style="grid-template-columns:1.5fr 1fr">
+          <div class="tabela-caixa">
+            <div class="tabela-caixa__barra"><div class="campo__caixa" style="width:260px"><svg class="ico ico--p"><use href="#i-busca"/></svg><input placeholder="Nº do pedido ou comprador"></div><div class="campo__caixa" style="width:200px"><select><option>Todos os compradores</option></select><svg class="ico ico--p"><use href="#i-baixo"/></svg></div></div>
+            <table class="tabela">
+              <tr><th>Pedido</th><th>Comprador</th><th>Itens</th><th>Data</th><th>Total</th><th>Status</th></tr>
+              <tr style="background:var(--azul-50)"><td><b class="c-azul">#10482</b></td><td>Ana Souza</td><td>4</td><td>22/11 10:42</td><td><b>R$ 339,60</b></td><td><span class="selo selo--verde">Confirmado</span></td></tr>
+              <tr><td><b>#10455</b></td><td>Bruno Lima</td><td>1</td><td>20/11 16:10</td><td><b>R$ 129,90</b></td><td><span class="selo selo--verde">Confirmado</span></td></tr>
+              <tr><td><b>#10431</b></td><td>Pequeno Saber Ltda</td><td>6</td><td>18/11 09:05</td><td><b>R$ 359,40</b></td><td><span class="selo selo--verde">Confirmado</span></td></tr>
+              <tr><td><b>#10398</b></td><td>Bruno Lima</td><td>1</td><td>15/11 21:33</td><td><b>R$ 199,90</b></td><td><span class="selo selo--verde">Confirmado</span></td></tr>
+            </table>
+          </div>
+          <div class="caixa">
+            <div class="linha entre"><div><span class="t-rotulo c-suave">Detalhe do pedido</span><h3 class="t-h2">#10482</h3></div><span class="selo selo--verde">Confirmado</span></div>
+            <div class="linha" style="margin:14px 0"><span class="avatar">AS</span><div><b>Ana Souza</b><div class="t-pequeno c-suave">ana@email.com · CPF 123.456.789-00</div></div></div>
+            <div class="divisor"></div>
+            <ul class="lista-simples">
+              <li><img src="img/blocos.jpg" style="width:44px;height:44px;border-radius:10px" alt=""><span class="cresce t-pequeno"><b>Kit Blocos 120 peças</b><div class="c-suave">1 × R$ 99,90</div></span><b>R$ 99,90</b></li>
+              <li><img src="img/urso.jpg" style="width:44px;height:44px;border-radius:10px" alt=""><span class="cresce t-pequeno"><b>Urso de Pelúcia 40 cm</b><div class="c-suave">2 × R$ 89,90</div></span><b>R$ 179,80</b></li>
+              <li><img src="img/argolas.jpg" style="width:44px;height:44px;border-radius:10px" alt=""><span class="cresce t-pequeno"><b>Torre de Argolas</b><div class="c-suave">1 × R$ 59,90</div></span><b>R$ 59,90</b></li>
+            </ul>
+            <div class="divisor"></div>
+            <div class="resumo__total"><b>Total</b><span class="t-preco-card">R$ 339,60</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== 18 · ADMIN · MARCAS E CATEGORIAS -->
+<section class="tela" id="admin-marcas" data-titulo="18 · Admin · Marcas e categorias" data-grupo="Admin">
+  <div class="painel">
+    <div data-inserir="lateral-admin" data-ativo="marcas"></div>
+    <div class="painel__main">
+      <div data-inserir="topo-painel" data-admin></div>
+      <div class="painel__corpo">
+        <div class="painel__titulo"><div><h1 class="t-h1">Marcas e categorias</h1><p>O nome é único e não diferencia maiúsculas de minúsculas (“Estrela” = “estrela”).</p></div></div>
+        <div class="cadastro-simples">
+          <div class="tabela-caixa">
+            <div class="tabela-caixa__barra"><h3 class="t-h3 cresce">Marcas <span class="selo selo--cinza">4</span></h3></div>
+            <div class="linha" style="padding:0 16px 16px"><div class="campo__caixa cresce"><input placeholder="Nome da nova marca"></div><button class="btn btn--primario"><svg class="ico ico--p"><use href="#i-mais"/></svg>Adicionar</button></div>
+            <table class="tabela"><tr><th>Nome</th><th>Brinquedos</th><th>Status</th><th>Ações</th></tr>
+              <tr><td><b>Brinca Mais</b></td><td>31</td><td><span class="selo selo--verde">Ativa</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+              <tr><td><b>Toy Center</b></td><td>27</td><td><span class="selo selo--verde">Ativa</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+              <tr><td><div class="campo campo--foco"><div class="campo__caixa" style="height:38px"><input value="Estrela Guia"></div></div></td><td>18</td><td><span class="selo selo--verde">Ativa</span></td><td><div class="acoes"><button class="btn btn--primario btn--p">Salvar</button></div></td></tr>
+              <tr><td><b>Ateliê Pequenos</b></td><td>12</td><td><span class="selo selo--verde">Ativa</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+              
+            </table>
+          </div>
+          <div class="tabela-caixa">
+            <div class="tabela-caixa__barra"><h3 class="t-h3 cresce">Categorias <span class="selo selo--cinza">6</span></h3></div>
+            <div class="linha" style="padding:0 16px 16px"><div class="campo campo--erro cresce"><div class="campo__caixa"><input value="bonecas"></div><span class="campo__ajuda">Já existe uma categoria com esse nome.</span></div><button class="btn btn--primario" style="align-self:flex-start"><svg class="ico ico--p"><use href="#i-mais"/></svg>Adicionar</button></div>
+            <table class="tabela"><tr><th>Nome</th><th>Brinquedos</th><th>Status</th><th>Ações</th></tr>
+              <tr><td><b>Bonecas</b></td><td>248</td><td><span class="selo selo--verde">Ativa</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+              <tr><td><b>Veículos</b></td><td>312</td><td><span class="selo selo--verde">Ativa</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+              <tr><td><b>Jogos</b></td><td>186</td><td><span class="selo selo--verde">Ativa</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+              <tr><td><b>Pelúcias</b></td><td>204</td><td><span class="selo selo--verde">Ativa</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+              <tr><td><b>Blocos de montar</b></td><td>97</td><td><span class="selo selo--verde">Ativa</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+              <tr><td><b>Baby</b></td><td>156</td><td><span class="selo selo--verde">Ativa</span></td><td><div class="acoes"><button class="btn btn--icone"><svg class="ico ico--p"><use href="#i-editar"/></svg></button><button class="btn btn--icone perigo"><svg class="ico ico--p"><use href="#i-lixeira"/></svg></button></div></td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="aviso" style="align-self:flex-start"><svg class="ico"><use href="#i-check"/></svg>Marca “Estrela Guia” atualizada.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<script src="js/app.js"></script>
+</body>
+</html>

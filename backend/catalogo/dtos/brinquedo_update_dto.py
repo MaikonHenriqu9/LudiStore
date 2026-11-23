@@ -10,6 +10,6 @@ class BrinquedoUpdateDTO(serializers.Serializer):
     preco = serializers.DecimalField(max_digits=8, decimal_places=2, min_value=Decimal('0.01'), required=False)
     estoque = serializers.IntegerField(min_value=0, required=False)
     idade_minima = serializers.IntegerField(min_value=0, required=False)
-    imagem_url = serializers.URLField(required=False, allow_blank=True)
+    imagem_url = serializers.URLField(max_length=2048, required=False, allow_blank=True)
     marca_id = serializers.IntegerField(required=False)
     categorias_ids = serializers.ListField(child=serializers.IntegerField(), allow_empty=False, required=False)

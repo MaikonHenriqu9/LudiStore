@@ -1,0 +1,315 @@
+/* =========================================================
+   LudiStore · Responsividade
+   Faixas (mesmas do Tailwind/Bootstrap, para facilitar no React):
+   ≤1280 notebook · ≤1024 tablet · ≤768 celular grande · ≤480 celular
+   Carregue este arquivo DEPOIS de componentes.css e telas.css.
+   ========================================================= */
+
+/* Elementos que só aparecem em telas pequenas */
+.so-mobile { display: none !important; }
+
+/* Tabelas: rolagem lateral em vez de espremer as colunas */
+.tabela-caixa .tabela thead,
+.tabela-caixa .tabela tbody,
+.tabela-caixa .tabela,
+.tabela-rolagem .tabela { min-width: 760px; }
+
+/* Em cadastros simples (Marcas e Categorias), a tabela tem poucas colunas e se adapta */
+.cadastro-simples .tabela-caixa .tabela thead,
+.cadastro-simples .tabela-caixa .tabela tbody,
+.cadastro-simples .tabela-caixa .tabela,
+.cadastro-simples .tabela-rolagem .tabela { min-width: 100% !important; }
+
+/* Em telas com layout dividido (ex: Admin Pedidos), min-width adaptado */
+.duas-colunas .tabela-caixa .tabela thead,
+.duas-colunas .tabela-caixa .tabela tbody,
+.duas-colunas .tabela-caixa .tabela,
+.duas-colunas .tabela-rolagem .tabela { min-width: 540px; }
+
+/* ===================== ≤ 1280px · notebook ===================== */
+@media (max-width: 1280px) {
+  :root { --margem-pagina: 40px; }
+  .cabecalho__principal { gap: 24px; }
+  .cabecalho__acoes { gap: 18px; }
+  .cabecalho__menu { gap: 22px; overflow-x: auto; scrollbar-width: none; }
+  .cabecalho__menu::-webkit-scrollbar { display: none; }
+  .prateleira { grid-template-columns: repeat(4, 1fr); }
+  .prateleira > :nth-child(5) { display: none; }
+  .hero { padding: 0 48px; }
+  .hero__fotos { right: 30px; width: 480px; transform: scale(.88); transform-origin: right center; }
+  .idade__circulo { width: 116px; height: 116px; }
+  .grade-produtos { grid-template-columns: repeat(3, 1fr); }
+  .rodape__cols { grid-template-columns: repeat(3, 1fr); }
+  .rodape__cols > :first-child { grid-column: 1 / -1; }
+  .painel { grid-template-columns: 236px 1fr; }
+  .indicadores { grid-template-columns: repeat(2, 1fr); }
+  .painel__topo .campo__caixa { width: 280px; }
+  .acesso__fotos img { width: 160px; }
+  .acesso__fotos img:nth-child(2) { left: 140px; }
+  .acesso__fotos img:nth-child(3) { left: 280px; }
+}
+
+/* ===================== ≤ 1024px · tablet ===================== */
+@media (max-width: 1024px) {
+  :root { --margem-pagina: 28px; }
+  .so-mobile { display: inline-flex !important; }
+  .so-desktop { display: none !important; }
+  .t-display { font-size: 38px; }
+  .t-h1 { font-size: 28px; }
+
+  /* Cabeçalho: busca vai para uma linha própria */
+  .cabecalho__faixa { gap: 24px; font-size: 12px; }
+  .cabecalho__principal { flex-wrap: wrap; row-gap: 14px; }
+  .cabecalho__principal .busca { order: 3; flex-basis: 100%; }
+  .cabecalho__acoes { margin-left: auto; }
+  .acao > span:last-child small { display: none; }
+
+  /* Home */
+  .hero { height: auto; min-height: 380px; padding: 40px 32px; }
+  .hero__texto { max-width: 52%; }
+  .hero__fotos { width: 400px; right: 0; transform: scale(.72); }
+  .hero__seta { display: none; }
+  .beneficios { grid-template-columns: repeat(2, 1fr); row-gap: 18px; }
+  .beneficio:nth-child(3) { border-left: 0; }
+  .idades { display: grid; grid-template-columns: repeat(3, 1fr); row-gap: 24px; }
+  .prateleira { grid-template-columns: repeat(3, 1fr); }
+  .prateleira > :nth-child(4) { display: none; }
+  .categorias { grid-template-columns: repeat(3, 1fr); }
+  .banners { grid-template-columns: 1fr; }
+  .marcas { grid-template-columns: repeat(3, 1fr); }
+  .secao { margin-top: 44px; }
+
+  /* Listagem / busca: filtros viram gaveta */
+  .listagem { grid-template-columns: 1fr; }
+  .filtros { display: none; position: static; }
+  .filtros.aberto { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; }
+  .filtros.aberto > .linha, .filtros.aberto > h3, .filtros.aberto > .btn { grid-column: 1 / -1; }
+  .grade-produtos { grid-template-columns: repeat(3, 1fr); }
+  .cat-topo__imgs { display: none; }
+  .sugestoes { left: var(--margem-pagina); right: var(--margem-pagina); width: auto; top: 188px; }
+
+  /* Produto */
+  .produto { grid-template-columns: 1fr; gap: 28px; }
+  .galeria { max-width: 620px; margin: 0 auto; width: 100%; }
+
+  /* Acesso */
+  .acesso, .acesso[style] { grid-template-columns: 1fr !important; min-height: 0; }
+  .acesso__arte { min-height: 260px; padding: 32px; justify-content: flex-end; }
+  .acesso__arte .t-display { font-size: 30px !important; }
+  .acesso__fotos { display: none; }
+  .acesso__form { padding: 36px var(--margem-pagina) 56px; }
+  .acesso__form > div, .acesso__form > div[style] { width: 100% !important; max-width: 560px; }
+
+  /* Conta do cliente: menu vira faixa de abas */
+  .conta { grid-template-columns: 1fr; gap: 18px; }
+  .conta__menu { display: flex; gap: 4px; overflow-x: auto; padding: 8px; scrollbar-width: none; }
+  .conta__menu::-webkit-scrollbar { display: none; }
+  .conta__perfil { display: none; }
+  .conta__menu a { white-space: nowrap; flex: none; }
+
+  /* Carrinho / checkout */
+  .carrinho { grid-template-columns: 1fr; }
+  .resumo { position: static; }
+  .etapas hr { width: 32px; }
+
+  /* Painéis: menu lateral vira barra no topo */
+  .painel { grid-template-columns: 1fr; min-height: 0; }
+  .lateral { flex-direction: row; align-items: center; gap: 4px; padding: 12px var(--margem-pagina); overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 5; }
+  .lateral::-webkit-scrollbar { display: none; }
+  .lateral .logo { margin: 0 14px 0 0; flex: none; }
+  .lateral__grupo, .lateral__usuario { display: none; }
+  .item-menu { flex: none; white-space: nowrap; padding: 9px 12px; font-size: 14px; }
+  .painel__topo { padding: 12px var(--margem-pagina); }
+  .painel__topo .campo__caixa { width: auto; flex: 1; max-width: 360px; }
+  .painel__corpo { padding: 24px var(--margem-pagina) 40px; }
+  .painel__titulo { flex-wrap: wrap; align-items: flex-start; }
+  .duas-colunas, .cadastro-simples, .duas-colunas[style] { grid-template-columns: 1fr !important; }
+
+  /* Rodapé */
+  .rodape__news { flex-wrap: wrap; }
+  .rodape__news > .cresce { flex-basis: 100%; }
+  .rodape__news .campo__caixa { flex: 1; width: auto; }
+  .rodape__base { flex-wrap: wrap; gap: 12px; }
+}
+
+/* ===================== ≤ 768px · celular grande ===================== */
+@media (max-width: 768px) {
+  :root { --margem-pagina: 16px; }
+  .t-display { font-size: 32px; }
+  .t-h1 { font-size: 24px; }
+  .t-h2 { font-size: 20px; }
+  .btn--g { height: 50px; padding: 0 20px; font-size: 14px; }
+
+  .cabecalho__faixa span:not(:first-child) { display: none; }
+  .cabecalho__principal { padding-top: 14px; padding-bottom: 14px; }
+  .cabecalho__principal .logo { font-size: 24px; }
+  .cabecalho__principal .logo svg { width: 36px; height: 36px; }
+  .acao > span:last-child { display: none; }
+  .cabecalho__acoes { gap: 10px; }
+  .busca { height: 46px; }
+  .busca button { width: 36px; height: 36px; }
+  .cabecalho__menu { gap: 18px; font-size: 13px; }
+  .cabecalho__ofertas { margin-left: 0; }
+  .cabecalho-simples { padding-top: 14px; padding-bottom: 14px; }
+  .cabecalho-simples .logo { font-size: 22px; } .cabecalho-simples .logo svg { width: 34px; height: 34px; }
+
+  .linha.entre, .secao-titulo { flex-wrap: wrap; }
+  .secao-titulo > .linha { flex-wrap: wrap; }
+
+  /* Home */
+  .hero { flex-direction: column; align-items: flex-start; padding: 28px 22px 34px; margin-top: 16px; border-radius: 22px; }
+  .hero__texto { max-width: 100%; gap: 14px; }
+  .hero__texto p { font-size: 15px; }
+  .hero__texto .linha { flex-wrap: wrap; }
+  .hero__fotos { position: relative; inset: auto; width: 100%; height: 190px; margin-top: 18px; transform: none; z-index: 1; }
+  .hero__foto { padding: 6px; border-radius: 18px; }
+  .hero__foto img { border-radius: 13px; }
+  .hero__foto:nth-child(1) { width: 150px; left: 50%; top: 0; translate: -50% 0; }
+  .hero__foto:nth-child(2) { width: 118px; left: 0; top: 50px; }
+  .hero__foto:nth-child(3) { width: 112px; right: 0; left: auto; top: 30px; }
+  .hero__foto:nth-child(4) { display: none; }
+  .hero__dots { bottom: 12px; }
+  .beneficios { grid-template-columns: 1fr; padding: 8px 0; row-gap: 0; }
+  .beneficio { padding: 12px 18px; }
+  .beneficio + .beneficio { border-left: 0; border-top: 1px solid var(--neutro-100); }
+  .idade__circulo { width: 92px; height: 92px; }
+  .idade__circulo b { font-size: 24px; }
+  .idade { font-size: 13px; text-align: center; }
+  .prateleira, .grade-produtos { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .prateleira > :nth-child(3), .prateleira > :nth-child(4) { display: flex; }
+  .prateleira > :nth-child(5) { display: none; }
+  .categorias { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .categoria img { width: 96px; height: 96px; }
+  .banner { height: auto; padding: 22px; }
+  .banner img { width: 120px; height: 120px; }
+  .banner .t-h1 { font-size: 22px; }
+  .marcas { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .marca { height: 60px; font-size: 13px; }
+  .secao { margin-top: 36px; }
+
+  /* Card de produto mais compacto */
+  .card-produto { padding: 8px 8px 12px; gap: 8px; border-radius: 16px; }
+  .card-produto__nome { font-size: 14px; min-height: 40px; }
+  .card-produto__preco { font-size: 18px; }
+  .card-produto__pix, .card-produto__info { font-size: 12px; }
+  .card-produto .btn svg { display: none; }
+  .card-produto .btn { font-size: 12px; padding: 0 8px; }
+  .card-produto__imagem .selo { top: 6px; left: 6px; font-size: 10px; padding: 3px 7px; }
+  .card-produto__fav { top: 6px; right: 6px; width: 30px; height: 30px; }
+
+  /* Listagem */
+  .cat-topo { padding: 20px; }
+  .filtros.aberto { grid-template-columns: 1fr; }
+  .barra-lista { flex-wrap: wrap; }
+  .barra-lista .linha { flex: 1; }
+  .barra-lista .campo__caixa { flex: 1; width: auto; }
+  .sugestoes { grid-template-columns: 1fr; top: 214px; }
+
+  /* Produto */
+  .galeria { grid-template-columns: 1fr; }
+  .galeria__mini { flex-direction: row; order: 2; overflow-x: auto; }
+  .galeria__mini img { width: 64px; height: 64px; flex: none; }
+  .preco-caixa .t-preco-g { font-size: 32px; }
+  .info-produto > .linha { flex-wrap: wrap; }
+  .info-produto .grade { grid-template-columns: 1fr !important; }
+  .vendedor-caixa { flex-wrap: wrap; }
+  .caixa { padding: 18px; }
+  .caixa.secao[style] { padding: 8px 16px 20px !important; }
+  .caixa .grade[style*="1.25fr"] { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .abas { overflow-x: auto; scrollbar-width: none; }
+  .abas a { white-space: nowrap; }
+
+  /* Formulários em uma coluna */
+  .form-grade, .form-grade[style] { grid-template-columns: 1fr !important; }
+  .perfis { grid-template-columns: 1fr; }
+  .acesso__arte { min-height: 200px; padding: 24px var(--margem-pagina); }
+  .acesso__arte p { font-size: 15px; }
+  .acesso__form { padding-top: 28px; }
+  .segmento a { padding: 8px 12px; }
+
+  /* Carrinho */
+  .item-carrinho { flex-wrap: wrap; position: relative; }
+  .item-carrinho img { width: 76px; height: 76px; }
+  .item-carrinho .cresce { flex-basis: calc(100% - 92px); }
+  .item-carrinho > div:last-child { width: 100%; display: flex; align-items: center; justify-content: flex-end; gap: 12px; text-align: right; }
+  .caixa.grade[style] { grid-template-columns: 1fr !important; }
+  .resumo .t-preco-g { font-size: 26px !important; }
+
+  /* Checkout */
+  .etapa { font-size: 0; gap: 0; }
+  .etapa i { font-size: 13px; }
+  .etapa.on { font-size: 13px; gap: 8px; }
+  .etapas { gap: 8px; }
+  .etapas hr { width: 20px; }
+  .pagamentos { grid-template-columns: 1fr; }
+  .pag-op { flex-direction: row; align-items: center; flex-wrap: wrap; }
+  .caixa .grade[style*="1.2fr"] { grid-template-columns: 1fr !important; }
+  .cartao-visual { order: -1; height: 170px; }
+  .caixa.linha { flex-wrap: wrap; }
+
+  /* Pedidos */
+  .linha-tempo { overflow-x: auto; }
+  .linha-tempo div { min-width: 92px; }
+  .pedido-card { padding: 16px; }
+  .pedido-card.linha { flex-wrap: wrap; row-gap: 10px; }
+  .aviso { font-size: 13px; }
+
+  /* Painéis */
+  .lateral { padding: 10px var(--margem-pagina); }
+  .lateral .logo { display: none; }
+  .painel__topo .campo__caixa { display: none; }
+  .painel__topo > .linha { margin-left: auto; }
+  .painel__topo .t-pequeno { display: none; }
+  .indicadores { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .card-indicador { padding: 14px; gap: 10px; flex-direction: column; align-items: flex-start; }
+  .card-indicador b { font-size: 20px; }
+  .painel__titulo .linha { flex-wrap: wrap; }
+  .painel__titulo .btn { flex: 1; }
+  .tabela-caixa__barra .campo__caixa, .tabela-caixa__barra .campo__caixa[style] { width: 100% !important; }
+  .tabela-caixa__barra > .cresce:empty { display: none; }
+  .tabela-caixa__rodape { flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .grafico { gap: 8px; height: 170px; }
+  .dialogo, .dialogo[style] { width: 100% !important; }
+  .painel__corpo > .linha[style] { flex-wrap: wrap; }
+  .uploader { padding: 20px; }
+  .miniaturas { grid-template-columns: repeat(3, 1fr); }
+  .cadastro-simples .tabela-caixa > .linha { flex-wrap: wrap; }
+  .cadastro-simples .tabela-caixa > .linha .btn { width: 100%; }
+  .tabela-caixa .tabela thead,
+  .tabela-caixa .tabela tbody,
+  .tabela-caixa .tabela,
+  .tabela-rolagem .tabela { min-width: 680px; }
+  .cadastro-simples .tabela-caixa .tabela thead,
+  .cadastro-simples .tabela-caixa .tabela tbody,
+  .cadastro-simples .tabela-caixa .tabela,
+  .cadastro-simples .tabela-rolagem .tabela { min-width: 320px !important; }
+  .tabela td, .tabela th { white-space: nowrap; }
+  .caixa.linha > .cresce { flex-basis: calc(100% - 64px); }
+  .cabecalho-simples__seg { font-size: 12px; text-align: right; max-width: 55%; }
+
+  /* Rodapé */
+  .rodape { margin-top: 44px; }
+  .rodape__news { padding: 24px var(--margem-pagina); gap: 14px; }
+  .rodape__news .btn { width: 100%; }
+  .rodape__cols { grid-template-columns: 1fr 1fr; gap: 28px; padding-top: 32px; }
+  .rodape__base { flex-direction: column; align-items: flex-start; }
+}
+
+/* ===================== ≤ 480px · celular ===================== */
+@media (max-width: 480px) {
+  .t-display { font-size: 28px; }
+  .hero__texto .btn { flex: 1; }
+  .idades { grid-template-columns: repeat(2, 1fr); }
+  .cabecalho__acoes .acao:nth-child(2) { display: none; }
+  .rodape__cols { grid-template-columns: 1fr; }
+  .banner img { display: none; }
+  .migalhas { flex-wrap: wrap; }
+  .indicadores { grid-template-columns: 1fr 1fr; }
+  .item-carrinho > div:last-child .btn span { display: none; }
+}
+
+/* Itens de grid não podem ficar maiores que a coluna (evita rolagem lateral) */
+.grade > *, .form-grade > *, .listagem > *, .produto > *, .galeria > *, .carrinho > *, .conta > *, .duas-colunas > *, .cadastro-simples > *, .acesso > * { min-width: 0; }
+@media (max-width: 768px) { .galeria { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 1024px) { .acesso__form > form, .acesso__form > form[style] { width: 100% !important; max-width: 560px; } }
+@media (max-width: 768px) { .segmento button { padding: 8px 12px; } }

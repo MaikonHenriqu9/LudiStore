@@ -1,0 +1,71 @@
+/* =========================================================
+   LudiStore · Tokens de design
+   Espelha as variáveis "LudiStore · Cores", os estilos de texto
+   e os estilos de sombra criados na página "Template" do Figma.
+   No React: importe este arquivo uma vez em src/main.jsx.
+   ========================================================= */
+
+:root {
+  /* ---- Cores (paleta "Oceano & Calma") ---- */
+  --azul-500: #0284C7;
+  --azul-700: #0369A1;
+  --azul-50: #E0F2FE;
+  --rosa-500: #FB7185;
+  --rosa-600: #E11D48;
+  --rosa-50: #FFE4E8;
+  --amarelo-400: #FBBF24;
+  --amarelo-50: #FEF3C7;
+  --marinho-900: #0C2340;
+  --marinho-700: #1E3A5F;
+  --neutro-0: #FFFFFF;
+  --neutro-50: #F8FAFC;
+  --neutro-100: #F1F5F9;
+  --neutro-200: #E2E8F0;
+  --neutro-400: #94A3B8;
+  --neutro-600: #475569;
+  --verde-600: #16A34A;
+  --verde-50: #DCFCE7;
+
+  /* Cores da logo (fixas, não mudar) */
+  --logo-azul: #3E9BD3;
+  --logo-vermelho: #EC5040;
+
+  /* ---- Tipografia ---- */
+  --fonte-titulo: 'Nunito', system-ui, sans-serif;
+  --fonte-texto: 'Nunito Sans', system-ui, sans-serif;
+
+  /* ---- Raios ---- */
+  --raio-p: 10px;
+  --raio-m: 14px;
+  --raio-g: 20px;
+  --raio-xg: 28px;
+  --raio-total: 999px;
+
+  /* ---- Sombras ---- */
+  --sombra-card: 0 4px 16px rgba(12, 35, 64, .08);
+  --sombra-elevada: 0 12px 32px rgba(12, 35, 64, .16);
+
+  /* ---- Layout ---- */
+  --largura-conteudo: 1312px;
+  --margem-pagina: 64px;
+}
+
+/* ---- Estilos de texto (mesmos nomes do Figma) ---- */
+.t-display      { font: 900 48px/1.1 var(--fonte-titulo); }
+.t-h1           { font: 800 32px/1.2 var(--fonte-titulo); }
+.t-h2           { font: 800 24px/1.25 var(--fonte-titulo); }
+.t-h3           { font: 800 18px/1.3 var(--fonte-titulo); }
+.t-preco-g      { font: 900 32px/1.1 var(--fonte-titulo); }
+.t-preco-card   { font: 900 20px/1.2 var(--fonte-titulo); }
+.t-botao        { font: 800 14px/1.2 var(--fonte-titulo); }
+.t-corpo        { font: 400 15px/1.5 var(--fonte-texto); }
+.t-corpo-forte  { font: 700 15px/1.5 var(--fonte-texto); }
+.t-pequeno      { font: 400 13px/1.45 var(--fonte-texto); }
+.t-pequeno-forte{ font: 600 13px/1.45 var(--fonte-texto); }
+.t-rotulo       { font: 700 12px/1.3 var(--fonte-texto); letter-spacing: .04em; text-transform: uppercase; }
+
+.c-suave  { color: var(--neutro-600); }
+.c-fraco  { color: var(--neutro-400); }
+.c-azul   { color: var(--azul-500); }
+.c-rosa   { color: var(--rosa-600); }
+.c-verde  { color: var(--verde-600); }

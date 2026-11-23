@@ -12,7 +12,7 @@ class Brinquedo(models.Model):
     preco = models.DecimalField(max_digits=8, decimal_places=2)
     estoque = models.PositiveIntegerField(default=0)
     idade_minima = models.PositiveIntegerField(default=0)
-    imagem_url = models.URLField(blank=True)
+    imagem_url = models.URLField(max_length=2048, blank=True)
     ativo = models.BooleanField(default=True)
 
     marca = models.ForeignKey(Marca, on_delete=models.PROTECT, related_name='brinquedos')
