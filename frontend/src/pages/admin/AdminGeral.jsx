@@ -19,7 +19,7 @@ export default function AdminGeral() {
       try {
         const [u, b, p] = await Promise.all([
           usuariosService.listar().catch(() => []),
-          brinquedosService.listar().catch(() => []),
+          brinquedosService.listar('recentes').catch(() => []),
           pedidosService.listar().catch(() => [])
         ])
         setUsuarios(u)
@@ -42,7 +42,14 @@ export default function AdminGeral() {
   }, [usuarios])
 
   const ultimosBrinquedos = useMemo(() => {
-    return [...brinquedos].slice(0, 5)
+    return [...brinquedos]
+      .sort((a, b) => {
+        if (a.criado_em && b.criado_em) {
+          return new Date(b.criado_em).getTime() - new Date(a.criado_em).getTime()
+        }
+        return (b.id || 0) - (a.id || 0)
+      })
+      .slice(0, 5)
   }, [brinquedos])
 
   return (
@@ -143,7 +150,8 @@ export default function AdminGeral() {
             Gerenciar produtos <ChevronRight size={16} />
           </Link>
         </div>
-        <table className="tabela">
+        <div className="tabela-rolagem">
+          <table className="tabela">
           <thead>
             <tr>
               <th>Brinquedo</th>
@@ -190,6 +198,7 @@ export default function AdminGeral() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   )
